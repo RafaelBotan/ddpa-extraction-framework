@@ -1,0 +1,91 @@
+# ============================================================================
+# Study Contract — Patologia Tireoide Bethesda holdout (platform test D)
+# ============================================================================
+# Cross-domain proof: mesmo runtime que roda endoscopia, roda patologia.
+# Nenhum codigo do runner tocado. Apenas contrato + policy + wrapper.
+# ============================================================================
+
+contract:
+  id: patologia_tireoide_holdout
+  version: 1.0.0
+  study: PATO_TIR
+  policy_registry: ../policies/patologia.yaml
+  description: >
+    Onboard patologia tireoidiana Bethesda no holdout real (N=200).
+    Valida que a plataforma e dominio-agnostica.
+  created: 2026-04-15
+
+corpus:
+  path: <path>
+  id_column: numExame
+  text_column: conclusao
+  strata:
+    - estrato
+
+extractor:
+  section_preset: PATHOLOGY_SECTIONS
+  language: pt-BR
+
+variables:
+
+  - name: bethesda
+    taxonomy: [ORD-E]
+    criticality: 8
+    description: "Categoria Bethesda TBSRTC (I..VI)."
+    detector:
+      module: tireoide_bethesda_l1_v4
+      function: detect_bethesda
+      interface: tuple
+      pre_normalize: true
+    silence_policy:
+      output_ontology: [I, II, III, IV, V, VI]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, diagnostico]
+    canaries:
+      - id: BET-01
+        text: "CONCLUSAO: Categoria II de Bethesda. Lesao folicular benigna."
+        expected_value: II
+      - id: BET-02
+        text: "CONCLUSAO: BETHESDA VI - carcinoma papilifero."
+        expected_value: VI
+      - id: BET-03
+        text: "CONCLUSAO: Categoria IV de Bethesda - neoplasia folicular."
+        expected_value: IV
+
+  - name: bethesda_desc
+    taxonomy: [LEX-E]
+    criticality: 5
+    description: "Descritor literal da categoria (indeterminado, atipias, suspeito...)."
+    detector:
+      module: tireoide_bethesda_l1_v4
+      function: detect_bethesda_desc
+      interface: tuple
+      pre_normalize: true
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, diagnostico]
+    canaries: []
+
+  - name: subtipo
+    taxonomy: [LEX-E]
+    criticality: 6
+    description: "Subtipo histologico (papilifero, folicular, medular, anaplasico)."
+    detector:
+      module: tireoide_bethesda_l1_v4
+      function: detect_subtipo
+      interface: tuple
+      pre_normalize: true
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, diagnostico]
+    canaries: []
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

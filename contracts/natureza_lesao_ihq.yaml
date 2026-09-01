@@ -1,0 +1,254 @@
+# ============================================================================
+# Study Contract — Natureza da lesao (IHQ cross-domain DDPA extraction)
+# ============================================================================
+# Canonizado 2026-04-19 como S3 da Fase 2 (pos golden persistente n=100 IHQ).
+# Fonte canonica da ontologia: question_set_sitio_natureza_v1.json v2.1.0
+#   (Q4 NATUREZA_LESAO, 4 classes com limite clinico canonico DDPA).
+# Golden humano: runs/fase_2a/golden_humano_100_v2_2026-04-19_n100.csv
+#   (100/100 super_ia_accepted == "all", Opus 4.7 propos, Dr. Rafael auditou).
+# L1 regex: playbooks/compendio/regex_organ_natureza_ihq_v1.yaml v1.1.0
+#   (4 classes, prioridade MALIGNO > BORDERLINE > BENIGNO > INDETERMINADO).
+# Definicoes clinicas detalhadas: playbooks/compendio/definicoes_natureza_sitio_v1.md
+# Agreement L1 vs golden (fase_2a n=100): tried 79.2%, overall 57%, abstain 28%.
+# ============================================================================
+
+contract:
+  id: natureza_lesao_ihq
+  version: 1.0.0
+  study: DDPA_NATUREZA_LESAO_IHQ
+  policy_registry: ../policies/patologia.yaml
+  description: >
+    Extracao canonica de natureza da lesao dominante em laudos IHQ. 4 classes
+    com limite clinico canonico DDPA (Q4 NATUREZA_LESAO, v2.1.0):
+    MALIGNO / BORDERLINE / BENIGNO / INDETERMINADO. Hierarquia:
+    lesao mais grave vence (MALIGNO > BORDERLINE > BENIGNO). INDETERMINADO
+    apenas quando nao ha lesao classificavel (painel IHQ isolado sem AP,
+    "suspeito para", material insuficiente). L1 regex prioriza MALIGNO;
+    L2 IA resolve ambiguidade clinica (linguagem probabilistica, atipia
+    como diagnostico vs descritor).
+  created: 2026-04-19
+  hypotheses:
+    - id: H_L1_TRIED_AGREEMENT
+      text: "L1 regex quando NAO abstem atinge >=80% agreement vs golden humano."
+    - id: H_L2_RESOLVES_BORDERLINE
+      text: "L2 IA resolve a maioria dos casos BORDERLINE que L1 colapsa em MALIGNO/BENIGNO."
+    - id: H_CASCATA_SURFACE
+      text: "Cascata L1+L2 atinge surface agreement >=90% vs golden humano n=100."
+    - id: H_CLASS_BALANCE
+      text: "Distribuicao inferida reflete o golden (~55% MALIGNO / 25% BENIGNO / 15% BORDERLINE / 5% INDETERMINADO)."
+
+corpus:
+  path: <path>
+  filter:
+    column: tipo_exame
+    value: IMUNO_HISTOQUIMICO
+  total_rows_expected: 32586
+  id_column: numExame
+  text_column: texto_completo
+  strata:
+    - ano
+  extra_columns:
+    - ano
+    - data_exame
+    - material_especificado
+    - conclusao
+    - tecnica
+    - macroscopia
+    - microscopia
+  text_compose:
+    method: concat_priority
+    priority:
+      - material_especificado
+      - conclusao
+      - microscopia
+      - macroscopia
+      - tecnica
+    separator: "\n|CONCLUSAO|\n"
+    uppercase_for_regex: true
+
+extractor:
+  section_preset: PATHOLOGY_SECTIONS
+  language: pt-BR
+
+variables:
+
+  - name: natureza_lesao
+    taxonomy: [CAT]
+    criticality: 10
+    description: >
+      Natureza da lesao dominante. 4 classes: MALIGNO (carcinoma invasivo,
+      CDIS qualquer grau, in-situ alto grau, sarcoma, linfoma, NET G1/G2/G3
+      salvo potencial incerto, IPMN alto grau/invasivo, metastase);
+      BORDERLINE (atipia como diagnostico principal: ADH, ALH, DIN 1B, FEA,
+      papilar com atipia; ovariano borderline, filodes borderline, GIST
+      incerto, LAMN, PUNLMP, IPMN baixo/intermediario); BENIGNO (sem atipia,
+      LSIL, CLIS classico, adenose esclerosante, radial scar sem atipia,
+      hiperplasia sem atipia); INDETERMINADO (material insuficiente, painel
+      IHQ isolado sem AP integrado, "suspeito para"/"nao se pode afastar"
+      sem confirmacao). natureza_heterogenea captura Whipple etc.
+    detector:
+      module: playbooks.compendio.sitio_natureza_l1
+      function: detect_natureza
+      interface: tuple
+      yaml_source: playbooks/compendio/regex_organ_natureza_ihq_v1.yaml
+      yaml_version: "1.1.0"
+      pre_normalize: true
+      note: |
+        Modulo canonico a ser extraido de runs/fase_2a/l1_regex_predict.py
+        (implementacao de referencia validada na fase_2a). Comportamento:
+        aplica anchor_patterns por classe, desempata por hierarquia
+        MALIGNO > BORDERLINE > BENIGNO > INDETERMINADO, abstem se nenhuma
+        classe bateu.
+    comparison_column: null
+    silence_policy:
+      output_ontology:
+        - MALIGNO
+        - BORDERLINE
+        - BENIGNO
+        - INDETERMINADO
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [material_especificado, conclusao, microscopia]
+      escalate_on_ambiguity: true
+    canaries:
+      - id: NAT-MALIGNO-INVASIVO
+        text: "CONCLUSAO: carcinoma ductal infiltrante de mama, grau II (Nottingham)."
+        expected_value: MALIGNO
+      - id: NAT-MALIGNO-CDIS
+        text: "CONCLUSAO: carcinoma ductal in situ de alto grau, com microinvasao focal."
+        expected_value: MALIGNO
+      - id: NAT-MALIGNO-META
+        text: "Material: linfonodo cervical. CONCLUSAO: metastase de carcinoma papilifero de tireoide."
+        expected_value: MALIGNO
+      - id: NAT-MALIGNO-NET-G2
+        text: "CONCLUSAO: tumor neuroendocrino bem diferenciado G2 (Ki-67 8%)."
+        expected_value: MALIGNO
+      - id: NAT-BORDERLINE-ADH
+        text: "CONCLUSAO: hiperplasia ductal atipica (ADH) em mama esquerda."
+        expected_value: BORDERLINE
+      - id: NAT-BORDERLINE-OVARIO
+        text: "CONCLUSAO: tumor seroso borderline de ovario direito."
+        expected_value: BORDERLINE
+      - id: NAT-BORDERLINE-IPMN
+        text: "CONCLUSAO: IPMN com displasia de baixo grau, sem invasao."
+        expected_value: BORDERLINE
+      - id: NAT-BENIGNO-FA
+        text: "CONCLUSAO: fibroadenoma de mama, sem atipias."
+        expected_value: BENIGNO
+      - id: NAT-BENIGNO-CLIS
+        text: "CONCLUSAO: carcinoma lobular in situ classico (CLIS), sem variantes pleomorfica ou com necrose."
+        expected_value: BENIGNO
+      - id: NAT-BENIGNO-LSIL
+        text: "CONCLUSAO: NIC I (LSIL) em colo uterino."
+        expected_value: BENIGNO
+      - id: NAT-INDET-IHQ-ISOLADO
+        text: "CONCLUSAO: painel imuno-histoquimico compativel com carcinoma de origem cutanea. Sem AP integrado."
+        expected_value: INDETERMINADO
+      - id: NAT-INDET-SUSPEITO
+        text: "CONCLUSAO: alteracoes suspeitas para carcinoma; nao se pode afastar neoplasia maligna. Sugere correlacao."
+        expected_value: INDETERMINADO
+
+  - name: natureza_lesao_abstained
+    taxonomy: [BIN]
+    criticality: 5
+    description: >
+      Flag L1: true quando regex nao conseguiu decidir (0 matches).
+      Alvo do L2 IA para resolucao.
+    detector:
+      module: playbooks.compendio.sitio_natureza_l1
+      function: detect_natureza_abstained_flag
+      interface: tuple
+      pre_normalize: false
+    comparison_column: null
+    silence_policy:
+      output_ontology: ['true', 'false']
+      default_if_silent: 'false'
+      allows_implicit_negative: false
+      section_scope: [material_especificado, conclusao]
+    canaries: []
+
+  - name: natureza_heterogenea
+    taxonomy: [BIN]
+    criticality: 6
+    description: >
+      true APENAS se o laudo descreve fragmentos de ORGAOS DIFERENTES com
+      naturezas diferentes (ex: Whipple com carcinoma no pancreas + polipo
+      benigno no duodeno). Se naturezas coexistem no MESMO orgao/lesao
+      dominante (ex: ADH + CDIS na mesma mama), NAO marcar. Default false.
+      Sinal secundario (Fase 2b) — nao entra no agreement primario.
+    detector:
+      module: playbooks.compendio.sitio_natureza_l1
+      function: detect_natureza_heterogenea
+      interface: tuple
+      pre_normalize: false
+    comparison_column: null
+    silence_policy:
+      output_ontology: ['true', 'false']
+      default_if_silent: 'false'
+      allows_implicit_negative: false
+      section_scope: [material_especificado, conclusao, microscopia]
+    canaries: []
+
+golden:
+  path: <path>
+  format: csv
+  encoding: utf-8-sig
+  sep: ';'
+  n: 100
+  column: natureza
+  agreement_targets:
+    tried_agreement_min: 0.85
+    overall_surface_min: 0.90
+    abstain_rate_max: 0.15
+    borderline_recall_min: 0.80   # captura de BORDERLINE e o ponto fraco documentado do L1
+  current_l1_baseline:
+    measured_on: "fase_2a n=100 (2026-04-19)"
+    tried_agreement: 0.792
+    overall_surface: 0.57
+    abstain_rate: 0.28
+    borderline_recall_observed: 0.067   # L1 pegou 1/15 BORDERLINE do golden
+    interpretation: |
+      L1 tem dois modos de falha documentados:
+      (a) colapsa BORDERLINE em MALIGNO (regra prioridade MALIGNO);
+      (b) colapsa INDETERMINADO em MALIGNO/BENIGNO (nao tem heuristica
+          para "suspeito para"/"nao se pode afastar").
+      L2 IA (modelo com raciocinio) e o natural owner desses dois casos.
+  class_prior_golden:
+    MALIGNO: 0.54
+    BORDERLINE: 0.15
+    BENIGNO: 0.24
+    INDETERMINADO: 0.07
+
+l2_ia:
+  enabled: true
+  model_primary: claude-sonnet-4-6
+  model_ablation: claude-haiku-4-5
+  prompt_source: playbooks/compendio/research_app_question_sets/question_set_sitio_natureza_v1.json
+  prompt_question: Q4
+  temperature: 0
+  call_mode: per_laudo
+  output_schema:
+    natureza: enum[MALIGNO, BORDERLINE, BENIGNO, INDETERMINADO]
+    natureza_heterogenea: bool
+    confianca: enum[alta, media, baixa]
+    rationale: str
+    evidencia: str
+  fallback_policy:
+    - "Se L1 tried MALIGNO com match inequivoco (invasivo, metastase) -> usa L1"
+    - "Se L1 tried em BENIGNO mas texto contem sinais de atipia -> escalate para L2"
+    - "Se L1 abstained -> usa L2"
+    - "Se L2 retorna BORDERLINE/INDETERMINADO com confianca media/baixa -> flagged para spot-check"
+
+output:
+  dir: <path>
+  format: csv
+  encoding: utf-8-sig
+  sep: ';'
+  decimal: ','
+  write_evidence: true
+  artifacts:
+    - l1_predictions.parquet
+    - l2_predictions.jsonl
+    - cascata_predictions.parquet
+    - agreement_vs_golden.md
+    - borderline_audit_list.csv

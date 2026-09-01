@@ -1,0 +1,903 @@
+# ============================================================================
+# Study Contract — Mama AP megabase v1 (cross-domain DDPA extraction)
+# ============================================================================
+# v1 (2026-05-18): primeira versão operacional do domínio AP de mama.
+# Mirrors mama_ihq_megabase_v3.yaml structure.
+# 27 variáveis cobertas, ~11.2k laudos AP-mama (invasivo / in situ / cirúrgico).
+#
+# L1: mama_ap_multi_l1_v4.py (2838 LOC, 247 smoke tests, holdout 200 100% adj).
+# L2 (bulk): DeepSeek Flash (deepseek-chat). NEVER Sonnet.
+# L2.5 (refinement, optional): DeepSeek Pro (deepseek-reasoner) — only for
+#                              cases where L2 abstains or returns low confidence.
+# L4 (cross-family adjudication, OUT OF BULK): GPT 5.5 OU Opus 4.7 — entra só na
+#     fila de adjudicação humana, NÃO neste contrato.
+#
+# Engenharia de IAs (regra fixa do projeto declarada 2026-05-18, PI Rafael Botan):
+#   - L2 bulk: DeepSeek Flash
+#   - Refinamento intra-familia: DeepSeek Pro
+#   - Adjudicacao cross-family: GPT 5.5 OU Opus 4.7
+#   - VEDADO: Sonnet (qualquer versão); Anthropic API para grande volume;
+#             OpenAI API para grande volume.
+# Memoria persistente: project_engenharia_ias_fixa.md
+# ============================================================================
+
+contract:
+  id: mama_ap_megabase_v1
+  version: 1.0.0
+  study: MAMA_AP
+  policy_registry: ../policies/patologia.yaml
+  description: >
+    Cross-domain DDPA extraction: domínio anatomopatológico de mama.
+    27 variáveis (5 cirúrgicas, 6 tumor-descritoras, 4 staging, 3 Nottingham
+    components, 3 derivadas, 8 L1-only de campo estruturado, mais ref_ihq).
+    L1 determinístico via mama_ap_multi_l1_v4.py.
+    L2 bulk = DeepSeek Flash (deepseek-chat), temperature=0.
+    Adjudicação humana cross-family fora deste contrato (GPT 5.5 / Opus 4.7).
+  created: 2026-05-18
+  hypotheses:
+    - id: H_CROSS_DOMAIN_AP
+      text: "Plataforma DDPA extrai domínio patologia AP-mama sem modificação do runtime."
+    - id: H_L1_CIRCUIT_BREAKER_AP
+      text: "L1 captura ≥1 alucinação LLM por 100 laudos em vars BIN (inv_linfov, inv_perin, ref_ihq, multifocalidade)."
+    - id: H_TIPO_HIST_OFFONT
+      text: "tipo_hist com subtipos raros (mucinoso, micropapilar, metaplásico) gera off-ontology >5% no L2."
+    - id: H_NOTT_DCIS_GUARD
+      text: "DCIS guard (Bug #28) zera esc_tubular/nuclear/mitotico em ≥98% de laudos in_situ-puros."
+
+corpus:
+  path: <path>
+  id_column: numExame
+  text_column: texto
+  strata:
+    - ano
+    - has_invasive
+    - has_surgical
+  extra_columns:
+    - ano
+    - data_exame
+    - filter_tier
+    - filter_note
+    - has_invasive
+    - has_insitu
+    - has_surgical
+
+extractor:
+  section_preset: PATHOLOGY_SECTIONS
+  language: pt-BR
+
+# ============================================================================
+# L2 / L2.5 / L4 model configuration
+# ============================================================================
+# This block is consumed by the runner. Bulk extraction uses DeepSeek Flash;
+# the refinement pass (L2.5) is OPTIONAL and only triggered by low-confidence
+# / abstain outputs from L2. Cross-family adjudication is HANDLED EXTERNALLY
+# (in the adjudicator HTML / human review queue), not by this contract.
+
+models:
+  l2_bulk:
+    provider: deepseek
+    model_id: deepseek-chat
+    label: DeepSeek Flash
+    temperature: 0
+    max_tokens: 2048
+    rationale: >-
+      Regra fixa do projeto (PI Rafael, 2026-05-18): grande volume = DeepSeek
+      Flash. Custo ~USD 5-15 estimado para 11.228 laudos × 27 vars (vs USD
+      300-800 se fosse Opus). Acoplado ao circuit-breaker L1 — "L2 típico de
+      produção" é exatamente o que a tese DDPA precisa demonstrar.
+
+  l25_refinement:
+    enabled: false  # opt-in. Mantemos OFF no smoke; ligar manualmente no full.
+    provider: deepseek
+    model_id: deepseek-reasoner
+    label: DeepSeek Pro
+    temperature: 0
+    max_tokens: 4096
+    trigger:
+      conditions:
+        - l2_abstained: true
+        - l2_low_confidence: true
+        - l2_offontology_after_normalization: true
+      max_fraction_of_corpus: 0.15  # refinamento NÃO deve passar de 15% do corpus
+    rationale: >-
+      Refinamento intra-família DeepSeek para casos complexos (tipo_hist
+      subtipos raros, grau_nott composto, pT/pN com sufixos exóticos).
+      Estimado ~10% do corpus, custo ~USD 10-30.
+
+  l4_cross_family_verifier:
+    # NÃO usado em bulk. Apenas em fila de adjudicação humana cross-family.
+    # Documentado aqui para rastreabilidade — runner NÃO invoca este bloco.
+    enabled_in_bulk: false
+    providers_allowed: [openai, anthropic]
+    candidates:
+      - provider: openai
+        model_id: gpt-5.5
+        label: GPT 5.5
+      - provider: anthropic
+        model_id: claude-opus-4-7
+        label: Opus 4.7
+    rationale: >-
+      Cross-family verifier para clustering de discordâncias L1↔L2 e
+      apresentação ao PI no adjudicador HTML. Volumes em centenas, não
+      milhares. Modelo de adjudicação é decisão por-batch documentada em
+      adjudicação manifest.
+
+  forbidden:
+    # Lista negativa explícita — guarda contra drift de configuração futuro.
+    - claude-sonnet-3.5
+    - claude-sonnet-4
+    - claude-sonnet-4.5
+    - claude-sonnet-4.6
+    - claude-sonnet-4.7
+    - anthropic-bulk-any  # qualquer API Anthropic para >100 laudos
+    - openai-bulk-any     # qualquer API OpenAI para >100 laudos
+
+# ============================================================================
+# Estimated costs (11.228 laudos × 27 vars, single-shot multi-variable prompt)
+# ============================================================================
+# - L2 Flash:                   USD  5 -  15
+# - L2.5 Pro (~10% of corpus):  USD 10 -  30
+# - Total bulk:                 USD 15 -  45
+# - Counter-factual (Opus 4.7): USD 300 - 800  (REJEITADO — regra projeto)
+
+cost_estimate:
+  laudos: 11228
+  variables_per_call: 27
+  l2_usd_min: 5
+  l2_usd_max: 15
+  l25_usd_min: 10
+  l25_usd_max: 30
+  total_bulk_usd_min: 15
+  total_bulk_usd_max: 45
+  counterfactual_opus_usd_min: 300
+  counterfactual_opus_usd_max: 800
+
+variables:
+
+  # -------------------------------------------------------------------------
+  # SURGICAL / SPECIMEN BLOCK (5 vars)
+  # -------------------------------------------------------------------------
+
+  - name: procedimento
+    taxonomy: [CAT]
+    criticality: 7
+    description: "Procedimento cirúrgico realizado. Categoriza mastectomia/quadrantectomia/excisional/mamotomia/biopsia_agulha."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_procedimento
+      interface: tuple_with_material  # detector accepts (text_norm, material_norm)
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [mastectomia_radical, mastectomia, quadrantectomia, excisional, mamotomia, biopsia_agulha]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, material_especificado]
+    canaries:
+      - id: MAP-PROC-MAST-RAD
+        text: "PROCEDIMENTO CIRÚRGICO: MASTECTOMIA RADICAL À DIREITA"
+        expected_value: mastectomia_radical
+      - id: MAP-PROC-AGULHA
+        text: "BIÓPSIA POR AGULHA DE MAMA ESQUERDA:"
+        expected_value: biopsia_agulha
+      - id: MAP-PROC-MAMO
+        text: "PRODUTO DE MAMOTOMIA, APRESENTANDO:"
+        expected_value: mamotomia
+      - id: MAP-PROC-SETOR
+        text: "PROCEDIMENTO CIRÚRGICO: SETORECTOMIA;"
+        expected_value: excisional
+
+  - name: tam_cm
+    taxonomy: [MEAS-N]
+    criticality: 9
+    description: "Tamanho do tumor (string com unidade preservada). Comparação cross-source via maior dimensão em mm."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_tam_cm
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-TAM-CM
+        text: "TAMANHO DA NEOPLASIA INVASIVA: 2,2 X 1,5 X 1,5 CM;"
+        expected_value: "2,2 x 1,5 x 1,5 cm"
+      - id: MAP-TAM-MM
+        text: "TAMANHO DA NEOPLASIA INVASIVA: 2 mm (MAIOR DIÂMETRO)"
+        expected_value: "2 mm"
+      - id: MAP-TAM-EXT
+        text: "MAIOR EXTENSÃO DA NEOPLASIA NESTA AMOSTRA: 8,0 mm."
+        expected_value: "8,0 mm"
+      - id: MAP-TAM-NONE
+        text: "FIBROADENOMA SEM ATIPIAS"
+        expected_value: null
+
+  - name: margens
+    taxonomy: [CAT]
+    criticality: 9
+    description: "Margens cirúrgicas (worst-case-wins: comprometidas > exiguas > livres)."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_margens
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [livres, exiguas, comprometidas]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-MARG-LIVRES
+        text: "MARGENS CIRÚRGICAS: LIVRES DE NEOPLASIA (FORAM AVALIADAS CINCO MARGENS)"
+        expected_value: livres
+      - id: MAP-MARG-COMP
+        text: "MARGEM CIRÚRGICA PROFUNDA FOCALMENTE COMPROMETIDA"
+        expected_value: comprometidas
+      - id: MAP-MARG-EXIG
+        text: "MARGENS CIRÚRGICAS LIVRES. A MARGEM CIRÚRGICA MAIS PRÓXIMA É A INFERIOR"
+        expected_value: exiguas
+      - id: MAP-MARG-TANG
+        text: "MARGENS CIRÚRGICAS TANGENCIADAS PELO FIBROADENOMA."
+        expected_value: exiguas
+
+  - name: pele
+    taxonomy: [BIN]
+    criticality: 7
+    description: "Comprometimento de pele. Positivo (invade/infiltra/comprometida) > negativo (livre)."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_pele
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-PELE-LIVRE
+        text: "PELE: LIVRE DE NEOPLASIA"
+        expected_value: nao
+      - id: MAP-PELE-SIM
+        text: "PELE COMPROMETIDA PELA NEOPLASIA"
+        expected_value: sim
+      - id: MAP-PELE-DERME
+        text: "DERME PROFUNDA COMPROMETIDA PELA NEOPLASIA"
+        expected_value: sim
+
+  - name: mamilo
+    taxonomy: [BIN]
+    criticality: 7
+    description: "Comprometimento de mamilo/aréola."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_mamilo
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-MAMILO-LIVRE
+        text: "MAMILO E ARÉOLA: LIVRE DE NEOPLASIA"
+        expected_value: nao
+      - id: MAP-MAMILO-SIM
+        text: "MAMILO COMPROMETIDO PELA NEOPLASIA"
+        expected_value: sim
+      - id: MAP-PELE-MAMILO
+        text: "PELE E MAMILO: LIVRES"
+        expected_value: nao
+
+  # -------------------------------------------------------------------------
+  # TUMOR / DIAGNOSIS BLOCK (6 vars)
+  # -------------------------------------------------------------------------
+
+  - name: tipo_hist
+    taxonomy: [CAT]
+    criticality: 10
+    description: "Tipo histológico. 15 categorias canônicas; subtipos raros podem produzir off-ontology no L2."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_tipo_hist
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [CDI_SOE, CLI, CDIS, CLIS, misto, mucinoso, tubular, medular, micropapilar, papilar, metaplasico, outro_maligno, fibroadenoma, fibrocistico, outro_benigno]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-TIPO-CDI
+        text: "CARCINOMA DUCTAL INVASIVO, DO TIPO NÃO ESPECIAL (OMS 2019)"
+        expected_value: CDI_SOE
+      - id: MAP-TIPO-CLI
+        text: "CARCINOMA LOBULAR INVASIVO, VARIANTE PLEOMÓRFICA"
+        expected_value: CLI
+      - id: MAP-TIPO-CDIS
+        text: "CARCINOMA DUCTAL IN SITU DE MAMA ESQUERDA"
+        expected_value: CDIS
+      - id: MAP-TIPO-MUCINOSO
+        text: "CARCINOMA MAMÁRIO DUCTAL INVASIVO COM DIFERENCIAÇÃO MUCINOSA"
+        expected_value: mucinoso
+      - id: MAP-TIPO-MICROPAP
+        text: "TIPO CARCINOMA MICROPAPILAR INVASIVO"
+        expected_value: micropapilar
+      - id: MAP-TIPO-MISTO
+        text: "CARCINOMA INVASIVO COM PADRÃO MISTO TIPO DUCTAL E LOBULAR"
+        expected_value: misto
+      - id: MAP-TIPO-FIBROADEN
+        text: "FIBROADENOMA SEM ATIPIAS"
+        expected_value: fibroadenoma
+      - id: MAP-TIPO-FIBROCIST
+        text: "TECIDO MAMÁRIO APRESENTANDO: CISTOS; ADENOSE; METAPLASIA APÓCRINA; FIBROSE ESTROMAL"
+        expected_value: fibrocistico
+
+  - name: comp_insitu
+    taxonomy: [BIN]
+    criticality: 8
+    description: "Componente in situ associado à neoplasia. Negation-first; positivo override quando em seções distintas."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_comp_insitu
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-INSITU-NEG
+        text: 'COMPONENTE "IN SITU": NÃO OBSERVADO.'
+        expected_value: nao
+      - id: MAP-INSITU-POS
+        text: 'COMPONENTE "IN SITU": PRESENTE, ALTO GRAU NUCLEAR'
+        expected_value: sim
+      - id: MAP-INSITU-CDIS
+        text: "REPRESENTADO POR CDIS, PADRÃO SÓLIDO"
+        expected_value: sim
+      - id: MAP-INSITU-AUS
+        text: "AUSÊNCIA DE CARCINOMA DUCTAL IN SITU RESIDUAL."
+        expected_value: nao
+
+  - name: necrose_tumoral
+    taxonomy: [BIN]
+    criticality: 5
+    description: "Necrose tumoral. Estrutural; exclui necrose adiposa e comedonecrose."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_necrose_tumoral
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-NEC-NEG
+        text: "NECROSE TUMORAL: NÃO OBSERVADA"
+        expected_value: nao
+      - id: MAP-NEC-POS
+        text: "NECROSE TUMORAL: PRESENTE, FOCAL"
+        expected_value: sim
+
+  - name: multifocalidade
+    taxonomy: [BIN]
+    criticality: 7
+    description: "Multifocalidade / multicentricidade."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_multifocalidade
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-MULTI-NEG
+        text: "FOCALIDADE: UNIFOCAL"
+        expected_value: nao
+      - id: MAP-MULTI-POS
+        text: "MULTIFOCALIDADE/MULTICENTRICIDADE: PRESENTE"
+        expected_value: sim
+
+  - name: microcalcificacoes
+    taxonomy: [BIN]
+    criticality: 5
+    description: "Microcalcificações. Apenas padrão estruturado para evitar falso-positivo em CDIS narrativo."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_microcalcificacoes
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-MIC-NEG
+        text: "MICROCALCIFICAÇÕES: NÃO OBSERVADAS"
+        expected_value: nao
+      - id: MAP-MIC-POS
+        text: "MICROCALCIFICAÇÕES: PRESENTES"
+        expected_value: sim
+
+  - name: inv_linfov
+    taxonomy: [BIN]
+    criticality: 9
+    description: "Invasão linfovascular / angiolinfática. Negation-first; aceita padrão combinado com perineural."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_inv_linfov
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-LV-NEG
+        text: "INVASÃO ANGIOLINFÁTICA E PERINEURAL: NÃO EVIDENCIADA"
+        expected_value: nao
+      - id: MAP-LV-POS
+        text: "INVASÃO LINFO-VASCULAR PRESENTE"
+        expected_value: sim
+      - id: MAP-LV-EMBOLOS
+        text: "ÊMBOLOS NEOPLÁSICOS EM LINFÁTICOS"
+        expected_value: sim
+
+  - name: inv_perin
+    taxonomy: [BIN]
+    criticality: 7
+    description: "Invasão perineural / neural."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_inv_perin
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-PN-NEG-COMB
+        text: "INVASÃO ANGIOLINFÁTICA E PERINEURAL: NÃO EVIDENCIADA"
+        expected_value: nao
+      - id: MAP-PN-NEG
+        text: "INVASÃO PERINEURAL: AUSENTE"
+        expected_value: nao
+      - id: MAP-PN-POS
+        text: "INVASÃO PERINEURAL: PRESENTE"
+        expected_value: sim
+
+  # -------------------------------------------------------------------------
+  # STAGING / TNM BLOCK (4 vars)
+  # -------------------------------------------------------------------------
+
+  - name: pT
+    taxonomy: [CAT-ORD]
+    criticality: 9
+    description: "Estadiamento pT/ypT (AJCC). Canonical lowercase, suffixos preservados."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_pT
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [pT0, pTis, pT1mi, pT1a, pT1b, "pT1b(m)", pT1c, pT2, pT3, pT4, pT4a, pT4b, pT4c, pT4d, ypT0, ypT1mi, ypT1a, ypT1b, ypT1c, ypT2, ypT3, ypT4]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-PT-STD
+        text: "ESTADIAMENTO PATOLÓGICO: pT2; pN1a; pMx."
+        expected_value: pt2
+      - id: MAP-PT-NEO
+        text: "ESTADIAMENTO PATOLÓGICO: ypT2; ypN0;"
+        expected_value: ypt2
+      - id: MAP-PT-MULTI
+        text: "ESTADIAMENTO (AJCC 7ª ED): pT1b(m) (CLI) pN0 (LS)."
+        expected_value: "pt1b(m)"
+      - id: MAP-PT-MI
+        text: "ESTADIAMENTO ANATÔMICO  (AJCC 8ª ed): pT1mi;  pN0 (sn)"
+        expected_value: pt1mi
+      - id: MAP-PT-INFL
+        text: "ESTADIAMENTO: pT4d; pN3a"
+        expected_value: pt4d
+
+  - name: pN
+    taxonomy: [CAT-ORD]
+    criticality: 9
+    description: "Estadiamento pN/ypN. Canonicaliza letra O→0 e prefixo p ausente."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_pN
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [pN0, "pN0(sn)", "pN0(ls)", "pN0(i+)", pN1, pN1a, pN1b, pN1c, pN1mi, pN2, pN2a, pN2b, pN3, pN3a, pN3b, pN3c, pNx, ypN0, "ypN0(sn)", ypN1, ypN1a, ypN2, ypN3, ypNx]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-PN-STD
+        text: "ESTADIAMENTO PATOLÓGICO: pT2; pN1a; pMx."
+        expected_value: pn1a
+      - id: MAP-PN-NEO
+        text: "ESTADIAMENTO PATOLÓGICO: ypT2; ypN0;"
+        expected_value: ypn0
+      - id: MAP-PN-LS
+        text: "ESTADIAMENTO (AJCC 7ª ED): pT1b(m) (CLI) pN0 (LS)."
+        expected_value: "pn0 (ls)"
+      - id: MAP-PN-X
+        text: "ESTADIAMENTO ANATÔMICO (AJCC 8ª ED): pT1a pNx Mx"
+        expected_value: pnx
+
+  - name: ln_exam
+    taxonomy: [NUM]
+    criticality: 8
+    description: "Linfonodos examinados (inteiro 0-60)."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_ln  # returns (exam, pos, evidence)
+      interface: tuple_triple
+      output_index: 0
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-LNEX-12
+        text: "LINFONODOS EXAMINADOS: 12. LINFONODOS COMPROMETIDOS: 3."
+        expected_value: 12
+      - id: MAP-LNEX-ISOL
+        text: "LINFONODOS ISOLADOS: 8"
+        expected_value: 8
+
+  - name: ln_pos
+    taxonomy: [NUM]
+    criticality: 9
+    description: "Linfonodos comprometidos / positivos / metastáticos."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_ln  # returns (exam, pos, evidence)
+      interface: tuple_triple
+      output_index: 1
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-LNPOS-3
+        text: "LINFONODOS EXAMINADOS: 12. LINFONODOS COMPROMETIDOS: 3."
+        expected_value: 3
+      - id: MAP-LNPOS-MAC
+        text: "MACROMETÁSTASES (>2mm): 2"
+        expected_value: 2
+
+  # -------------------------------------------------------------------------
+  # NOTTINGHAM GRADE + COMPONENTS (4 vars)
+  # -------------------------------------------------------------------------
+
+  - name: grau_nott
+    taxonomy: [CAT-ORD]
+    criticality: 9
+    description: "Grau Nottingham (1-3). Roman→arabic alias suportado."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_grau_nott
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: ['1', '2', '3']
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-GRAU-NOTT-II
+        text: "GRAU HISTOLÓGICO: GRAU II DE NOTTINGHAM"
+        expected_value: '2'
+      - id: MAP-GRAU-MBR-III
+        text: "GRAU III DE BLOOM RICHARDSON"
+        expected_value: '3'
+      - id: MAP-GRAU-NOVO
+        text: "NOVO GRAU HISTOLÓGICO FINAL: GRAU II DE NOTTINGHAM"
+        expected_value: '2'
+      - id: MAP-GRAU-SCORE
+        text: "ESCORES: 3+3+2=8 / GRAU FINAL"
+        expected_value: '3'
+
+  - name: esc_tubular
+    taxonomy: [NUM-C]
+    criticality: 7
+    description: "Componente Nottingham — diferenciação tubular (1-3). DCIS guard."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_nottingham_components  # returns (tub, nuc, mit, evidence)
+      interface: tuple_quadruple
+      output_index: 0
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: ['1', '2', '3']
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-TUB-3
+        text: "DIFERENCIAÇÃO TUBULAR: 3; GRAU NUCLEAR: 2; ÍNDICE MITÓTICO: 1"
+        expected_value: '3'
+      - id: MAP-TUB-DESC
+        text: "GRAU TUBULAR: INTERMEDIÁRIO, ESCORE 2"
+        expected_value: '2'
+
+  - name: esc_nuclear
+    taxonomy: [NUM-C]
+    criticality: 7
+    description: "Componente Nottingham — grau nuclear (1-3). DCIS guard."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_nottingham_components
+      interface: tuple_quadruple
+      output_index: 1
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: ['1', '2', '3']
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-NUC-2
+        text: "DIFERENCIAÇÃO TUBULAR: 3; GRAU NUCLEAR: 2; ÍNDICE MITÓTICO: 1"
+        expected_value: '2'
+      - id: MAP-NUC-PAREN
+        text: "GRAU NUCLEAR: ALTO GRAU (3)"
+        expected_value: '3'
+
+  - name: esc_mitotico
+    taxonomy: [NUM-C]
+    criticality: 7
+    description: "Componente Nottingham — índice mitótico (1-3). DCIS guard."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_nottingham_components
+      interface: tuple_quadruple
+      output_index: 2
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: ['1', '2', '3']
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-MIT-1
+        text: "DIFERENCIAÇÃO TUBULAR: 3; GRAU NUCLEAR: 2; ÍNDICE MITÓTICO: 1"
+        expected_value: '1'
+
+  # -------------------------------------------------------------------------
+  # DERIVED (3 vars)
+  # -------------------------------------------------------------------------
+
+  - name: behavior_class
+    taxonomy: [CAT]
+    criticality: 9
+    description: "Derivada de tipo_hist (invasivo/in_situ/benigno)."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: derive_behavior_class  # accepts tipo_hist value
+      interface: derived_from_tipo_hist
+      pre_normalize: false
+    comparison_column: null
+    silence_policy:
+      output_ontology: [invasivo, in_situ, benigno]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-BEH-INV
+        text: "CARCINOMA DUCTAL INVASIVO, DO TIPO NÃO ESPECIAL"
+        expected_value: invasivo
+      - id: MAP-BEH-IS
+        text: "CARCINOMA DUCTAL IN SITU DE MAMA"
+        expected_value: in_situ
+      - id: MAP-BEH-BEN
+        text: "FIBROADENOMA SEM ATIPIAS"
+        expected_value: benigno
+
+  - name: invasive_malignancy
+    taxonomy: [BIN]
+    criticality: 9
+    description: "Derivada: sim sse tipo_hist ∈ INVASIVE_TYPES."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: derive_invasive_malignancy
+      interface: derived_from_tipo_hist
+      pre_normalize: false
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-INVMAL-SIM
+        text: "CARCINOMA DUCTAL INVASIVO"
+        expected_value: sim
+      - id: MAP-INVMAL-NAO-CDIS
+        text: "CARCINOMA DUCTAL IN SITU"
+        expected_value: nao
+      - id: MAP-INVMAL-NAO-FA
+        text: "FIBROADENOMA"
+        expected_value: nao
+
+  - name: malignancy_any
+    taxonomy: [BIN]
+    criticality: 9
+    description: "Derivada: sim sse tipo_hist ∈ INVASIVE_TYPES ∪ IN_SITU_TYPES."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: derive_malignancy_any
+      interface: derived_from_tipo_hist
+      pre_normalize: false
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-MALANY-INV
+        text: "CARCINOMA DUCTAL INVASIVO"
+        expected_value: sim
+      - id: MAP-MALANY-CDIS
+        text: "CARCINOMA DUCTAL IN SITU"
+        expected_value: sim
+      - id: MAP-MALANY-FA
+        text: "FIBROADENOMA"
+        expected_value: nao
+
+  # -------------------------------------------------------------------------
+  # L1-ONLY / LINKAGE (4 vars)
+  # -------------------------------------------------------------------------
+
+  - name: ref_ihq
+    taxonomy: [BIN]
+    criticality: 8
+    description: "Referência a exame IHQ complementar. Permite linkage AP↔IHQ na megabase."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_ref_ihq
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-IHQ-VIDE
+        text: "VIDE EXAME COMPLEMENTAR Nº 123456IH"
+        expected_value: sim
+      - id: MAP-IHQ-EXAME
+        text: "EXAME DE IMUNOHISTOQUÍMICA Nº 234567IH"
+        expected_value: sim
+      - id: MAP-IHQ-SUG
+        text: "SUGERIMOS COMPLEMENTAÇÃO POR IMUNOHISTOQUÍMICA"
+        expected_value: sim
+
+  - name: extensao_extranodal
+    taxonomy: [BIN]
+    criticality: 6
+    description: "Extensão extranodal / extracapsular / rompimento capsular. Só em peças com linfonodos."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_extensao_extranodal
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-EXT-NEG
+        text: "EXTENSÃO EXTRANODAL: NÃO OBSERVADA"
+        expected_value: nao
+      - id: MAP-EXT-POS
+        text: "EXTENSÃO EXTRANODAL: PRESENTE"
+        expected_value: sim
+      - id: MAP-EXT-ROMP
+        text: "ROMPIMENTO CAPSULAR PRESENTE"
+        expected_value: sim
+
+  - name: efeito_terapeutico
+    taxonomy: [CAT]
+    criticality: 5
+    description: "Resposta à neoadjuvância. ~12% fill — baixa prioridade."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_efeito_terapeutico
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [completa, parcial, sem_info]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-EFT-COMP
+        text: "EFEITO TERAPÊUTICO: COMPLETA, AUSÊNCIA DE NEOPLASIA RESIDUAL"
+        expected_value: completa
+      - id: MAP-EFT-PARC
+        text: "EFEITO TERAPÊUTICO: PARCIAL, COM CARCINOMA RESIDUAL"
+        expected_value: parcial
+      - id: MAP-EFT-SI
+        text: "EFEITO TERAPÊUTICO: AUSÊNCIA DE INFORMAÇÕES CLÍNICAS"
+        expected_value: sem_info
+
+  - name: infiltrado_linfocitico
+    taxonomy: [CAT]
+    criticality: 4
+    description: "TILs (infiltrado linfocítico intratumoral). ~5% fill — baixa prioridade."
+    detector:
+      module: mama_ap_multi_l1_v4
+      function: detect_infiltrado_linfocitico
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [escasso, moderado, intenso, presente, nao_evidenciado]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MAP-TIL-ESC
+        text: "INFILTRADO LINFOCÍTICO INTRATUMORAL: ESCASSO"
+        expected_value: escasso
+      - id: MAP-TIL-MOD
+        text: "INFILTRADO LINFOCÍTICO INTRATUMORAL: MODERADO"
+        expected_value: moderado
+      - id: MAP-TIL-INT
+        text: "INFILTRADO LINFOCÍTICO INTRATUMORAL: INTENSO"
+        expected_value: intenso
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

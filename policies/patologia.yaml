@@ -1,0 +1,574 @@
+registry:
+  id: patologia_v1
+  version: '0.3.0'
+  domain: patologia
+  language: pt-BR
+  created: '2026-04-13'
+  changelog:
+    - version: '0.3.0'
+      date: '2026-05-18'
+      change: added 27 mama_ap entries (cross-domain DDPA extraction for paper-mae). Mirrors mama_ihq pattern. L2 model = DeepSeek Flash per project_engenharia_ias_fixa rule.
+    - version: '0.2.0'
+      date: '2026-04-17'
+      change: her2_score vocabulary_aliases 1→1+, 2→2+, 3→3+ (Gate #2 decision, Dr. Rafael)
+    - version: '0.1.0'
+      date: '2026-04-13'
+      change: initial registry
+
+policies:
+  bethesda:
+    taxonomy: [ORD-E]
+    output_ontology:
+      type: enum
+      values: [I, II, III, IV, V, VI]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, diagnostico]
+    vocabulary_aliases:
+      1: I
+      2: II
+      3: III
+      4: IV
+      5: V
+      6: VI
+    notes: 'Bethesda 2023 TBSRTC — categoria I..VI. 1-VI algarismos arábicos são aliases.'
+
+  bethesda_desc:
+    taxonomy: [LEX-E]
+    output_ontology:
+      type: string
+      values: []
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, diagnostico]
+    notes: 'Descritor literal da categoria Bethesda (ex: indeterminado, atipias, suspeito).'
+
+  subtipo:
+    taxonomy: [LEX-E]
+    output_ontology:
+      type: string
+      values: []
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, diagnostico]
+    notes: 'Subtipo histológico de neoplasia tireoidiana quando especificado (papilífero, folicular, medular, etc).'
+
+  # =========================================================================
+  # MAMA IHQ — Immunohistochemistry breast cancer markers
+  # Added 2026-04-15 for DDPA cross-domain extraction (megabase v2, 15k laudos)
+  # Registry starts MINIMAL (no vocabulary_aliases) — loop discovers aliases.
+  # =========================================================================
+
+  re_status:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [positivo, negativo]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, microscopia]
+    vocabulary_aliases: {}
+    notes: 'Receptor de estrogênio status. Fonte: tabela IHQ ou conclusão narrativa. Componente invasivo tem prioridade sobre in-situ.'
+
+  re_pct:
+    taxonomy: [NUM-C]
+    output_ontology:
+      type: range
+      min: 0
+      max: 100
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, microscopia]
+    vocabulary_aliases: {}
+    notes: 'Percentual de células positivas para RE (0-100). Presente apenas em formato tabular (~3.600 laudos). Range → midpoint.'
+
+  re_allred:
+    taxonomy: [ORD-E]
+    output_ontology:
+      type: range
+      min: 0
+      max: 8
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [microscopia]
+    vocabulary_aliases: {}
+    notes: 'Escore de Allred para RE (0-8). L1-only — não extraído por IA.'
+
+  rp_status:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [positivo, negativo]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, microscopia]
+    vocabulary_aliases: {}
+    notes: 'Receptor de progesterona status. Mesma lógica do RE: tabela > conclusão, invasivo > in-situ.'
+
+  rp_pct:
+    taxonomy: [NUM-C]
+    output_ontology:
+      type: range
+      min: 0
+      max: 100
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, microscopia]
+    vocabulary_aliases: {}
+    notes: 'Percentual de células positivas para RP (0-100).'
+
+  rp_allred:
+    taxonomy: [ORD-E]
+    output_ontology:
+      type: range
+      min: 0
+      max: 8
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [microscopia]
+    vocabulary_aliases: {}
+    notes: 'Escore de Allred para RP (0-8). L1-only.'
+
+  her2_score:
+    taxonomy: [ORD-E]
+    output_ontology:
+      type: enum
+      values: ['0', '0+', '1+', '2+', '3+']
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, microscopia]
+    vocabulary_aliases:
+      '1': '1+'
+      '2': '2+'
+      '3': '3+'
+    notes: >-
+      HER2 IHC score (ASCO/CAP). Aliases 1/2/3 → 1+/2+/3+ foram adicionados
+      em 2026-04-17 por decisão do Dr. Rafael após revisão clínica de 8 casos
+      tabulares com padrão "HER2 / c-erb b-2 (SP3): escore X". O sufixo "+" é
+      convenção canônica; a ausência no laudo é apenas variação tipográfica
+      quando o clone está nomeado (TIER 1 no detector, safe por construção).
+      ORD-E → numeric_guard continua escalando propostas automáticas; estes
+      aliases foram registrados manualmente com autorização clínica.
+
+  her2_status:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [positivo, negativo, equivoco]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, microscopia]
+    vocabulary_aliases: {}
+    notes: 'Interpretação HER2: derivado de her2_score (3+=pos, 2+=equivoco, 0/0+/1+=neg) ou texto explícito. Equivoco = precisa ISH.'
+
+  ki67_pct:
+    taxonomy: [NUM-C]
+    output_ontology:
+      type: range
+      min: 0
+      max: 100
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, microscopia]
+    vocabulary_aliases: {}
+    notes: 'Índice de proliferação Ki-67 (%). Presente em ~4.400/15.250 laudos (formato tabular + narrativo com %). Ausência é limitação do dado.'
+
+  tipo_hist_ihq:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [CDI_SOE, CLI, CDIS, CLIS, micropapilar, mucinoso, papilar]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Tipo histológico mencionado na conclusão IHQ. L1 normaliza para códigos; IA emitirá variantes textuais (off-ontology esperado).'
+
+  subtipo_molecular:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [luminal_a, luminal_b_her2neg, luminal_b_her2pos, her2_enriched, triplo_negativo, luminal]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, microscopia]
+    vocabulary_aliases: {}
+    notes: 'Subtipo molecular derivado (St. Gallen 2013). luminal = HR+ sem Ki-67 (incompleto). Null se HER2 equivoco ou CDIS/CLIS puro.'
+
+  # =========================================================================
+  # MAMA AP — Anatomopathology (surgical / biopsy specimens) — breast
+  # Added 2026-05-18 for DDPA cross-domain extraction (paper-mae, ~11.2k laudos).
+  # L1 detector: mama_ap_multi_l1_v4.py (2838 lines, 247 smoke tests).
+  # Registry starts MINIMAL — vocabulary_aliases discovered by the loop.
+  # L2 model per project rule: DeepSeek Flash (deepseek-chat). NEVER Sonnet.
+  # =========================================================================
+
+  tam_cm:
+    taxonomy: [MEAS-N]
+    output_ontology:
+      type: string
+      values: []
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Tamanho do tumor invasivo. Valor canônico = string preservando unidade (e.g. "2,2 x 1,5 x 1,5 cm", "8,0 mm"). L1 normaliza separador "x" em minúsculas. Comparação cross-source usa _meas_to_mm (maior dimensão em mm, tolerância 0.5 mm).'
+
+  comp_insitu:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Componente in situ associado. Negation-first (sem componente / não observado), positivo override quando em seções distintas (multi-biopsia). Inclui CDIS, CLIS, "carcinoma intraductal", "componente intraducto".'
+
+  procedimento:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [mastectomia_radical, mastectomia, quadrantectomia, excisional, mamotomia, biopsia_agulha]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao, material_especificado]
+    vocabulary_aliases: {}
+    notes: 'Procedimento cirúrgico. Ordem de especificidade no detector: radical > simples/total/subcutânea/adenomastectomia > quadrantectomia > setorectomia/tumorectomia/nodulectomia/biopsia excisional > mamotomia > biópsia agulha/core. Earliest-match-wins para evitar emendas tardias.'
+
+  tipo_hist:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [CDI_SOE, CLI, CDIS, CLIS, misto, mucinoso, tubular, medular, micropapilar, papilar, metaplasico, outro_maligno, fibroadenoma, fibrocistico, outro_benigno]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Tipo histológico. Specific-before-catch-all: metaplásico → misto (lobular+ductal) → CLI → papilar encapsulado → micropapilar → mucinoso → misto pattern → tubular → medular → microinvasivo (→ CDI_SOE) → CDI_SOE → CDIS (apenas se SEM componente invasivo) → CLIS → adenocarcinoma genérico (outro_maligno) → benignos. Microinvasão é classificada CDI_SOE (decisão clínica).'
+
+  margens:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [livres, exiguas, comprometidas]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Margens cirúrgicas. WORST-CASE-WINS: severity comprometidas(3) > exiguas(2) > livres(1). "Margem mais próxima" → exíguas exceto quando precedida por "livres" no mesmo bloco. "Tangenciadas" → exíguas. Margens de linfonodo/mamilo/pele excluídas.'
+
+  pT:
+    taxonomy: [CAT-ORD]
+    output_ontology:
+      type: enum
+      values: [pT0, pTis, pT1mi, pT1a, pT1b, pT1b(m), pT1c, pT2, pT3, pT4, pT4a, pT4b, pT4c, pT4d, ypT0, ypT1mi, ypT1a, ypT1b, ypT1c, ypT2, ypT3, ypT4]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'pT/ypT staging (AJCC). Detector emite forma canônica em minúsculas ("pt2", "ypt1mi", "pt1b(m)"). Sufixo (m)/(mi)/letras a-d preservados. Loop pode propor novos suffixos via numeric_guard.'
+
+  pN:
+    taxonomy: [CAT-ORD]
+    output_ontology:
+      type: enum
+      values: [pN0, pN0(sn), pN0(ls), pN0(i+), pN1, pN1a, pN1b, pN1c, pN1mi, pN2, pN2a, pN2b, pN3, pN3a, pN3b, pN3c, pNx, ypN0, ypN0(sn), ypN1, ypN1a, ypN2, ypN3, ypNx]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'pN/ypN staging. Detector canonicaliza letra "O" → dígito "0", insere "p" ausente em forma bare N0..N3/Nx. Sufixos (sn) sentinel/ (ls) linfonodo sentinel preservados. Comparação cross-source strip-suffix.'
+
+  ln_exam:
+    taxonomy: [NUM]
+    output_ontology:
+      type: range
+      min: 0
+      max: 60
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Linfonodos examinados/isolados (inteiro). Parser também aceita palavras portuguesas (zero..trinta). Só presente em peças cirúrgicas com esvaziamento axilar / linfonodo sentinela.'
+
+  ln_pos:
+    taxonomy: [NUM]
+    output_ontology:
+      type: range
+      min: 0
+      max: 60
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Linfonodos comprometidos/positivos/metastáticos (inteiro). Fallback para padrão "MACROMETÁSTASES (>Xmm): N" quando ln_pos não explícito.'
+
+  grau_nott:
+    taxonomy: [CAT-ORD]
+    output_ontology:
+      type: enum
+      values: ['1', '2', '3']
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases:
+      I: '1'
+      II: '2'
+      III: '3'
+      i: '1'
+      ii: '2'
+      iii: '3'
+    notes: 'Grau histológico de Nottingham/MBR/Bloom-Richardson (1-3). Roman → arabic aliases preserved. Derivação via score composition (A+B+C=D) suportada: 3-5→1, 6-7→2, 8-9→3. "Novo grau histológico final" (amended) tem prioridade.'
+
+  esc_tubular:
+    taxonomy: [NUM-C]
+    output_ontology:
+      type: enum
+      values: ['1', '2', '3']
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases:
+      baixo: '1'
+      leve: '1'
+      intermediario: '2'
+      moderado: '2'
+      elevado: '3'
+      alto: '3'
+    notes: 'Componente Nottingham — diferenciação tubular (1-3). DCIS guard: nullified quando behavior_class == in_situ (Bug #28).'
+
+  esc_nuclear:
+    taxonomy: [NUM-C]
+    output_ontology:
+      type: enum
+      values: ['1', '2', '3']
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases:
+      baixo: '1'
+      leve: '1'
+      intermediario: '2'
+      moderado: '2'
+      elevado: '3'
+      alto: '3'
+    notes: 'Componente Nottingham — grau nuclear/pleomorfismo (1-3). DCIS guard ativo.'
+
+  esc_mitotico:
+    taxonomy: [NUM-C]
+    output_ontology:
+      type: enum
+      values: ['1', '2', '3']
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases:
+      baixo: '1'
+      leve: '1'
+      intermediario: '2'
+      moderado: '2'
+      elevado: '3'
+      alto: '3'
+    notes: 'Componente Nottingham — índice mitótico (1-3). Sinônimos: índice/grau mitótico, mitose(s). DCIS guard ativo.'
+
+  behavior_class:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [invasivo, in_situ, benigno]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Derivada de tipo_hist. INVASIVE = {CDI_SOE, CLI, misto, mucinoso, tubular, medular, micropapilar, papilar, metaplasico, outro_maligno}. IN_SITU = {CDIS, CLIS}. BENIGN = {fibroadenoma, fibrocistico, outro_benigno}.'
+
+  invasive_malignancy:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Derivada: sim sse tipo_hist ∈ INVASIVE_TYPES. Critica para estratificação cirúrgica.'
+
+  malignancy_any:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Derivada: sim sse tipo_hist ∈ INVASIVE_TYPES ∪ IN_SITU_TYPES. Critério inclusão paper para qualquer lesão maligna (invasiva ou in situ).'
+
+  inv_linfov:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Invasão linfovascular / angiolinfática / vascular linfática. Negation-first. Aceita padrão combinado "invasão angiolinfática e perineural: não evidenciada". Êmbolos neoplásicos em linfáticos/vasculares = positivo.'
+
+  inv_perin:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Invasão perineural / neural / filetes nervosos. Negation-first. Compartilha NEG_TAIL com inv_linfov para padrão combinado.'
+
+  ref_ihq:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Referência a exame de IHQ complementar ("VIDE EXAME COMPLEMENTAR NNNNNNIH"). Permite linkage cross-base entre AP cirúrgico e laudo IHQ. L1 retorna "sim" + número IH; LLM provavelmente retornará texto descritivo (normalize na comparação).'
+
+  necrose_tumoral:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Necrose tumoral. Negation-first. Estrutural "necrose tumoral:" prioritário; "necrose:" cru aceito quando estruturado. Excluídos: "com necrose" narrativo, "necrose adiposa", "comedonecrose".'
+
+  multifocalidade:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Multifocalidade / multicentricidade. Negation-first. Unifocal = nao. Detector também aceita "focalidade: dois focos / múltiplos focos" como sim.'
+
+  microcalcificacoes:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Microcalcificações. Negation-first. Detecta apenas padrões estruturais (microcalcificacoes: presente/ausente) para evitar falsos positivos em descrição narrativa de CDIS.'
+
+  pele:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Comprometimento de pele. Priority: positivo (comprometida/invade/infiltrada/acometida) > negativo (livre/sem neoplasia) > não-avaliável (None) — handles bilaterais. Inclui derme profunda comprometida pela neoplasia.'
+
+  mamilo:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Comprometimento de mamilo/aréola. Priority idêntica a pele. Aceita "pele e mamilo: livre" como negativo para ambos.'
+
+  efeito_terapeutico:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [completa, parcial, sem_info]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Resposta à neoadjuvância. completa = pCR / desaparecimento total / ausência de neoplasia. parcial = doença residual. sem_info = "ausência de informações clínicas" (explicitamente não-neoadjuvante). Campo só aparece em ~12% dos laudos (baixa prioridade).'
+
+  infiltrado_linfocitico:
+    taxonomy: [CAT]
+    output_ontology:
+      type: enum
+      values: [escasso, moderado, intenso, presente, nao_evidenciado]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases:
+      discreto: escasso
+      leve: escasso
+      raro: escasso
+      exuberante: intenso
+      acentuado: intenso
+      proeminente: intenso
+    notes: 'TILs (infiltrado linfocítico intratumoral/peritumoral/estromal). Categoria escassa antes de negação para evitar mis-rota. Sinônimos: componente linfocítico, reação linfocitária, TILs. ~5% fill (baixa prioridade).'
+
+  extensao_extranodal:
+    taxonomy: [BIN]
+    output_ontology:
+      type: enum
+      values: [sim, nao]
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses: []
+    section_scope: [conclusao]
+    vocabulary_aliases: {}
+    notes: 'Extensão extranodal / extracapsular / rompimento capsular. Negation-first. Só relevante em peças cirúrgicas com linfonodos (ca_peca stratum).'

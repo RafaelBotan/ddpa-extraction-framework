@@ -1,0 +1,99 @@
+# ============================================================================
+# Study Contract — E2 EDA FULL (platform test D)
+# ============================================================================
+# Platform test D — E2 corpus (128k EDA) com la_grau + hh.
+# Detectores ainda NAO retrofitted pra runtime v1.1 (sem scope_meta/evidence_class),
+# mas usando value_field=letter pra la_grau e value direto pra hh funciona.
+# ============================================================================
+
+contract:
+  id: e2_esofagite_full
+  version: 1.0.0
+  study: E2
+  policy_registry: ../policies/endoscopia.yaml
+  description: >
+    Platform test D: la_grau + hernia_hiatal_estrita no corpus E2 completo
+    (128.167 laudos EDA). Exercita detectores legacy-interface (sem scope_meta)
+    pra validar backward-compat do adapter universal.
+  created: 2026-04-15
+  hypotheses:
+    - id: H_LEGACY
+      text: "Adapter universal lida com detectores legacy (sem scope_meta/evidence_class)."
+    - id: H_E2_SCALE
+      text: "128k laudos x 2 vars em <5min."
+
+corpus:
+  path: <path>
+  id_column: id_registro
+  text_column: texto_laudo_completo
+  strata:
+    - clinica
+  extra_columns:
+    - clinica
+    - la_grau
+    - hernia_hiatal_estrita
+
+extractor:
+  section_preset: ENDOSCOPY_SECTIONS
+  language: pt-BR
+
+variables:
+
+  - name: la_grau
+    taxonomy: [ORD-E, LEX-E, MULTI]
+    criticality: 7
+    description: "Classificacao Los Angeles de esofagite erosiva (A-D, sem_esofagite, indeterminada_ee)."
+    detector:
+      module: la_grau_l1_v4
+      function: detect_la_grau
+      interface: dataclass
+      value_field: letter
+      extra_fields: [span_start, span_end]
+    comparison_column: la_grau
+    silence_policy:
+      output_ontology: [A, B, C, D, sem_esofagite, indeterminada_ee]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, esofago, achados]
+    canaries:
+      - id: LA-01
+        text: "CONCLUSAO: esofagite erosiva grau A de Los Angeles."
+        expected_value: A
+      - id: LA-02
+        text: "CONCLUSAO: esofagite grau C."
+        expected_value: C
+      - id: LA-03
+        text: "CONCLUSAO: mucosa esofagica normal, sem esofagite."
+        expected_value: sem_esofagite
+
+  - name: hernia_hiatal_estrita
+    taxonomy: [LEX-S, INF, NUM-C]
+    criticality: 7
+    description: "Presenca de hernia hiatal estrita (sim/nao/nao_mencionada)."
+    detector:
+      module: hh_l1_v4
+      function: detect_hh
+      interface: dataclass
+      value_field: value
+      extra_fields: [certainty, span_start, span_end]
+    comparison_column: hernia_hiatal_estrita
+    silence_policy:
+      output_ontology: [sim, nao, nao_mencionada]
+      default_if_silent: nao_mencionada
+      allows_implicit_negative: false
+      section_scope: [esofago, achados, conclusao]
+    canaries:
+      - id: HH-01
+        text: "ESOFAGO: hernia hiatal por deslizamento, aprox 2cm."
+        expected_value: sim
+      - id: HH-02
+        text: "CONCLUSAO: sem evidencia de hernia hiatal."
+        expected_value: nao
+      - id: HH-03
+        text: "ESOFAGO: JEC ao nivel do pincamento diafragmatico."
+        expected_value: nao
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

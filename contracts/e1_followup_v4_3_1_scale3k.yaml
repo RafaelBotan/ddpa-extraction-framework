@@ -1,0 +1,83 @@
+# ============================================================================
+# Study Contract — followup_interval_any v4.3.1 @ E1 scale3k (sanity)
+# ============================================================================
+# Platform test A — roda o classifier v4.3.1 frozen via runtime no corpus
+# 3k pra validar pipeline end-to-end antes de full 67k.
+# ============================================================================
+
+contract:
+  id: e1_followup_v4_3_1_scale3k
+  version: 1.0.0
+  study: E1
+  policy_registry: ../policies/endoscopia.yaml
+  description: >
+    Platform test: classifier followup_interval_any v4.3.1 (frozen 2026-04-15)
+    rodando via runtime no corpus scale3k (3k laudos) para validar pipeline
+    antes do full E1. Sem comparacao com IA (legacy extraiu com ontologia
+    diferente).
+  created: 2026-04-15
+  hypotheses:
+    - id: H_SURFACE_AGREEMENT
+      text: "Plataforma resolve >=90% dos 3k sem gate humano via auto-adjudicator (surface_agreement_rate, nao acuracia)."
+
+corpus:
+  path: <path>
+  id_column: id_registro
+  text_column: texto_laudo_completo
+  strata:
+    - clinica
+  extra_columns:
+    - clinica
+
+extractor:
+  section_preset: ENDOSCOPY_SECTIONS
+  language: pt-BR
+
+variables:
+  - name: followup_present_v4_3_1
+    taxonomy: [LEX-S, TEMP, INF]
+    criticality: 7
+    description: "followup_present em {sim, sim_sem_prazo, ambiguo, nao_recomendado, nao_mencionado} via classifier v4.3.1 frozen."
+    detector:
+      module: followup_interval_any_v4_3_1
+      function: detect_followup_interval_any
+      interface: dataclass
+      value_field: value
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty]
+    comparison_column: null
+    silence_policy:
+      output_ontology:
+        - sim
+        - sim_sem_prazo
+        - ambiguo
+        - nao_recomendado
+        - nao_mencionado
+      default_if_silent: nao_mencionado
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: FUI-01
+        text: "[CONCLUSAO] Sugere-se nova colonoscopia em 3 anos."
+        expected_value: sim
+      - id: FUI-02
+        text: "[CONCLUSAO] Se necessario, repetir colonoscopia com melhor preparo intestinal."
+        expected_value: sim_sem_prazo
+        note: "preparo-tecnica guard — sim firme, nao ambiguo"
+      - id: FUI-03
+        text: "[CONCLUSAO] Habitualmente repete-se em 5 anos."
+        expected_value: ambiguo
+        note: "hedge + numero"
+      - id: FUI-04
+        text: "[CONCLUSAO] Exame normal."
+        expected_value: nao_mencionado
+      - id: FUI-05
+        text: "[CONCLUSAO] Sugere-se, a criterio clinico, novo procedimento em 4-8\nsemanas."
+        expected_value: sim
+        note: "cross-line fix bug 102761"
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

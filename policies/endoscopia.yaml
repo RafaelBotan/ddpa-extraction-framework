@@ -1,0 +1,268 @@
+registry:
+  id: endoscopia_v1
+  version: 1.0.0
+  domain: endoscopy
+  language: pt-BR
+  created: 2026-04-13
+policies:
+  bbps:
+    taxonomy:
+    - NUM-C
+    - ORD-E
+    output_ontology:
+      type: integer
+      range:
+      - 0
+      - 9
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses:
+    - no_match
+    - ambiguous
+    section_scope:
+    - preparo
+    - descricao
+    section_excluded:
+    - indicacao
+    - sedacao
+    site_template_overrides: []
+    notes: 'Silêncio numérico legítimo em colonoscopias sem score Boston declarado.
+      NÃO inferir de "adequado"/"inadequado" sem número — isso é alucinação IA.
+
+      '
+  polipo_presente:
+    taxonomy:
+    - LEX-S
+    - NEG
+    output_ontology:
+      type: enum
+      values:
+      - sim
+      - nao
+    allows_implicit_negative: true
+    default_if_silent: nao
+    abstention_statuses: []
+    section_scope:
+    - conclusao
+    - descricao
+    section_excluded:
+    - indicacao
+    - sedacao
+    - preparo
+    site_template_overrides: []
+    notes: '"ausência de formações polipóides" = nao explícito. Historicidade em INDICAÇÃO
+      (controle pós-polipectomia) não conta como sim.
+
+      '
+    vocabulary_aliases:
+      nao_mencionado: nao
+  polipo_tamanho_max_mm:
+    taxonomy:
+    - MEAS-N
+    - NUM-C
+    output_ontology:
+      type: float
+      range:
+      - 0.1
+      - 100.0
+      unit: mm
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses:
+    - polipo_no_size
+    - qualitative_diminuto
+    - qualitative_puntiforme
+    - no_polipo
+    section_scope:
+    - descricao
+    - conclusao
+    section_excluded:
+    - indicacao
+    - sedacao
+    - preparo
+    - biopsia
+    site_template_overrides: []
+    notes: '"diminuto"/"puntiforme"/"subcentimétrico" -> abstain qualitative_*. Intervalo
+      "X a Y" -> usa Y (upper bound). Números precedidos de Boston/Mayo/Paris/NICE/BBPS
+      -> descartar (score).
+
+      '
+  # Split 2026-04-14 (GPT double-check): a antiga `intervalo_recomendado`
+  # virou RAW (`followup_interval_any`) + TARGET (`intervalo_vigilancia_ccr`).
+  # Policy é a mesma ontologia; target adiciona abstention_statuses para os
+  # terminais `excluded_*` do wrapper detector.
+  followup_interval_any:
+    taxonomy:
+    - TEMP
+    - INF
+    output_ontology:
+      type: enum
+      values:
+      - 7_dias
+      - 15_dias
+      - 30_dias
+      - 3_meses
+      - 6_meses
+      - 1_ano
+      - 2_anos
+      - 3_anos
+      - 5_anos
+      - 10_anos
+      - precoce
+      - posterior
+      - imediato
+      - sem_intervalo
+      - nao_recomendado
+    allows_implicit_negative: true
+    default_if_silent: nao_recomendado
+    abstention_statuses: []
+    section_scope:
+    - conclusao
+    section_excluded:
+    - indicacao
+    - descricao
+    - preparo
+    site_template_overrides: []
+    vocabulary_aliases:
+      nao_aplicavel: nao_recomendado
+      nao_mencionado: nao_recomendado
+      nenhum: nao_recomendado
+    notes: 'RAW: qualquer intervalo de follow-up na conclusão. Inclui vigilância,
+      terapêutico, remake, diagnóstico. Target clínico = intervalo_vigilancia_ccr.
+
+      '
+  intervalo_vigilancia_ccr:
+    taxonomy:
+    - TEMP
+    - INF
+    output_ontology:
+      type: enum
+      values:
+      - 7_dias
+      - 15_dias
+      - 30_dias
+      - 3_meses
+      - 6_meses
+      - 1_ano
+      - 2_anos
+      - 3_anos
+      - 5_anos
+      - 10_anos
+      - precoce
+      - posterior
+      - imediato
+      - sem_intervalo
+      - nao_recomendado
+    allows_implicit_negative: true
+    default_if_silent: nao_recomendado
+    abstention_statuses:
+    - excluded_therapeutic_session
+    - excluded_bad_prep_remake
+    - excluded_diagnostic_completion
+    section_scope:
+    - conclusao
+    section_excluded:
+    - indicacao
+    - descricao
+    - preparo
+    site_template_overrides: []
+    vocabulary_aliases:
+      nao_aplicavel: nao_recomendado
+      nao_mencionado: nao_recomendado
+      nenhum: nao_recomendado
+    notes: 'TARGET derivado de followup_interval_any. Wrapper detector aplica
+      exclusão negativa de terapêutico/remake/diagnóstico na janela da evidência.
+      Status excluded_* viram abstained_unsupported (não-vigilância, valor não
+      aplicável a este target).
+
+      '
+  # v4.3.1 semantic state (2026-04-15, frozen design_phase/followup_interval_any).
+  # Separado da policy `followup_interval_any` legacy (temporal normalizado)
+  # porque o contrato difere: aqui o valor e o estado semantico (5 labels),
+  # nao a categoria temporal. Literal vai em meta.literal.
+  followup_present_v4_3_1:
+    taxonomy:
+    - LEX-S
+    - TEMP
+    - INF
+    output_ontology:
+      type: enum
+      values:
+      - sim
+      - sim_sem_prazo
+      - ambiguo
+      - nao_recomendado
+      - nao_mencionado
+    allows_implicit_negative: false
+    default_if_silent: nao_mencionado
+    abstention_statuses: []
+    section_scope:
+    - conclusao
+    section_excluded:
+    - indicacao
+    - descricao
+    - preparo
+    site_template_overrides: []
+    notes: 'v4.3.1 frozen classifier. 5-state semantic ontology. literal em meta.literal.'
+  la_grau:
+    taxonomy:
+    - ORD-E
+    - LEX-E
+    - MULTI
+    output_ontology:
+      type: enum
+      values:
+      - A
+      - B
+      - C
+      - D
+      - sem_esofagite
+      - indeterminada_ee
+    allows_implicit_negative: false
+    default_if_silent: null
+    abstention_statuses:
+    - historical
+    - ambiguous
+    - anti_pattern_collision
+    - no_match
+    section_scope:
+    - conclusao
+    - esofago
+    - achados
+    section_excluded:
+    - indicacao
+    site_template_overrides: []
+    logical_dependencies:
+    - se esofagite_erosiva=nao -> la_grau=sem_esofagite
+    - se esofagite_erosiva=indeterminada -> la_grau=indeterminada_ee
+    notes: 'MULTI: pode aparecer em várias seções. Hierarquia CONCLUSÃO > ESOFAGO
+      > ACHADOS. Historicidade (controle Barrett prévio, pós-RFA) -> abstain.
+
+      '
+  hernia_hiatal_estrita:
+    taxonomy:
+    - LEX-S
+    - INF
+    - NUM-C
+    output_ontology:
+      type: enum
+      values:
+      - sim
+      - nao
+      - nao_mencionada
+    allows_implicit_negative: false
+    default_if_silent: nao_mencionada
+    abstention_statuses: []
+    section_scope:
+    - esofago
+    - achados
+    - conclusao
+    section_excluded:
+    - indicacao
+    - sedacao
+    site_template_overrides: []
+    notes: 'Lemma vence medida: "hérnia hiatal leve sem fenômenos refluxivos" -> sim
+      (lemma explícito), apesar de "sem" ambíguo. "JEC ao nível do pinçamento" sem
+      lemma -> nao (negação geométrica).
+
+      '

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>revisor — auditoria DDPA</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --surface: #161b22;
+    --surface2: #21262d;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --blue: #58a6ff;
+    --green: #7ee787;
+    --red: #ff7b72;
+    --yellow: #ffd43b;
+    --gray: #8b949e;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; height: 100%; background: var(--bg); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 14px; }
+  body { display: flex; flex-direction: column; height: 100vh; }
+
+  /* Top bar */
+  .topbar { display: flex; align-items: center; gap: 16px; padding: 10px 18px;
+    background: var(--surface); border-bottom: 1px solid var(--border); }
+  .topbar .title { font-weight: 700; color: var(--blue); letter-spacing: 0.5px; }
+  .topbar .spacer { flex: 1; }
+  .topbar .pos { font-variant-numeric: tabular-nums; }
+  .topbar .pos .cur { color: var(--blue); font-weight: 700; }
+  .topbar .pos .tot { color: var(--muted); }
+  .topbar .timer { font-variant-numeric: tabular-nums; color: var(--yellow); font-weight: 600; }
+  .topbar .reviewer { color: var(--muted); font-size: 12px; }
+  .progress { height: 3px; background: var(--surface2); }
+  .progress > div { height: 100%; background: var(--green); transition: width 0.25s ease; }
+
+  /* Layout */
+  .main { display: flex; flex: 1; overflow: hidden; }
+  .panel-left { flex: 0 0 58%; padding: 18px 22px; overflow-y: auto;
+    border-right: 1px solid var(--border); background: var(--surface); }
+  .panel-right { flex: 1; padding: 18px 22px; overflow-y: auto; background: var(--bg); }
+
+  /* Left panel */
+  .meta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .chip { font-size: 11px; padding: 3px 9px; border-radius: 10px; background: var(--surface2);
+    color: var(--text); border: 1px solid var(--border); }
+  .chip.var { background: rgba(88,166,255,0.12); border-color: rgba(88,166,255,0.35); color: var(--blue); font-weight: 700; }
+  .chip.sec { color: var(--yellow); border-color: rgba(255,212,59,0.3); }
+  .chip.res { color: var(--green); border-color: rgba(126,231,135,0.3); }
+
+  .section-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--blue); font-weight: 700; margin: 20px 0 8px; padding-bottom: 4px;
+    border-bottom: 1px solid var(--border); }
+  .section-title:first-child { margin-top: 0; }
+
+  .evidence { font-size: 15px; line-height: 1.75; white-space: pre-wrap;
+    background: var(--surface2); padding: 14px 16px; border-radius: 8px;
+    border-left: 3px solid var(--blue); }
+
+  .ia-box { margin-top: 6px; padding: 10px 14px; background: rgba(88,166,255,0.06);
+    border: 1px solid rgba(88,166,255,0.2); border-radius: 8px; }
+  .ia-box .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+  .ia-box .val { font-size: 22px; font-weight: 700; color: var(--blue); margin-top: 4px; word-wrap: break-word; }
+
+  .kv { display: grid; grid-template-columns: max-content 1fr; gap: 4px 14px; font-size: 13px; }
+  .kv .k { color: var(--muted); }
+  .kv .v { color: var(--text); font-variant-numeric: tabular-nums; word-break: break-word; }
+
+  /* Right panel */
+  .prompt { font-size: 13px; color: var(--muted); margin-bottom: 14px; line-height: 1.55; }
+  .prompt strong { color: var(--text); }
+
+  .buttons { display: flex; flex-direction: column; gap: 10px; }
+  .btn { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text);
+    font-size: 15px; font-weight: 600; cursor: pointer; text-align: left;
+    transition: all 0.12s ease; }
+  .btn:hover { background: var(--surface2); border-color: var(--muted); }
+  .btn .key { display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 6px; background: var(--surface2);
+    font-size: 12px; font-weight: 700; border: 1px solid var(--border); color: var(--muted); }
+  .btn.correct { border-color: rgba(126,231,135,0.4); color: var(--green); background: rgba(126,231,135,0.06); }
+  .btn.correct:hover { background: rgba(126,231,135,0.18); }
+  .btn.incorrect { border-color: rgba(255,123,114,0.4); color: var(--red); background: rgba(255,123,114,0.06); }
+  .btn.incorrect:hover { background: rgba(255,123,114,0.18); }
+  .btn.ambiguous { border-color: rgba(139,148,158,0.4); color: var(--gray); background: rgba(139,148,158,0.06); }
+  .btn.ambiguous:hover { background: rgba(139,148,158,0.2); }
+  .btn.selected { box-shadow: 0 0 0 2px currentColor inset; }
+
+  .note { margin-top: 16px; }
+  .note label { font-size: 12px; color: var(--muted); display: block; margin-bottom: 4px; }
+  .note textarea { width: 100%; min-height: 56px; background: var(--surface); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+    font-family: inherit; font-size: 13px; resize: vertical; }
+
+  .confidence { margin-top: 14px; display: flex; gap: 8px; align-items: center; }
+  .confidence label { font-size: 12px; color: var(--muted); }
+  .conf-btn { padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--muted); cursor: pointer; font-size: 12px; }
+  .conf-btn.active { background: var(--surface2); color: var(--text); border-color: var(--blue); }
+
+  /* Footer nav */
+  .navbar { display: flex; gap: 10px; padding: 12px 18px; background: var(--surface);
+    border-top: 1px solid var(--border); align-items: center; }
+  .navbar button { padding: 8px 14px; border-radius: 6px; border: 1px solid var(--border);
+    background: var(--surface2); color: var(--text); cursor: pointer; font-size: 13px; }
+  .navbar button:hover { background: var(--border); }
+  .navbar button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .navbar .hint { color: var(--muted); font-size: 12px; margin-left: auto; }
+
+  .toast { position: fixed; bottom: 70px; left: 50%; transform: translateX(-50%);
+    background: var(--green); color: #000; padding: 8px 16px; border-radius: 6px;
+    font-weight: 600; opacity: 0; transition: opacity 0.25s; pointer-events: none; z-index: 99; }
+  .toast.show { opacity: 0.95; }
+
+  .status-ok { color: var(--green); font-weight: 700; }
+  .status-done-overlay { text-align: center; padding: 40px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="title">revisor</span>
+  <span class="chip" id="chip-status">carregando...</span>
+  <span class="spacer"></span>
+  <span class="timer" id="timer">00:00</span>
+  <span class="pos"><span class="cur" id="pos-cur">-</span><span class="tot">/<span id="pos-tot">-</span></span></span>
+  <span class="reviewer" id="reviewer">-</span>
+</div>
+<div class="progress"><div id="progress-bar" style="width:0"></div></div>
+
+<div class="main">
+  <div class="panel-left" id="panel-left">
+    <div class="section-title">Carregando...</div>
+  </div>
+  <div class="panel-right">
+    <div class="prompt">
+      A <strong>resposta do sistema</strong> esta correta dado o trecho do laudo?
+    </div>
+    <div class="buttons">
+      <button class="btn correct" data-label="correct">
+        <span class="key">1</span><span>Correto — IA acertou</span>
+      </button>
+      <button class="btn incorrect" data-label="incorrect">
+        <span class="key">2</span><span>Incorreto — IA errou</span>
+      </button>
+      <button class="btn ambiguous" data-label="ambiguous">
+        <span class="key">3</span><span>Ambiguo — nao da pra saber</span>
+      </button>
+    </div>
+
+    <div class="confidence">
+      <label>Confianca:</label>
+      <button class="conf-btn" data-conf="low">baixa</button>
+      <button class="conf-btn" data-conf="medium">media</button>
+      <button class="conf-btn active" data-conf="high">alta</button>
+    </div>
+
+    <div class="note">
+      <label for="note">Nota (opcional, Enter salva)</label>
+      <textarea id="note" placeholder="Justificativa, observacao, padrao..." spellcheck="false"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="navbar">
+  <button id="btn-prev" title="B ou setas">&larr; Anterior</button>
+  <button id="btn-next" title="Espaco ou setas">Proximo &rarr;</button>
+  <button id="btn-clear" title="Backspace">Limpar anotacao</button>
+  <span class="hint">
+    <strong>1</strong>=correto &nbsp; <strong>2</strong>=incorreto &nbsp; <strong>3</strong>=ambiguo &nbsp;
+    <strong>B</strong>=voltar &nbsp; <strong>espaco</strong>=proximo &nbsp; <strong>Ctrl+Enter</strong>=salvar nota
+  </span>
+</div>
+
+<div class="toast" id="toast">salvo</div>
+
+<script>
+const state = {
+  index: 0,
+  total: 0,
+  done: 0,
+  record: null,
+  legend: {},
+  confidence: "high",
+  caseEnterTs: null,
+};
+
+function fmtTimer(s) {
+  const m = Math.floor(s/60), r = s%60;
+  return String(m).padStart(2,'0') + ':' + String(r).padStart(2,'0');
+}
+
+let timerSec = 0;
+setInterval(() => {
+  if (document.visibilityState === 'visible') {
+    timerSec++;
+    document.getElementById('timer').textContent = fmtTimer(timerSec);
+  }
+}, 1000);
+
+function showToast(msg, color) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = color || 'var(--green)';
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 900);
+}
+
+async function api(path, opts) {
+  const r = await fetch(path, opts);
+  if (!r.ok) {
+    const err = await r.json().catch(() => ({}));
+    throw new Error(err.error || ('HTTP ' + r.status));
+  }
+  return r.json();
+}
+
+function renderLeft(rec) {
+  const el = document.getElementById('panel-left');
+  const leg = state.legend || {};
+  const clinica = rec.strata && rec.strata.clinica ? rec.strata.clinica : null;
+  const answer = (rec.normalized != null && rec.normalized !== '')
+    ? rec.normalized
+    : (rec.value != null ? rec.value : '(sem resposta)');
+
+  const parts = [];
+
+  parts.push(`<div class="meta">
+    <span class="chip var">${esc(rec.variable)}</span>
+    ${clinica ? `<span class="chip">clinica: ${esc(String(clinica))}</span>` : ''}
+    ${rec.human_label ? `<span class="chip res">ja anotado: ${esc(rec.human_label)}</span>` : ''}
+  </div>`);
+
+  parts.push(`<div class="section-title">Trecho do laudo</div>`);
+  parts.push(`<div class="evidence">${esc(rec.evidence || '(sem evidencia)')}</div>`);
+  if (state.fullText) {
+    parts.push(`<div style="margin-top:8px">
+      <button type="button" id="btn-full-text" style="background:transparent; color:var(--blue); border:1px solid var(--blue); padding:4px 10px; border-radius:4px; cursor:pointer; font-size:12px">
+        Ver laudo completo (${state.fullText.length} chars)
+      </button>
+      <div id="full-text-box" class="evidence" style="display:none; margin-top:8px; max-height:400px; overflow:auto; font-size:12px; white-space:pre-wrap">${esc(state.fullText)}</div>
+    </div>`);
+  } else {
+    parts.push(`<div style="margin-top:6px; color:var(--muted); font-size:12px">(laudo completo nao disponivel — rode com --text-csv)</div>`);
+  }
+
+  parts.push(`<div class="section-title">Pergunta</div>`);
+  parts.push(`<div style="font-size:16px; line-height:1.55; color:var(--text)">
+    ${esc(leg.question || leg.judging_question || 'O resultado esta correto dada a evidencia?')}
+  </div>`);
+  if (leg.options) {
+    parts.push(`<div style="font-size:13px; color:var(--muted); margin-top:8px">
+      Opcoes: ${esc(leg.options)}
+    </div>`);
+  }
+
+  parts.push(`<div class="section-title">Resposta do sistema</div>`);
+  parts.push(`<div class="ia-box">
+    <div class="val">${esc(String(answer))}</div>
+  </div>`);
+
+  el.innerHTML = parts.join('');
+
+  const btnFull = document.getElementById('btn-full-text');
+  if (btnFull) {
+    btnFull.addEventListener('click', () => {
+      const box = document.getElementById('full-text-box');
+      const visible = box.style.display !== 'none';
+      box.style.display = visible ? 'none' : 'block';
+      btnFull.textContent = visible
+        ? `Ver laudo completo (${state.fullText.length} chars)`
+        : 'Ocultar laudo completo';
+    });
+  }
+}
+
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function renderRight(rec) {
+  // selected button
+  document.querySelectorAll('.btn[data-label]').forEach(b => {
+    b.classList.toggle('selected', b.dataset.label === rec.human_label);
+  });
+  // note
+  document.getElementById('note').value = rec.human_note || '';
+  // confidence: default high, but if record has one, use it
+  const conf = rec.confidence || 'high';
+  state.confidence = conf;
+  document.querySelectorAll('.conf-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.conf === conf);
+  });
+}
+
+function renderHeader() {
+  document.getElementById('pos-cur').textContent = String(state.index + 1);
+  document.getElementById('pos-tot').textContent = String(state.total);
+  const pct = state.total ? (state.done / state.total * 100) : 0;
+  document.getElementById('progress-bar').style.width = pct.toFixed(1) + '%';
+  document.getElementById('chip-status').textContent =
+    `${state.done}/${state.total} anotados`;
+  document.getElementById('btn-prev').disabled = state.index <= 0;
+  document.getElementById('btn-next').disabled = state.index >= state.total - 1;
+}
+
+async function loadRecord(idx) {
+  if (idx < 0 || idx >= state.total) return;
+  const data = await api('/api/record/' + idx);
+  state.index = idx;
+  state.record = data.record;
+  state.legend = data.legend || {};
+  state.fullText = data.full_text || null;
+  state.done = data.done;
+  state.total = data.total;
+  state.caseEnterTs = Date.now() / 1000;
+  renderLeft(data.record);
+  renderRight(data.record);
+  renderHeader();
+}
+
+async function annotate(label) {
+  if (!state.record) return;
+  const note = document.getElementById('note').value.trim();
+  const elapsed = state.caseEnterTs ? (Date.now()/1000 - state.caseEnterTs) : 0;
+  let data;
+  try {
+    data = await api('/api/annotate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        index: state.index,
+        human_label: label,
+        human_note: note || null,
+        confidence: state.confidence,
+        time_spent_s: elapsed,
+      }),
+    });
+  } catch (e) {
+    console.error('annotate failed', e);
+    showToast('ERRO: ' + e.message, 'var(--red)');
+    return;
+  }
+  state.done = data.done;
+  state.record = data.record;
+  renderHeader();
+  showToast(`salvo: ${label}`);
+  // auto-advance
+  if (state.index < state.total - 1) {
+    setTimeout(() => loadRecord(state.index + 1), 180);
+  } else {
+    showToast('FIM — todos os casos deste lote', 'var(--blue)');
+    renderRight(data.record);
+  }
+}
+
+async function clearAnnotation() {
+  if (!state.record) return;
+  let data;
+  try {
+    data = await api('/api/clear', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({index: state.index}),
+    });
+  } catch (e) {
+    console.error('clear failed', e);
+    showToast('ERRO: ' + e.message, 'var(--red)');
+    return;
+  }
+  state.done = data.done;
+  state.record = data.record;
+  renderLeft(data.record);
+  renderRight(data.record);
+  renderHeader();
+  showToast('anotacao removida', 'var(--yellow)');
+}
+
+// --- event listeners ---
+document.querySelectorAll('.btn[data-label]').forEach(b => {
+  b.addEventListener('click', () => annotate(b.dataset.label));
+});
+document.querySelectorAll('.conf-btn').forEach(b => {
+  b.addEventListener('click', () => {
+    state.confidence = b.dataset.conf;
+    document.querySelectorAll('.conf-btn').forEach(x => x.classList.toggle('active', x === b));
+  });
+});
+document.getElementById('btn-prev').addEventListener('click', () => loadRecord(state.index - 1));
+document.getElementById('btn-next').addEventListener('click', () => loadRecord(state.index + 1));
+document.getElementById('btn-clear').addEventListener('click', clearAnnotation);
+
+document.addEventListener('keydown', (e) => {
+  const inTextarea = e.target.tagName === 'TEXTAREA';
+  // Ctrl+Enter from note saves as "correct" (default save action)
+  if (e.ctrlKey && e.key === 'Enter' && inTextarea) {
+    e.preventDefault();
+    annotate('correct');
+    return;
+  }
+  if (inTextarea) return;
+  if (e.key === '1') { e.preventDefault(); annotate('correct'); }
+  else if (e.key === '2') { e.preventDefault(); annotate('incorrect'); }
+  else if (e.key === '3') { e.preventDefault(); annotate('ambiguous'); }
+  else if (e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); loadRecord(state.index + 1); }
+  else if (e.key.toLowerCase() === 'b' || e.key === 'ArrowLeft') { e.preventDefault(); loadRecord(state.index - 1); }
+  else if (e.key === 'Backspace') { e.preventDefault(); clearAnnotation(); }
+});
+
+// --- bootstrap ---
+(async () => {
+  try {
+    const s = await api('/api/state');
+    state.total = s.total;
+    state.done = s.done;
+    document.getElementById('reviewer').textContent = s.reviewer_id;
+    await loadRecord(s.first_pending || 0);
+  } catch (e) {
+    document.getElementById('panel-left').innerHTML =
+      `<div class="section-title">ERRO</div><div class="evidence">${esc(e.message)}</div>`;
+  }
+})();
+</script>
+</body>
+</html>

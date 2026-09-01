@@ -1,0 +1,102 @@
+# ============================================================================
+# Study Contract — Patologia Tireoide Bethesda (dry-run onboard)
+# ============================================================================
+# GPT-5 R5 item #8: prova que o runtime é domínio-agnóstico. Nenhum código do
+# runner foi tocado para suportar patologia — apenas contrato + policy YAML +
+# interface 'tuple' (já suportada).
+# ============================================================================
+
+contract:
+  id: patologia_tireoide_piloto
+  version: 0.1.0
+  study: PATO_TIR
+  policy_registry: ../policies/patologia.yaml
+  description: >
+    Onboard de patologia tireoidiana (Bethesda TBSRTC) no runtime DDPA.
+    Wraps tireoide_bethesda_l1_v4 (100% adjusted vs R regex, ver
+    project_tireoide_bethesda_l1_progress). Mesmo runner, outro domínio.
+  created: 2026-04-13
+
+corpus:
+  path: <path>
+  id_column: id
+  text_column: conclusao
+  strata: []
+
+extractor:
+  section_preset: PATHOLOGY_SECTIONS
+  language: pt-BR
+
+variables:
+
+  # --------------------------------------------------------------------------
+  # bethesda — categoria I..VI (ORD-E)
+  # --------------------------------------------------------------------------
+  - name: bethesda
+    taxonomy: [ORD-E]
+    criticality: 8
+    description: "Categoria Bethesda TBSRTC (I..VI)."
+    detector:
+      module: tireoide_bethesda_l1_v4
+      function: detect_bethesda
+      interface: tuple
+      pre_normalize: true
+    silence_policy:
+      output_ontology: [I, II, III, IV, V, VI]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, diagnostico]
+    canaries:
+      - id: BET-01
+        text: "CONCLUSÃO: Categoria II de Bethesda. Lesão folicular benigna."
+        expected_value: II
+      - id: BET-02
+        text: "CONCLUSÃO: BETHESDA VI — carcinoma papilífero."
+        expected_value: VI
+      - id: BET-03
+        text: "CONCLUSÃO: Categoria IV de Bethesda — neoplasia folicular."
+        expected_value: IV
+        note: "word boundary impede match dentro de 'IV' por regex 'I'; exige 'bethesda' no mesmo span"
+
+  # --------------------------------------------------------------------------
+  # bethesda_desc — descritor literal
+  # --------------------------------------------------------------------------
+  - name: bethesda_desc
+    taxonomy: [LEX-E]
+    criticality: 5
+    description: "Descritor literal da categoria (indeterminado, atipias, suspeito...)."
+    detector:
+      module: tireoide_bethesda_l1_v4
+      function: detect_bethesda_desc
+      interface: tuple
+      pre_normalize: true
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, diagnostico]
+    canaries: []
+
+  # --------------------------------------------------------------------------
+  # subtipo — subtipo histológico quando especificado
+  # --------------------------------------------------------------------------
+  - name: subtipo
+    taxonomy: [LEX-E]
+    criticality: 6
+    description: "Subtipo histológico (papilífero, folicular, medular, anaplasico)."
+    detector:
+      module: tireoide_bethesda_l1_v4
+      function: detect_subtipo
+      interface: tuple
+      pre_normalize: true
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, diagnostico]
+    canaries: []
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

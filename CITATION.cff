@@ -1,0 +1,5 @@
+cff-version: 1.2.0
+message: "If you use this material, please cite the associated article."
+title: "DDPA \u2014 Disagreement-Driven Policy Adjudication: a safety-gated, contract-first framework for auditable extraction of structured data from free-text pathology and endoscopy reports"
+authors:
+date-released: "2026-09-01"

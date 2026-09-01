@@ -1,0 +1,234 @@
+# ============================================================================
+# Study Contract — E1 Endoscopia FULL (platform test B)
+# ============================================================================
+# Platform test B — multi-variavel via runtime no corpus E1 completo.
+# Escala o mesmo contrato do scale3k (5 vars, comparison_column ativo em 4)
+# para 67.816 laudos. Exercita Gate #1/#2 cascade + auto-adjudicator +
+# audit slice em volume real.
+# ============================================================================
+
+contract:
+  id: e1_endoscopia_full
+  version: 1.0.0
+  study: E1
+  policy_registry: ../policies/endoscopia.yaml
+  description: >
+    Platform test B: bbps + polipo_presente + polipo_tamanho_max_mm +
+    followup_interval_any + intervalo_vigilancia_ccr rodando no corpus E1
+    completo via runtime v1.1. Mede surface_agreement_rate do cascade
+    (accepted_exact / accepted_semantic / accepted_cross_verified /
+    escalated_human — nota: concordancia de superficie, nao acuracia) e
+    expoe skew guard + silent-consensus sampler em escala.
+  created: 2026-04-15
+  hypotheses:
+    - id: H_SURFACE_AGREEMENT
+      text: "Cascade resolve >=95% do corpus sem escalar pra humano (surface_agreement_rate)."
+    - id: H_SKEW
+      text: "Skew guard nao dispara em nenhuma variavel (nenhum polo >70%)."
+    - id: H_SCALE
+      text: "5 vars x 67k em <15min single-thread."
+
+corpus:
+  path: <path>
+  id_column: id_registro
+  text_column: texto_laudo_completo
+  strata:
+    - clinica
+  extra_columns:
+    - clinica
+    - preparo_boston_total
+    - polipo_presente
+    - polipo_tamanho_max_mm
+    - intervalo_recomendado
+
+extractor:
+  section_preset: ENDOSCOPY_SECTIONS
+  language: pt-BR
+
+variables:
+
+  - name: bbps
+    taxonomy: [NUM-C, ORD-E]
+    criticality: 6
+    description: "Boston Bowel Preparation Scale total (0-9)."
+    detector:
+      module: bbps_l1_v4
+      function: detect_bbps
+      interface: dataclass
+      value_field: value
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [computed_sum, declared_total, arith_flag]
+    comparison_column: preparo_boston_total
+    silence_policy:
+      output_ontology: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [preparo, descricao]
+    canaries:
+      - id: BBPS-01
+        text: "PREPARO: Boston 2+3+3=8"
+        expected_value: 8
+      - id: BBPS-02
+        text: "PREPARO: inadequado"
+        expected_value: null
+
+  - name: polipo_presente
+    taxonomy: [LEX-S, NEG]
+    criticality: 7
+    description: "Presenca de polipo colorretal (sim/nao)."
+    detector:
+      module: polipo_l1_v4
+      function: detect_polipo
+      interface: dataclass
+      mode: C
+      value_field: value
+      certainty_field: certainty
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty]
+    comparison_column: polipo_presente
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: nao
+      allows_implicit_negative: true
+      section_scope: [conclusao, descricao]
+    canaries:
+      - id: POL-01
+        text: "CONCLUSAO: Polipo sessil de 5mm em colon sigmoide."
+        expected_value: sim
+      - id: POL-02
+        text: "CONCLUSAO: ausencia de formacoes polipoides."
+        expected_value: nao
+      - id: POL-03
+        text: "INDICACAO: controle pos-polipectomia"
+        expected_value: nao
+
+  - name: polipo_tamanho_max_mm
+    taxonomy: [MEAS-N, NUM-C]
+    criticality: 8
+    description: "Tamanho maximo do maior polipo em mm."
+    detector:
+      module: tamanho_polipo_l1_v4
+      function: detect_tamanho_polipo
+      interface: dataclass
+      mode: C
+      value_field: value
+      certainty_field: certainty
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty, all_measurements]
+    comparison_column: polipo_tamanho_max_mm
+    silence_policy:
+      output_ontology: [float]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [descricao, conclusao]
+    canaries:
+      - id: TAM-01
+        text: "DESCRICAO: polipo sessil de 8mm em colon direito."
+        expected_value: 8.0
+      - id: TAM-02
+        text: "DESCRICAO: formacao polipoide diminuta."
+        expected_value: null
+
+  - name: followup_interval_any
+    taxonomy: [TEMP, INF]
+    criticality: 7
+    description: "RAW: qualquer intervalo de follow-up mencionado na conclusao."
+    detector:
+      module: intervalo_rec_l1_v4
+      function: detect_intervalo_recomendado
+      interface: dataclass
+      mode: C
+      value_field: value
+      certainty_field: certainty
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty]
+    comparison_column: null  # legacy `intervalo_recomendado` tem ontologia impura (raw+target misturados), skip Gate #1 p/ RAW
+    silence_policy:
+      output_ontology:
+        - 7_dias
+        - 15_dias
+        - 30_dias
+        - 3_meses
+        - 6_meses
+        - 1_ano
+        - 2_anos
+        - 3_anos
+        - 5_anos
+        - 10_anos
+        - precoce
+        - posterior
+        - imediato
+        - sem_intervalo
+        - nao_recomendado
+      default_if_silent: nao_recomendado
+      allows_implicit_negative: true
+      section_scope: [conclusao]
+    canaries:
+      - id: INT-01
+        text: "CONCLUSAO: Sugere-se nova colonoscopia em 3 anos."
+        expected_value: 3_anos
+      - id: INT-02
+        text: "CONCLUSAO: exame normal."
+        expected_value: null
+
+  - name: intervalo_vigilancia_ccr
+    taxonomy: [TEMP, INF]
+    criticality: 7
+    description: "TARGET: intervalo de vigilancia CCR (raw - terapeutico - remake - diagnostico)."
+    detector:
+      module: intervalo_vigilancia_ccr_l1_v4
+      function: detect_intervalo_vigilancia_ccr
+      interface: dataclass
+      mode: C
+      value_field: value
+      certainty_field: certainty
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty]
+    comparison_column: null
+    silence_policy:
+      output_ontology:
+        - 7_dias
+        - 15_dias
+        - 30_dias
+        - 3_meses
+        - 6_meses
+        - 1_ano
+        - 2_anos
+        - 3_anos
+        - 5_anos
+        - 10_anos
+        - precoce
+        - posterior
+        - imediato
+        - sem_intervalo
+        - nao_recomendado
+      default_if_silent: nao_recomendado
+      allows_implicit_negative: true
+      section_scope: [conclusao]
+      abstention_statuses:
+        - excluded_therapeutic_session
+        - excluded_bad_prep_remake
+        - excluded_diagnostic_completion
+    canaries:
+      - id: VIG-01
+        text: "CONCLUSAO: recomenda-se novo controle colonoscopico em 3 anos para rastreio."
+        expected_value: 3_anos
+      - id: VIG-02
+        text: "CONCLUSAO: angiodisplasias no ceco. sugere-se nova sessao de argonio em 4 semanas."
+        expected_value: null
+      - id: VIG-03
+        text: "CONCLUSAO: preparo ruim. repetir exame mais precocemente com melhor preparo."
+        expected_value: null
+      - id: VIG-04
+        text: "CONCLUSAO: exame incompleto. sugere-se complementacao com colonoscopia virtual."
+        expected_value: null
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

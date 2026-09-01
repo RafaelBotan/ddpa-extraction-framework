@@ -1,0 +1,317 @@
+# ============================================================================
+# Study Contract — Mama IHQ megabase v3 (cross-domain DDPA extraction)
+# ============================================================================
+# v3 (2026-04-18): corpus agora inclui campo `tecnica` estruturado (72.2% fill)
+# prepended ao `texto` com separador '|' → ':'. Recupera quantitativos
+# (re_pct, rp_pct, her2_score, ki67_pct) que o run v2 marcava abstained.
+# Compendio mama_ihq v0: fontes elegiveis priority tecnica(1) > conclusao(2) > microscopia(3).
+# ============================================================================
+
+contract:
+  id: mama_ihq_megabase_v3
+  version: 1.1.0
+  study: MAMA_IHQ
+  policy_registry: ../policies/patologia.yaml
+  description: >
+    Cross-domain DDPA extraction: marcadores IHQ mama (RE, RP, HER2, Ki-67,
+    tipo histológico) em 13.905 laudos da megabase Lab Z v2.
+    v1.1.0: corpus inclui campo `tecnica` estruturado prepended ao `texto`.
+    Detector inalterado — ganha quantitativos que a tecnica carrega.
+    L1 determinístico via mama_ihq_l1_v4.py (2.125 linhas).
+    IA: a definir (comparison_column null por enquanto).
+  created: 2026-04-18
+  hypotheses:
+    - id: H_CROSS_DOMAIN
+      text: "Plataforma DDPA extrai domínio patologia mama sem modificação do runtime."
+    - id: H_SURFACE_AGREEMENT
+      text: "Surface agreement rate >=90% em variáveis binárias (RE/RP status)."
+    - id: H_PRODUCTIVE_LOOP
+      text: "Loop adaptativo reduz fila Gate #2 em variáveis categóricas (tipo_hist_ihq, her2_status) via descoberta de aliases."
+
+corpus:
+  path: <path>
+  id_column: numExame
+  text_column: texto
+  strata:
+    - ano
+    - formato
+  extra_columns:
+    - ano
+    - formato
+    - data_exame
+
+extractor:
+  section_preset: PATHOLOGY_SECTIONS
+  language: pt-BR
+
+variables:
+
+  # --- RE (Estrogen Receptor) ---
+
+  - name: re_status
+    taxonomy: [BIN]
+    criticality: 9
+    description: "Receptor de estrogênio: positivo/negativo. Componente invasivo priorizado."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_re_status
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [positivo, negativo]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, microscopia]
+    canaries:
+      - id: MIH-01-RE
+        text: "RE (6F11): Positivo em 100% das celulas (Escore de Allred: 8)"
+        expected_value: positivo
+      - id: MIH-02-RE
+        text: "RE (6F11): Negativo"
+        expected_value: negativo
+      - id: MIH-03-RE
+        text: "CARCINOMA DUCTAL INFILTRANTE, RECEPTOR DE ESTROGENO-POSITIVO"
+        expected_value: positivo
+      - id: MIH-TN-RE
+        text: "CARCINOMA DUCTAL INFILTRANTE, TRIPLO-NEGATIVO"
+        expected_value: negativo
+
+  - name: re_pct
+    taxonomy: [NUM-C]
+    criticality: 7
+    description: "Percentual RE (0-100). Presente em formato tabular (~3.600 laudos)."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_re_pct
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, microscopia]
+    canaries:
+      - id: MIH-01-REPCT
+        text: "RE (6F11): Positivo em 90% das celulas (Escore de Allred: 7)"
+        expected_value: 90
+
+  - name: re_allred
+    taxonomy: [ORD-E]
+    criticality: 6
+    description: "Escore Allred RE (0-8). L1-only, formato tabular."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_re_allred
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [microscopia]
+    canaries:
+      - id: MIH-01-REALL
+        text: "RE (6F11): Positivo em 90% das celulas (Escore de Allred: 7)"
+        expected_value: 7
+
+  # --- RP (Progesterone Receptor) ---
+
+  - name: rp_status
+    taxonomy: [BIN]
+    criticality: 9
+    description: "Receptor de progesterona: positivo/negativo."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_rp_status
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [positivo, negativo]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, microscopia]
+    canaries:
+      - id: MIH-01-RP
+        text: "RP (16): Positivo em 60% das celulas (Escore de Allred: 7)"
+        expected_value: positivo
+      - id: MIH-06-RP
+        text: "RECEPTOR DE PROGESTERONA-NEGATIVO"
+        expected_value: negativo
+
+  - name: rp_pct
+    taxonomy: [NUM-C]
+    criticality: 7
+    description: "Percentual RP (0-100)."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_rp_pct
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, microscopia]
+    canaries:
+      - id: MIH-01-RPPCT
+        text: "RP (16): Positivo em 60% das celulas"
+        expected_value: 60
+
+  - name: rp_allred
+    taxonomy: [ORD-E]
+    criticality: 6
+    description: "Escore Allred RP (0-8). L1-only."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_rp_allred
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [microscopia]
+    canaries: []
+
+  # --- HER2 ---
+
+  - name: her2_score
+    taxonomy: [ORD-E]
+    criticality: 9
+    description: "HER2 IHC score: 0/0+/1+/2+/3+. numeric_guard escalará propostas de alias."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_her2_score
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: ['0', '0+', '1+', '2+', '3+']
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, microscopia]
+    canaries:
+      - id: MIH-02-HER2
+        text: "HER2 / c-erb B-2 (SP3): Escore 3+ (Positivo)"
+        expected_value: '3+'
+      - id: MIH-05-HER2
+        text: "HER2 / c-erb B-2 (SP3): Escore 2+ (Equivoco)"
+        expected_value: '2+'
+      - id: MIH-HER2-0
+        text: "HER2 / c-erb B-2 (SP3): Escore 0 (Negativo)"
+        expected_value: '0'
+
+  - name: her2_status
+    taxonomy: [CAT]
+    criticality: 9
+    description: "Interpretação HER2: derivado de score ou texto. Wrapper standalone."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_her2_status_standalone
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [positivo, negativo, equivoco]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, microscopia]
+    canaries:
+      - id: MIH-HER2S-POS
+        text: "HER2 / c-erb B-2 (SP3): Escore 3+ (Positivo)"
+        expected_value: positivo
+      - id: MIH-HER2S-EQV
+        text: "HER2 / c-erb B-2 (SP3): Escore 2+ (Equivoco)"
+        expected_value: equivoco
+      - id: MIH-HER2S-NAR
+        text: "COM EXPRESSAO NEGATIVA DOS PRODUTOS DO HER2"
+        expected_value: negativo
+
+  # --- Ki-67 ---
+
+  - name: ki67_pct
+    taxonomy: [NUM-C]
+    criticality: 8
+    description: "Indice de proliferacao Ki-67 (%). ~4.400/15.250 laudos tem valor numerico."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_ki67_pct
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: []
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, microscopia]
+    canaries:
+      - id: MIH-KI67-TAB
+        text: "Ki-67 / MIB-1 (MM1): Positivo em 5% das celulas neoplasicas."
+        expected_value: 5
+      - id: MIH-KI67-NAR
+        text: "INDICE DE PROLIFERACAO CELULAR DE 90% AO KI67"
+        expected_value: 90
+
+  # --- Histological Type ---
+
+  - name: tipo_hist_ihq
+    taxonomy: [CAT]
+    criticality: 7
+    description: "Tipo histologico na conclusao IHQ. Off-ontology esperado na IA."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_tipo_hist_ihq
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [CDI_SOE, CLI, CDIS, CLIS, micropapilar, mucinoso, papilar]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: MIH-TIPO-CDI
+        text: "CARCINOMA DUCTAL INFILTRANTE DE MAMA ESQUERDA, GRAU II"
+        expected_value: CDI_SOE
+      - id: MIH-TIPO-CLI
+        text: "CARCINOMA LOBULAR INVASIVO DE MAMA DIREITA"
+        expected_value: CLI
+      - id: MIH-TIPO-CDIS
+        text: "CARCINOMA DUCTAL IN SITU DE MAMA"
+        expected_value: CDIS
+
+  # --- Molecular Subtype (derived) ---
+
+  - name: subtipo_molecular
+    taxonomy: [CAT]
+    criticality: 8
+    description: "Subtipo molecular derivado (St. Gallen 2013). Wrapper re-extrai RE/RP/HER2/Ki67."
+    detector:
+      module: mama_ihq_l1_v4
+      function: detect_subtipo_molecular_standalone
+      interface: tuple
+      pre_normalize: true
+    comparison_column: null
+    silence_policy:
+      output_ontology: [luminal_a, luminal_b_her2neg, luminal_b_her2pos, her2_enriched, triplo_negativo, luminal]
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [conclusao, microscopia]
+    canaries:
+      - id: MIH-SUB-LUMA
+        text: "RE (6F11): Positivo em 90%\nRP (16): Positivo em 60%\nHER2 / c-erb B-2 (SP3): Escore 0 (Negativo)\nKi-67 / MIB-1 (MM1): Positivo em 5% das celulas neoplasicas."
+        expected_value: luminal_a
+      - id: MIH-SUB-TN
+        text: "CARCINOMA DUCTAL INFILTRANTE, TRIPLO-NEGATIVO"
+        expected_value: triplo_negativo
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

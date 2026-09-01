@@ -1,0 +1,297 @@
+{
+  "manifest_version": "1.0.0",
+  "contract_id": "e1_endoscopia_full",
+  "contract_version": "1.0.0",
+  "contract_path": "contracts\\e1_endoscopia_full.yaml",
+  "started_at": "2026-04-15T14:04:02.952610+00:00",
+  "completed_at": "2026-04-15T14:07:16.275148+00:00",
+  "duration_s": 193.32,
+  "hashes": {
+    "study_contract": "d3121e72eac2dde91974e20a2e5e9b1c0ff5583ec622d62c986fce52f1b64c15",
+    "kb_semver": "v4.0",
+    "policy_registry": "463703166b85fcbd75b9a9608a3a6ff29136c1f43e2c68ff304b022d915e6d83",
+    "framework_core": "78470caafa89b7b93923674533058a7d5927a062b90dde488fe1197accb6c898",
+    "extractors": {
+      "bbps": "2018c19fbb790eff72e0f4b1867397fb2d88c95ed56600c6b066dc74ac3c9b37",
+      "polipo_presente": "5521938617c3118339ae13ec953b05969a7a0cf67378c1a546fd091990f370ab",
+      "polipo_tamanho_max_mm": "4339b54af072d2f9bd79acc5b827e55eb1adac2128de01315ee38535a75ffa9d",
+      "followup_interval_any": "41d7c9e71f95bfcb011974b386a94115c44c123c58eeeea7ebaace128560e4c8",
+      "intervalo_vigilancia_ccr": "254e7cb460e386078db4a1475c525592f004b042e6343ae0620601a1c4be237b"
+    }
+  },
+  "policy_registry_id": "endoscopia_v1@1.0.0",
+  "variables": [
+    {
+      "name": "bbps",
+      "n_total": 67816,
+      "n_filled": 14717,
+      "fill_rate": 0.217,
+      "status_distribution": {
+        "no_match": 53099,
+        "bbps_soma_3seg": 7670,
+        "bbps_total_near": 5770,
+        "bbps_labeled_seg": 1245,
+        "bbps_soma_3seg_arith_inc": 26,
+        "bbps_sobre_9": 3,
+        "bbps_total": 3
+      },
+      "ia_fill": 15208,
+      "n_both_filled": 14579,
+      "n_agree_both": 14465,
+      "agreement_surface": 0.9922,
+      "duration_s": 29.83,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "abstained_unsupported": 53099,
+        "accepted_exact": 14717
+      }
+    },
+    {
+      "name": "polipo_presente",
+      "n_total": 67816,
+      "n_filled": 67816,
+      "fill_rate": 1.0,
+      "status_distribution": {
+        "polipo_explicit": 23744,
+        "polipo_negative": 23013,
+        "no_match": 20332,
+        "polipo_synonym": 684,
+        "polipo_historical": 43
+      },
+      "ia_fill": 67816,
+      "n_both_filled": 67816,
+      "n_agree_both": 66508,
+      "agreement_surface": 0.9807,
+      "duration_s": 30.83,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 67087,
+        "accepted_semantic": 727,
+        "abstained_source_incomplete": 2
+      }
+    },
+    {
+      "name": "polipo_tamanho_max_mm",
+      "n_total": 67816,
+      "n_filled": 18411,
+      "fill_rate": 0.2715,
+      "status_distribution": {
+        "polipo_no_size": 28232,
+        "no_polipo": 20445,
+        "measure_explicit": 14627,
+        "measure_multi_max": 2541,
+        "measure_interval": 1243,
+        "qualitative_diminuto": 666,
+        "qualitative_large": 50,
+        "qualitative_subcm": 12
+      },
+      "ia_fill": 19514,
+      "n_both_filled": 18154,
+      "n_agree_both": 17594,
+      "agreement_surface": 0.9692,
+      "duration_s": 35.98,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "abstained_unsupported": 49343,
+        "accepted_exact": 17145,
+        "accepted_semantic": 1243,
+        "abstained_source_incomplete": 62,
+        "escalated_case": 23
+      }
+    },
+    {
+      "name": "followup_interval_any",
+      "n_total": 67816,
+      "n_filled": 1901,
+      "fill_rate": 0.028,
+      "status_distribution": {
+        "no_match": 65915,
+        "rec_no_interval": 1443,
+        "rec_posterior": 136,
+        "rec_precoce": 123,
+        "interval_with_rec": 121,
+        "interval_standalone": 31,
+        "rec_imediato": 16,
+        "interval_standalone_near_rec": 13,
+        "interval_range_with_rec": 10,
+        "interval_written_with_rec": 4,
+        "interval_written": 3,
+        "interval_periodic_with_rec": 1
+      },
+      "duration_s": 29.82,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 66335,
+        "accepted_semantic": 1447,
+        "escalated_case": 34
+      }
+    },
+    {
+      "name": "intervalo_vigilancia_ccr",
+      "n_total": 67816,
+      "n_filled": 1095,
+      "fill_rate": 0.0161,
+      "status_distribution": {
+        "no_match": 65915,
+        "rec_no_interval": 876,
+        "excluded_bad_prep_remake": 381,
+        "excluded_therapeutic_session": 341,
+        "interval_with_rec": 85,
+        "excluded_diagnostic_completion": 84,
+        "rec_posterior": 61,
+        "rec_precoce": 23,
+        "interval_standalone": 17,
+        "rec_imediato": 15,
+        "interval_standalone_near_rec": 10,
+        "interval_range_with_rec": 3,
+        "interval_written_with_rec": 3,
+        "interval_written": 1,
+        "interval_periodic_with_rec": 1
+      },
+      "duration_s": 32.77,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 66119,
+        "accepted_semantic": 878,
+        "abstained_unsupported": 806,
+        "escalated_case": 13
+      }
+    }
+  ],
+  "canaries": {
+    "bbps": [
+      {
+        "canary_id": "BBPS-01",
+        "expected": 8,
+        "got": 8,
+        "passed": true,
+        "status": "bbps_soma_3seg",
+        "section": "preparo",
+        "note": ""
+      },
+      {
+        "canary_id": "BBPS-02",
+        "expected": null,
+        "got": null,
+        "passed": true,
+        "status": "no_match",
+        "section": null,
+        "note": ""
+      }
+    ],
+    "polipo_presente": [
+      {
+        "canary_id": "POL-01",
+        "expected": "sim",
+        "got": "sim",
+        "passed": true,
+        "status": "polipo_explicit",
+        "section": "conclusao",
+        "note": ""
+      },
+      {
+        "canary_id": "POL-02",
+        "expected": "nao",
+        "got": "nao",
+        "passed": true,
+        "status": "polipo_negative",
+        "section": "conclusao",
+        "note": ""
+      },
+      {
+        "canary_id": "POL-03",
+        "expected": "nao",
+        "got": "nao",
+        "passed": true,
+        "status": "no_match",
+        "section": null,
+        "note": ""
+      }
+    ],
+    "polipo_tamanho_max_mm": [
+      {
+        "canary_id": "TAM-01",
+        "expected": 8.0,
+        "got": 8.0,
+        "passed": true,
+        "status": "measure_explicit",
+        "section": "global",
+        "note": ""
+      },
+      {
+        "canary_id": "TAM-02",
+        "expected": null,
+        "got": null,
+        "passed": true,
+        "status": "qualitative_diminuto",
+        "section": "global",
+        "note": ""
+      }
+    ],
+    "followup_interval_any": [
+      {
+        "canary_id": "INT-01",
+        "expected": "3_anos",
+        "got": "3_anos",
+        "passed": true,
+        "status": "interval_with_rec",
+        "section": "conclusao",
+        "note": ""
+      },
+      {
+        "canary_id": "INT-02",
+        "expected": null,
+        "got": null,
+        "passed": true,
+        "status": "no_match",
+        "section": null,
+        "note": ""
+      }
+    ],
+    "intervalo_vigilancia_ccr": [
+      {
+        "canary_id": "VIG-01",
+        "expected": "3_anos",
+        "got": "3_anos",
+        "passed": true,
+        "status": "interval_with_rec",
+        "section": "conclusao",
+        "note": ""
+      },
+      {
+        "canary_id": "VIG-02",
+        "expected": null,
+        "got": null,
+        "passed": true,
+        "status": "excluded_therapeutic_session",
+        "section": "conclusao",
+        "note": ""
+      },
+      {
+        "canary_id": "VIG-03",
+        "expected": null,
+        "got": null,
+        "passed": true,
+        "status": "excluded_bad_prep_remake",
+        "section": "conclusao",
+        "note": ""
+      },
+      {
+        "canary_id": "VIG-04",
+        "expected": null,
+        "got": null,
+        "passed": true,
+        "status": "excluded_diagnostic_completion",
+        "section": "conclusao",
+        "note": ""
+      }
+    ]
+  },
+  "gates": {
+    "gate1_path": "<path>",
+    "gate2_path": "<path>",
+    "gate1_count": 0,
+    "gate2_count": 35,
+    "gate1_blocking": 0
+  }
+}

@@ -1,0 +1,24 @@
+# segredos / ambiente
+.env
+*.pem
+*.key
+*.pfx
+*.p12
+credentials*
+secrets*
+# dado bruto / individual (NUNCA versionar)
+*.parquet
+*.dta
+*.sav
+*.sas7bdat
+*.RData
+*.rds
+*.dcm
+01_dados_brutos/
+02_dados_limpos/
+raw/
+phi/
+# lixo
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store

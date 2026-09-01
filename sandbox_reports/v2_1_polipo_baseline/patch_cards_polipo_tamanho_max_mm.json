@@ -1,0 +1,3268 @@
+[
+ {
+  "card_id": "pc_84bb20ebdc90",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_9faff0c55851",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM superficie regular",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "12.0",
+    "2.0",
+    "3.0",
+    "5.0",
+    "6.0",
+    "7.0",
+    "8.0",
+    "9.0"
+   ],
+   "ia_value_distribution": {
+    "2.0": 15,
+    "3.0": 161,
+    "5.0": 61,
+    "6.0": 80,
+    "7.0": 33,
+    "8.0": 11,
+    "9.0": 2,
+    "12.0": 5
+   },
+   "evidence_windows": {
+    "n_windows": 19,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 370,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "2.0",
+    "3.0",
+    "5.0",
+    "6.0",
+    "7.0",
+    "8.0",
+    "9.0",
+    "12.0"
+   ],
+   "family_coverage_rate": 0.0761,
+   "family_coverage_detail": {
+    "source_cluster_total": 762,
+    "claimed_here": 58
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 355,
+    "pf_184bd1a6403d": 69,
+    "pf_7b72e8213786": 24,
+    "pf_733b4d9aa254": 20,
+    "pf_5b963ce4235e": 16,
+    "pf_f6913f7e2eda": 10,
+    "pf_66a4dd423b02": 9,
+    "pf_bde9fffc30bf": 8,
+    "pf_88372865b570": 7,
+    "pf_3ece44b11440": 6,
+    "pf_d9897ce5213b": 4,
+    "pf_6a966d3b4bbd": 4,
+    "pf_cc1be3b3660a": 3,
+    "pf_bf391333d980": 3,
+    "pf_598bbe5c62fc": 3,
+    "pf_91f71edf9723": 3,
+    "pf_d7b08737d180": 3,
+    "pf_negative": 3,
+    "pf_b90fa5fe5cc6": 2,
+    "pf_a50158e45283": 2,
+    "pf_b23562bd8695": 2,
+    "pf_d4d700052d33": 2,
+    "pf_24626f0f0042": 2,
+    "pf_e8c79bf47104": 2,
+    "pf_da88c7bfab93": 2,
+    "pf_6085f889bc74": 2,
+    "pf_53f799d5e5db": 2,
+    "pf_a7a9fac9b34a": 2,
+    "pf_b780b24e3454": 2,
+    "pf_f835a6ece536": 2,
+    "pf_287a79f65bb9": 2,
+    "pf_99e492f866b0": 2,
+    "pf_c6f2a4c8bfbb": 1,
+    "pf_19bc976288c3": 1,
+    "pf_f5dcfb6b3a50": 1,
+    "pf_d5908a21fb61": 1,
+    "pf_328d57191d92": 1,
+    "pf_9d908e06e5b5": 1,
+    "pf_ddf8cfb8b73e": 1,
+    "pf_8d3d3e55fe00": 1,
+    "pf_8e72340cf311": 1,
+    "pf_26d8553e3a7e": 1,
+    "pf_9dfc01bce995": 1,
+    "pf_ac18302dce7b": 1,
+    "pf_d12ec498da2c": 1,
+    "pf_32fef26bbe40": 1,
+    "pf_dd74bc6648c4": 1,
+    "pf_7d9abe462e33": 1,
+    "pf_97f618101ccc": 1,
+    "pf_91d9dab54cb5": 1,
+    "pf_07756b4d1e43": 1,
+    "pf_9a05bb5da1ab": 1,
+    "pf_ecd0a5fc5dfd": 1,
+    "pf_a98320d380f9": 1,
+    "pf_0915982b4686": 1,
+    "pf_a7865809f97a": 1,
+    "pf_b021dd2de6d6": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_2008c73083bf": 1,
+    "pf_00d0ddc1860e": 1,
+    "pf_5e1f1e545f70": 1,
+    "pf_e947989de417": 1,
+    "pf_6ae4cea8cd25": 1,
+    "pf_cc66000680aa": 1,
+    "pf_4a132836b4bf": 1,
+    "pf_2d898e9843b2": 1,
+    "pf_2cddd025db90": 1,
+    "pf_29f8bb72d691": 1,
+    "pf_135d356b1152": 1,
+    "pf_b6f494b13ecc": 1,
+    "pf_c10f4a489dcb": 1,
+    "pf_e690b4a70ab3": 1,
+    "pf_1441dabc6697": 1,
+    "pf_7176f9ee2d3f": 1,
+    "pf_b6ae7019ebe3": 1,
+    "pf_e530bfc09f1c": 1,
+    "pf_b51b91c6ac81": 1,
+    "pf_861bb31c7406": 1,
+    "pf_c31b0ee3b536": 1,
+    "pf_bd3113ee2333": 1,
+    "pf_b43d32ed04ce": 1,
+    "pf_a95c1c59ceb0": 1,
+    "pf_40326e41e1b8": 1,
+    "pf_8a03ad3a5dd0": 1,
+    "pf_a6e84a583dcd": 1,
+    "pf_ce08bd40a027": 1,
+    "pf_0a80b5d01dc7": 1,
+    "pf_f54d0706e247": 1,
+    "pf_4de10a85482f": 1,
+    "pf_25a5b268efa2": 1,
+    "pf_391f852f6790": 1,
+    "pf_c741bcf361db": 1,
+    "pf_20e9b563b6c3": 1,
+    "pf_3ea0a15d4273": 1,
+    "pf_4ff2b892ff23": 1,
+    "pf_2c25c6fcd969": 1,
+    "pf_51dcf02ca41e": 1,
+    "pf_45eacb8c5a71": 1,
+    "pf_55767f33f9c7": 1,
+    "pf_d0342d865223": 1,
+    "pf_8280e1136f68": 1,
+    "pf_700fe181fc87": 1,
+    "pf_d46fb7b92a49": 1,
+    "pf_c1fd3e5149ff": 1,
+    "pf_c6a46376b2a9": 1,
+    "pf_6ecb23e06472": 1,
+    "pf_dc73c9950b35": 1,
+    "pf_14a4feaf1e6d": 1,
+    "pf_092ce954a0ca": 1,
+    "pf_3bb615f63e28": 1,
+    "pf_35cc5a487348": 1,
+    "pf_23bd64a32e09": 1,
+    "pf_aafb0180b66d": 1,
+    "pf_25e3be4f1c3d": 1,
+    "pf_fdf54b700679": 1,
+    "pf_00887c57b76c": 1,
+    "pf_2a4a0fc6bccf": 1,
+    "pf_96a88fc10e20": 1,
+    "pf_ee311fcaf895": 1,
+    "pf_18e394ba51cd": 1,
+    "pf_d63d039cdd21": 1,
+    "pf_ea284da935b7": 1,
+    "pf_f0e426aa00eb": 1,
+    "pf_de317b230983": 1,
+    "pf_79a1d7f92334": 1,
+    "pf_c2f3bbe34927": 1,
+    "pf_daccb0bcd43d": 1,
+    "pf_ee234353d9cf": 1,
+    "pf_e14137f22c40": 1,
+    "pf_c1cae314e9ce": 1,
+    "pf_0c5f9787abd5": 1,
+    "pf_5ed408db94c8": 1,
+    "pf_d9bae5d5aa78": 1,
+    "pf_1702686b7afc": 1,
+    "pf_ddca80c13541": 1,
+    "pf_625eab2d665b": 1,
+    "pf_e7c763dd8255": 1,
+    "pf_be20b51abab2": 1,
+    "pf_1594f5e64e12": 1,
+    "pf_7475ffd52660": 1,
+    "pf_6d9840f50811": 1,
+    "pf_9c45913e1872": 1,
+    "pf_e4f81d592b19": 1,
+    "pf_e15d19d00eee": 1,
+    "pf_216acfa3b776": 1,
+    "pf_169ab01dbccc": 1,
+    "pf_3494785c96fa": 1,
+    "pf_47775ab0abb5": 1,
+    "pf_be9635d4a2c1": 1,
+    "pf_a6f5280f705b": 1,
+    "pf_e86d437b9c7b": 1,
+    "pf_89199dda5d46": 1,
+    "pf_d5acfdb6812d": 1,
+    "pf_9226d18d676a": 1,
+    "pf_f1daa7838b9f": 1,
+    "pf_c7df61874136": 1,
+    "pf_6c12c4e62281": 1,
+    "pf_4adcce03f4fd": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_9faff0c55851",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 48,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 21,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 69
+  },
+  "impact_estimate": 370,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=21)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 69 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_e798a097c2da",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_733b4d9aa254",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM superficie regular de",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "2.0",
+    "3.0",
+    "4.0",
+    "5.0",
+    "9.0"
+   ],
+   "ia_value_distribution": {
+    "2.0": 5,
+    "3.0": 40,
+    "4.0": 18,
+    "5.0": 61,
+    "9.0": 2
+   },
+   "evidence_windows": {
+    "n_windows": 5,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 127,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "2.0",
+    "3.0",
+    "4.0",
+    "5.0",
+    "9.0"
+   ],
+   "family_coverage_rate": 0.0329,
+   "family_coverage_detail": {
+    "source_cluster_total": 638,
+    "claimed_here": 21
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 304,
+    "pf_184bd1a6403d": 71,
+    "pf_9faff0c55851": 44,
+    "pf_7b72e8213786": 23,
+    "pf_5b963ce4235e": 16,
+    "pf_88372865b570": 8,
+    "pf_f6913f7e2eda": 6,
+    "pf_3ece44b11440": 6,
+    "pf_66a4dd423b02": 5,
+    "pf_24626f0f0042": 4,
+    "pf_d9897ce5213b": 4,
+    "pf_d7b08737d180": 4,
+    "pf_6a966d3b4bbd": 4,
+    "pf_91f71edf9723": 3,
+    "pf_cc1be3b3660a": 2,
+    "pf_d4d700052d33": 2,
+    "pf_5e1f1e545f70": 2,
+    "pf_e8c79bf47104": 2,
+    "pf_da88c7bfab93": 2,
+    "pf_6085f889bc74": 2,
+    "pf_598bbe5c62fc": 2,
+    "pf_a7a9fac9b34a": 2,
+    "pf_b780b24e3454": 2,
+    "pf_e7c763dd8255": 2,
+    "pf_bff8dbbd2ce2": 2,
+    "pf_9dfc01bce995": 1,
+    "pf_ac18302dce7b": 1,
+    "pf_d12ec498da2c": 1,
+    "pf_32fef26bbe40": 1,
+    "pf_dd74bc6648c4": 1,
+    "pf_7d9abe462e33": 1,
+    "pf_97f618101ccc": 1,
+    "pf_91d9dab54cb5": 1,
+    "pf_07756b4d1e43": 1,
+    "pf_bf391333d980": 1,
+    "pf_9a05bb5da1ab": 1,
+    "pf_ecd0a5fc5dfd": 1,
+    "pf_a98320d380f9": 1,
+    "pf_0915982b4686": 1,
+    "pf_a7865809f97a": 1,
+    "pf_b021dd2de6d6": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_2008c73083bf": 1,
+    "pf_00d0ddc1860e": 1,
+    "pf_e947989de417": 1,
+    "pf_6ae4cea8cd25": 1,
+    "pf_cc66000680aa": 1,
+    "pf_4a132836b4bf": 1,
+    "pf_2d898e9843b2": 1,
+    "pf_2cddd025db90": 1,
+    "pf_29f8bb72d691": 1,
+    "pf_135d356b1152": 1,
+    "pf_b6f494b13ecc": 1,
+    "pf_c10f4a489dcb": 1,
+    "pf_e690b4a70ab3": 1,
+    "pf_1441dabc6697": 1,
+    "pf_7176f9ee2d3f": 1,
+    "pf_b6ae7019ebe3": 1,
+    "pf_e530bfc09f1c": 1,
+    "pf_b51b91c6ac81": 1,
+    "pf_861bb31c7406": 1,
+    "pf_c31b0ee3b536": 1,
+    "pf_bd3113ee2333": 1,
+    "pf_b43d32ed04ce": 1,
+    "pf_a95c1c59ceb0": 1,
+    "pf_40326e41e1b8": 1,
+    "pf_8a03ad3a5dd0": 1,
+    "pf_a6e84a583dcd": 1,
+    "pf_700fe181fc87": 1,
+    "pf_d46fb7b92a49": 1,
+    "pf_c1fd3e5149ff": 1,
+    "pf_c6a46376b2a9": 1,
+    "pf_6ecb23e06472": 1,
+    "pf_dc73c9950b35": 1,
+    "pf_14a4feaf1e6d": 1,
+    "pf_092ce954a0ca": 1,
+    "pf_3bb615f63e28": 1,
+    "pf_35cc5a487348": 1,
+    "pf_23bd64a32e09": 1,
+    "pf_aafb0180b66d": 1,
+    "pf_25e3be4f1c3d": 1,
+    "pf_fdf54b700679": 1,
+    "pf_b23562bd8695": 1,
+    "pf_00887c57b76c": 1,
+    "pf_2a4a0fc6bccf": 1,
+    "pf_96a88fc10e20": 1,
+    "pf_f835a6ece536": 1,
+    "pf_ee311fcaf895": 1,
+    "pf_18e394ba51cd": 1,
+    "pf_negative": 1,
+    "pf_d63d039cdd21": 1,
+    "pf_b9470b1241aa": 1,
+    "pf_605899682a36": 1,
+    "pf_f93789432e6d": 1,
+    "pf_017adaed77dd": 1,
+    "pf_e33649d698e7": 1,
+    "pf_c6a72b1e2c5b": 1,
+    "pf_0e1a8877290a": 1,
+    "pf_fd3c8f78e254": 1,
+    "pf_9c0afda081e9": 1,
+    "pf_03f365da1e8b": 1,
+    "pf_0701efeaa821": 1,
+    "pf_7503459d1348": 1,
+    "pf_9d511c81b60a": 1,
+    "pf_1f636af0bc08": 1,
+    "pf_2e3c685c82fa": 1,
+    "pf_7ef7e13917e2": 1,
+    "pf_37cf1aefecd1": 1,
+    "pf_b366feb235ae": 1,
+    "pf_2c63befd1856": 1,
+    "pf_625eab2d665b": 1,
+    "pf_be20b51abab2": 1,
+    "pf_1594f5e64e12": 1,
+    "pf_7475ffd52660": 1,
+    "pf_6d9840f50811": 1,
+    "pf_9c45913e1872": 1,
+    "pf_e4f81d592b19": 1,
+    "pf_e15d19d00eee": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_733b4d9aa254",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 14,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 7,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 21
+  },
+  "impact_estimate": 127,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=7)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 21 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_a779585b90b7",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_f6913f7e2eda",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM superficie regular padrao vascular",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "5.0",
+    "9.0"
+   ],
+   "ia_value_distribution": {
+    "5.0": 61,
+    "9.0": 4
+   },
+   "evidence_windows": {
+    "n_windows": 3,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 65,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "5.0",
+    "9.0"
+   ],
+   "family_coverage_rate": 0.0158,
+   "family_coverage_detail": {
+    "source_cluster_total": 316,
+    "claimed_here": 5
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 113,
+    "pf_184bd1a6403d": 68,
+    "pf_7b72e8213786": 22,
+    "pf_5b963ce4235e": 16,
+    "pf_9faff0c55851": 12,
+    "pf_733b4d9aa254": 10,
+    "pf_88372865b570": 6,
+    "pf_3ece44b11440": 4,
+    "pf_66a4dd423b02": 3,
+    "pf_24626f0f0042": 2,
+    "pf_da88c7bfab93": 2,
+    "pf_6085f889bc74": 2,
+    "pf_9dfc01bce995": 1,
+    "pf_cc1be3b3660a": 1,
+    "pf_ac18302dce7b": 1,
+    "pf_d12ec498da2c": 1,
+    "pf_32fef26bbe40": 1,
+    "pf_dd74bc6648c4": 1,
+    "pf_7d9abe462e33": 1,
+    "pf_97f618101ccc": 1,
+    "pf_91d9dab54cb5": 1,
+    "pf_07756b4d1e43": 1,
+    "pf_bf391333d980": 1,
+    "pf_9a05bb5da1ab": 1,
+    "pf_d4d700052d33": 1,
+    "pf_ecd0a5fc5dfd": 1,
+    "pf_a98320d380f9": 1,
+    "pf_0915982b4686": 1,
+    "pf_a7865809f97a": 1,
+    "pf_b021dd2de6d6": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_2008c73083bf": 1,
+    "pf_00d0ddc1860e": 1,
+    "pf_5e1f1e545f70": 1,
+    "pf_e947989de417": 1,
+    "pf_6ae4cea8cd25": 1,
+    "pf_cc66000680aa": 1,
+    "pf_4a132836b4bf": 1,
+    "pf_2d898e9843b2": 1,
+    "pf_e8c79bf47104": 1,
+    "pf_2cddd025db90": 1,
+    "pf_29f8bb72d691": 1,
+    "pf_135d356b1152": 1,
+    "pf_b6f494b13ecc": 1,
+    "pf_c10f4a489dcb": 1,
+    "pf_e690b4a70ab3": 1,
+    "pf_1441dabc6697": 1,
+    "pf_7176f9ee2d3f": 1,
+    "pf_b6ae7019ebe3": 1,
+    "pf_e530bfc09f1c": 1,
+    "pf_b51b91c6ac81": 1,
+    "pf_861bb31c7406": 1,
+    "pf_c31b0ee3b536": 1,
+    "pf_bd3113ee2333": 1,
+    "pf_b43d32ed04ce": 1,
+    "pf_a95c1c59ceb0": 1,
+    "pf_40326e41e1b8": 1,
+    "pf_8a03ad3a5dd0": 1,
+    "pf_a6e84a583dcd": 1,
+    "pf_6d9840f50811": 1,
+    "pf_9c45913e1872": 1,
+    "pf_e4f81d592b19": 1,
+    "pf_e15d19d00eee": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_f6913f7e2eda",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 8,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 4,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 12
+  },
+  "impact_estimate": 65,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=4)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 12 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_6d1ec5727cb2",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_9dfc01bce995",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM superficie regular de LESAO_SUBJ",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "5.0"
+   ],
+   "ia_value_distribution": {
+    "5.0": 61
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 61,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "5.0"
+   ],
+   "family_coverage_rate": 0.0033,
+   "family_coverage_detail": {
+    "source_cluster_total": 305,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 113,
+    "pf_184bd1a6403d": 68,
+    "pf_7b72e8213786": 22,
+    "pf_5b963ce4235e": 16,
+    "pf_733b4d9aa254": 9,
+    "pf_9faff0c55851": 9,
+    "pf_88372865b570": 6,
+    "pf_3ece44b11440": 4,
+    "pf_66a4dd423b02": 3,
+    "pf_f6913f7e2eda": 2,
+    "pf_24626f0f0042": 2,
+    "pf_da88c7bfab93": 2,
+    "pf_6085f889bc74": 2,
+    "pf_cc1be3b3660a": 1,
+    "pf_ac18302dce7b": 1,
+    "pf_d12ec498da2c": 1,
+    "pf_32fef26bbe40": 1,
+    "pf_dd74bc6648c4": 1,
+    "pf_7d9abe462e33": 1,
+    "pf_97f618101ccc": 1,
+    "pf_91d9dab54cb5": 1,
+    "pf_07756b4d1e43": 1,
+    "pf_bf391333d980": 1,
+    "pf_9a05bb5da1ab": 1,
+    "pf_d4d700052d33": 1,
+    "pf_ecd0a5fc5dfd": 1,
+    "pf_a98320d380f9": 1,
+    "pf_0915982b4686": 1,
+    "pf_a7865809f97a": 1,
+    "pf_b021dd2de6d6": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_2008c73083bf": 1,
+    "pf_00d0ddc1860e": 1,
+    "pf_5e1f1e545f70": 1,
+    "pf_e947989de417": 1,
+    "pf_6ae4cea8cd25": 1,
+    "pf_cc66000680aa": 1,
+    "pf_4a132836b4bf": 1,
+    "pf_2d898e9843b2": 1,
+    "pf_e8c79bf47104": 1,
+    "pf_2cddd025db90": 1,
+    "pf_29f8bb72d691": 1,
+    "pf_135d356b1152": 1,
+    "pf_b6f494b13ecc": 1,
+    "pf_c10f4a489dcb": 1,
+    "pf_e690b4a70ab3": 1,
+    "pf_1441dabc6697": 1,
+    "pf_7176f9ee2d3f": 1,
+    "pf_b6ae7019ebe3": 1,
+    "pf_e530bfc09f1c": 1,
+    "pf_b51b91c6ac81": 1,
+    "pf_861bb31c7406": 1,
+    "pf_c31b0ee3b536": 1,
+    "pf_bd3113ee2333": 1,
+    "pf_b43d32ed04ce": 1,
+    "pf_a95c1c59ceb0": 1,
+    "pf_40326e41e1b8": 1,
+    "pf_8a03ad3a5dd0": 1,
+    "pf_a6e84a583dcd": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_9dfc01bce995",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 61,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_ccca83791371",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_cc1be3b3660a",
+   "lane": "positive",
+   "skeleton": "POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM superficie regular",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "5.0"
+   ],
+   "ia_value_distribution": {
+    "5.0": 61
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 61,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "5.0"
+   ],
+   "family_coverage_rate": 0.0033,
+   "family_coverage_detail": {
+    "source_cluster_total": 305,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 113,
+    "pf_184bd1a6403d": 68,
+    "pf_7b72e8213786": 22,
+    "pf_5b963ce4235e": 16,
+    "pf_733b4d9aa254": 9,
+    "pf_9faff0c55851": 9,
+    "pf_88372865b570": 6,
+    "pf_3ece44b11440": 4,
+    "pf_66a4dd423b02": 3,
+    "pf_f6913f7e2eda": 2,
+    "pf_24626f0f0042": 2,
+    "pf_da88c7bfab93": 2,
+    "pf_6085f889bc74": 2,
+    "pf_9dfc01bce995": 1,
+    "pf_ac18302dce7b": 1,
+    "pf_d12ec498da2c": 1,
+    "pf_32fef26bbe40": 1,
+    "pf_dd74bc6648c4": 1,
+    "pf_7d9abe462e33": 1,
+    "pf_97f618101ccc": 1,
+    "pf_91d9dab54cb5": 1,
+    "pf_07756b4d1e43": 1,
+    "pf_bf391333d980": 1,
+    "pf_9a05bb5da1ab": 1,
+    "pf_d4d700052d33": 1,
+    "pf_ecd0a5fc5dfd": 1,
+    "pf_a98320d380f9": 1,
+    "pf_0915982b4686": 1,
+    "pf_a7865809f97a": 1,
+    "pf_b021dd2de6d6": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_2008c73083bf": 1,
+    "pf_00d0ddc1860e": 1,
+    "pf_5e1f1e545f70": 1,
+    "pf_e947989de417": 1,
+    "pf_6ae4cea8cd25": 1,
+    "pf_cc66000680aa": 1,
+    "pf_4a132836b4bf": 1,
+    "pf_2d898e9843b2": 1,
+    "pf_e8c79bf47104": 1,
+    "pf_2cddd025db90": 1,
+    "pf_29f8bb72d691": 1,
+    "pf_135d356b1152": 1,
+    "pf_b6f494b13ecc": 1,
+    "pf_c10f4a489dcb": 1,
+    "pf_e690b4a70ab3": 1,
+    "pf_1441dabc6697": 1,
+    "pf_7176f9ee2d3f": 1,
+    "pf_b6ae7019ebe3": 1,
+    "pf_e530bfc09f1c": 1,
+    "pf_b51b91c6ac81": 1,
+    "pf_861bb31c7406": 1,
+    "pf_c31b0ee3b536": 1,
+    "pf_bd3113ee2333": 1,
+    "pf_b43d32ed04ce": 1,
+    "pf_a95c1c59ceb0": 1,
+    "pf_40326e41e1b8": 1,
+    "pf_8a03ad3a5dd0": 1,
+    "pf_a6e84a583dcd": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_cc1be3b3660a",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 2,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 3
+  },
+  "impact_estimate": 61,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 3 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_a81ce833bf33",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_69d5a0911904",
+   "lane": "positive",
+   "skeleton": "LESAO_SUBJ LESAO_SUBJ em com PLUSMINUS N UNIT_MM",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "10.0",
+    "20.0"
+   ],
+   "ia_value_distribution": {
+    "10.0": 17,
+    "20.0": 6
+   },
+   "evidence_windows": {
+    "n_windows": 2,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 24,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "10.0",
+    "20.0"
+   ],
+   "family_coverage_rate": 0.0165,
+   "family_coverage_detail": {
+    "source_cluster_total": 121,
+    "claimed_here": 2
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 72,
+    "pf_9c3a8ccacc10": 3,
+    "pf_66a4dd423b02": 3,
+    "pf_16c2c5debfc3": 2,
+    "pf_88372865b570": 2,
+    "pf_d1ca334550c6": 1,
+    "pf_91015f5b9d27": 1,
+    "pf_94eda7f0a5ac": 1,
+    "pf_3c820f00d387": 1,
+    "pf_f6913f7e2eda": 1,
+    "pf_3bdb04432e05": 1,
+    "pf_8a2a2f66262b": 1,
+    "pf_b27d30943424": 1,
+    "pf_dc001f47300d": 1,
+    "pf_395bae1059a6": 1,
+    "pf_7d33693d40d7": 1,
+    "pf_c3354b3e4ca2": 1,
+    "pf_5cca92d42af7": 1,
+    "pf_7987e1c3a1d6": 1,
+    "pf_6c7f5ce6380c": 1,
+    "pf_c96e29debfe9": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_6dca3ec7a2fd": 1,
+    "pf_18e394ba51cd": 1,
+    "pf_2611eebd98b0": 1,
+    "pf_2db667c609d9": 1,
+    "pf_fdc1da4dd3fe": 1,
+    "pf_1df07aa26d15": 1,
+    "pf_4951154eb3bc": 1,
+    "pf_539a93c6b672": 1,
+    "pf_7dbff8fffd89": 1,
+    "pf_d68259f5db5e": 1,
+    "pf_e856bbf9d7d0": 1,
+    "pf_b9326133b568": 1,
+    "pf_e4d88e7e4c68": 1,
+    "pf_734d6fdd1242": 1,
+    "pf_7f86d32608eb": 1,
+    "pf_6c35d7d0ee12": 1,
+    "pf_3d3b7907ae81": 1,
+    "pf_dd1e47e85a28": 1,
+    "pf_6f6031a714b2": 1,
+    "pf_6124e184ff67": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_69d5a0911904",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 2
+  },
+  "impact_estimate": 24,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 2 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_292533b8e693",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_24626f0f0042",
+   "lane": "positive",
+   "skeleton": "N UNIT_MM POLIPO_SUBJ com",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "4.0"
+   ],
+   "ia_value_distribution": {
+    "4.0": 18
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 18,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "4.0"
+   ],
+   "family_coverage_rate": 0.0213,
+   "family_coverage_detail": {
+    "source_cluster_total": 94,
+    "claimed_here": 2
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 53,
+    "pf_9faff0c55851": 11,
+    "pf_184bd1a6403d": 2,
+    "pf_bff8dbbd2ce2": 2,
+    "pf_b9470b1241aa": 1,
+    "pf_605899682a36": 1,
+    "pf_733b4d9aa254": 1,
+    "pf_f93789432e6d": 1,
+    "pf_d7b08737d180": 1,
+    "pf_017adaed77dd": 1,
+    "pf_e33649d698e7": 1,
+    "pf_c6a72b1e2c5b": 1,
+    "pf_0e1a8877290a": 1,
+    "pf_fd3c8f78e254": 1,
+    "pf_5e1f1e545f70": 1,
+    "pf_88372865b570": 1,
+    "pf_9c0afda081e9": 1,
+    "pf_03f365da1e8b": 1,
+    "pf_0701efeaa821": 1,
+    "pf_7503459d1348": 1,
+    "pf_9d511c81b60a": 1,
+    "pf_1f636af0bc08": 1,
+    "pf_e7c763dd8255": 1,
+    "pf_2e3c685c82fa": 1,
+    "pf_7ef7e13917e2": 1,
+    "pf_37cf1aefecd1": 1,
+    "pf_b366feb235ae": 1,
+    "pf_2c63befd1856": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_24626f0f0042",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 2,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 2,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 2,
+   "Clinic B": 2
+  },
+  "impact_estimate": 18,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "APPROVED",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=2)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 0.5,
+     "detail": "Site distribution balanced — max site 'Clinic A' at 50.0%"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_9a7b10ad85a3",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_b9470b1241aa",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM superficie regular de em",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "4.0"
+   ],
+   "ia_value_distribution": {
+    "4.0": 18
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 18,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "4.0"
+   ],
+   "family_coverage_rate": 0.0106,
+   "family_coverage_detail": {
+    "source_cluster_total": 94,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 53,
+    "pf_9faff0c55851": 11,
+    "pf_24626f0f0042": 2,
+    "pf_184bd1a6403d": 2,
+    "pf_bff8dbbd2ce2": 2,
+    "pf_605899682a36": 1,
+    "pf_733b4d9aa254": 1,
+    "pf_f93789432e6d": 1,
+    "pf_d7b08737d180": 1,
+    "pf_017adaed77dd": 1,
+    "pf_e33649d698e7": 1,
+    "pf_c6a72b1e2c5b": 1,
+    "pf_0e1a8877290a": 1,
+    "pf_fd3c8f78e254": 1,
+    "pf_5e1f1e545f70": 1,
+    "pf_88372865b570": 1,
+    "pf_9c0afda081e9": 1,
+    "pf_03f365da1e8b": 1,
+    "pf_0701efeaa821": 1,
+    "pf_7503459d1348": 1,
+    "pf_9d511c81b60a": 1,
+    "pf_1f636af0bc08": 1,
+    "pf_e7c763dd8255": 1,
+    "pf_2e3c685c82fa": 1,
+    "pf_7ef7e13917e2": 1,
+    "pf_37cf1aefecd1": 1,
+    "pf_b366feb235ae": 1,
+    "pf_2c63befd1856": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_b9470b1241aa",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 18,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_98596428af2b",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_605899682a36",
+   "lane": "positive",
+   "skeleton": "com POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM POLIPO_SUBJ com em",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "4.0"
+   ],
+   "ia_value_distribution": {
+    "4.0": 18
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 18,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "4.0"
+   ],
+   "family_coverage_rate": 0.0106,
+   "family_coverage_detail": {
+    "source_cluster_total": 94,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 53,
+    "pf_9faff0c55851": 11,
+    "pf_24626f0f0042": 2,
+    "pf_184bd1a6403d": 2,
+    "pf_bff8dbbd2ce2": 2,
+    "pf_b9470b1241aa": 1,
+    "pf_733b4d9aa254": 1,
+    "pf_f93789432e6d": 1,
+    "pf_d7b08737d180": 1,
+    "pf_017adaed77dd": 1,
+    "pf_e33649d698e7": 1,
+    "pf_c6a72b1e2c5b": 1,
+    "pf_0e1a8877290a": 1,
+    "pf_fd3c8f78e254": 1,
+    "pf_5e1f1e545f70": 1,
+    "pf_88372865b570": 1,
+    "pf_9c0afda081e9": 1,
+    "pf_03f365da1e8b": 1,
+    "pf_0701efeaa821": 1,
+    "pf_7503459d1348": 1,
+    "pf_9d511c81b60a": 1,
+    "pf_1f636af0bc08": 1,
+    "pf_e7c763dd8255": 1,
+    "pf_2e3c685c82fa": 1,
+    "pf_7ef7e13917e2": 1,
+    "pf_37cf1aefecd1": 1,
+    "pf_b366feb235ae": 1,
+    "pf_2c63befd1856": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_605899682a36",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 18,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_6c7b5e477a58",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_f93789432e6d",
+   "lane": "positive",
+   "skeleton": "POLIPO_SUBJ N UNIT_MM POLIPO_SUBJ com POLIPO_SUBJ de",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "4.0"
+   ],
+   "ia_value_distribution": {
+    "4.0": 18
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 18,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "4.0"
+   ],
+   "family_coverage_rate": 0.0106,
+   "family_coverage_detail": {
+    "source_cluster_total": 94,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 53,
+    "pf_9faff0c55851": 11,
+    "pf_24626f0f0042": 2,
+    "pf_184bd1a6403d": 2,
+    "pf_bff8dbbd2ce2": 2,
+    "pf_b9470b1241aa": 1,
+    "pf_605899682a36": 1,
+    "pf_733b4d9aa254": 1,
+    "pf_d7b08737d180": 1,
+    "pf_017adaed77dd": 1,
+    "pf_e33649d698e7": 1,
+    "pf_c6a72b1e2c5b": 1,
+    "pf_0e1a8877290a": 1,
+    "pf_fd3c8f78e254": 1,
+    "pf_5e1f1e545f70": 1,
+    "pf_88372865b570": 1,
+    "pf_9c0afda081e9": 1,
+    "pf_03f365da1e8b": 1,
+    "pf_0701efeaa821": 1,
+    "pf_7503459d1348": 1,
+    "pf_9d511c81b60a": 1,
+    "pf_1f636af0bc08": 1,
+    "pf_e7c763dd8255": 1,
+    "pf_2e3c685c82fa": 1,
+    "pf_7ef7e13917e2": 1,
+    "pf_37cf1aefecd1": 1,
+    "pf_b366feb235ae": 1,
+    "pf_2c63befd1856": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_f93789432e6d",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 18,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_62fd6cf1266f",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_9c3a8ccacc10",
+   "lane": "positive",
+   "skeleton": "LESAO_SUBJ em com CERCA de N UNIT_MM de",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "10.0"
+   ],
+   "ia_value_distribution": {
+    "10.0": 17
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 17,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "10.0"
+   ],
+   "family_coverage_rate": 0.0341,
+   "family_coverage_detail": {
+    "source_cluster_total": 88,
+    "claimed_here": 3
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 53,
+    "pf_88372865b570": 2,
+    "pf_66a4dd423b02": 2,
+    "pf_d1ca334550c6": 1,
+    "pf_91015f5b9d27": 1,
+    "pf_94eda7f0a5ac": 1,
+    "pf_69d5a0911904": 1,
+    "pf_3c820f00d387": 1,
+    "pf_f6913f7e2eda": 1,
+    "pf_3bdb04432e05": 1,
+    "pf_8a2a2f66262b": 1,
+    "pf_16c2c5debfc3": 1,
+    "pf_b27d30943424": 1,
+    "pf_dc001f47300d": 1,
+    "pf_395bae1059a6": 1,
+    "pf_7d33693d40d7": 1,
+    "pf_c3354b3e4ca2": 1,
+    "pf_5cca92d42af7": 1,
+    "pf_7987e1c3a1d6": 1,
+    "pf_6c7f5ce6380c": 1,
+    "pf_c96e29debfe9": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_6dca3ec7a2fd": 1,
+    "pf_18e394ba51cd": 1,
+    "pf_2611eebd98b0": 1,
+    "pf_2db667c609d9": 1,
+    "pf_fdc1da4dd3fe": 1,
+    "pf_1df07aa26d15": 1,
+    "pf_4951154eb3bc": 1,
+    "pf_539a93c6b672": 1,
+    "pf_7dbff8fffd89": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_9c3a8ccacc10",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 2,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 3
+  },
+  "impact_estimate": 17,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 3 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_d6c38736d13e",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_d1ca334550c6",
+   "lane": "positive",
+   "skeleton": "LESAO_SUBJ LESAO_SUBJ POLIPO_SUBJ com PLUSMINUS N UNIT_MM em",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "10.0"
+   ],
+   "ia_value_distribution": {
+    "10.0": 17
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 17,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "10.0"
+   ],
+   "family_coverage_rate": 0.0114,
+   "family_coverage_detail": {
+    "source_cluster_total": 88,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 53,
+    "pf_9c3a8ccacc10": 3,
+    "pf_88372865b570": 2,
+    "pf_66a4dd423b02": 2,
+    "pf_91015f5b9d27": 1,
+    "pf_94eda7f0a5ac": 1,
+    "pf_69d5a0911904": 1,
+    "pf_3c820f00d387": 1,
+    "pf_f6913f7e2eda": 1,
+    "pf_3bdb04432e05": 1,
+    "pf_8a2a2f66262b": 1,
+    "pf_16c2c5debfc3": 1,
+    "pf_b27d30943424": 1,
+    "pf_dc001f47300d": 1,
+    "pf_395bae1059a6": 1,
+    "pf_7d33693d40d7": 1,
+    "pf_c3354b3e4ca2": 1,
+    "pf_5cca92d42af7": 1,
+    "pf_7987e1c3a1d6": 1,
+    "pf_6c7f5ce6380c": 1,
+    "pf_c96e29debfe9": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_6dca3ec7a2fd": 1,
+    "pf_18e394ba51cd": 1,
+    "pf_2611eebd98b0": 1,
+    "pf_2db667c609d9": 1,
+    "pf_fdc1da4dd3fe": 1,
+    "pf_1df07aa26d15": 1,
+    "pf_4951154eb3bc": 1,
+    "pf_539a93c6b672": 1,
+    "pf_7dbff8fffd89": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_d1ca334550c6",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 17,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_703cb4f684dc",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_91015f5b9d27",
+   "lane": "positive",
+   "skeleton": "em em com CERCA de N UNIT_MM de",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "10.0"
+   ],
+   "ia_value_distribution": {
+    "10.0": 17
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 17,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "10.0"
+   ],
+   "family_coverage_rate": 0.0114,
+   "family_coverage_detail": {
+    "source_cluster_total": 88,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 53,
+    "pf_9c3a8ccacc10": 3,
+    "pf_88372865b570": 2,
+    "pf_66a4dd423b02": 2,
+    "pf_d1ca334550c6": 1,
+    "pf_94eda7f0a5ac": 1,
+    "pf_69d5a0911904": 1,
+    "pf_3c820f00d387": 1,
+    "pf_f6913f7e2eda": 1,
+    "pf_3bdb04432e05": 1,
+    "pf_8a2a2f66262b": 1,
+    "pf_16c2c5debfc3": 1,
+    "pf_b27d30943424": 1,
+    "pf_dc001f47300d": 1,
+    "pf_395bae1059a6": 1,
+    "pf_7d33693d40d7": 1,
+    "pf_c3354b3e4ca2": 1,
+    "pf_5cca92d42af7": 1,
+    "pf_7987e1c3a1d6": 1,
+    "pf_6c7f5ce6380c": 1,
+    "pf_c96e29debfe9": 1,
+    "pf_2a30a9ad55a9": 1,
+    "pf_6dca3ec7a2fd": 1,
+    "pf_18e394ba51cd": 1,
+    "pf_2611eebd98b0": 1,
+    "pf_2db667c609d9": 1,
+    "pf_fdc1da4dd3fe": 1,
+    "pf_1df07aa26d15": 1,
+    "pf_4951154eb3bc": 1,
+    "pf_539a93c6b672": 1,
+    "pf_7dbff8fffd89": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_91015f5b9d27",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 17,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_9f246f57f5d5",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_b90fa5fe5cc6",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB LESAO_SUBJ N UNIT_MM superficie regular padrao vascular",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "7.0"
+   ],
+   "ia_value_distribution": {
+    "7.0": 11
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 11,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "7.0"
+   ],
+   "family_coverage_rate": 0.0182,
+   "family_coverage_detail": {
+    "source_cluster_total": 55,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 31,
+    "pf_9faff0c55851": 8,
+    "pf_f6913f7e2eda": 2,
+    "pf_c6f2a4c8bfbb": 1,
+    "pf_19bc976288c3": 1,
+    "pf_f5dcfb6b3a50": 1,
+    "pf_d5908a21fb61": 1,
+    "pf_328d57191d92": 1,
+    "pf_9d908e06e5b5": 1,
+    "pf_a50158e45283": 1,
+    "pf_b23562bd8695": 1,
+    "pf_ddf8cfb8b73e": 1,
+    "pf_8d3d3e55fe00": 1,
+    "pf_bde9fffc30bf": 1,
+    "pf_8e72340cf311": 1,
+    "pf_26d8553e3a7e": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_b90fa5fe5cc6",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 2
+  },
+  "impact_estimate": 11,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 2 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_41b7e3b2470d",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_c6f2a4c8bfbb",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB LESAO_SUBJ LESAO_SUBJ N UNIT_MM superficie regular",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "7.0"
+   ],
+   "ia_value_distribution": {
+    "7.0": 11
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 11,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "7.0"
+   ],
+   "family_coverage_rate": 0.0182,
+   "family_coverage_detail": {
+    "source_cluster_total": 55,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 31,
+    "pf_9faff0c55851": 8,
+    "pf_f6913f7e2eda": 2,
+    "pf_b90fa5fe5cc6": 1,
+    "pf_19bc976288c3": 1,
+    "pf_f5dcfb6b3a50": 1,
+    "pf_d5908a21fb61": 1,
+    "pf_328d57191d92": 1,
+    "pf_9d908e06e5b5": 1,
+    "pf_a50158e45283": 1,
+    "pf_b23562bd8695": 1,
+    "pf_ddf8cfb8b73e": 1,
+    "pf_8d3d3e55fe00": 1,
+    "pf_bde9fffc30bf": 1,
+    "pf_8e72340cf311": 1,
+    "pf_26d8553e3a7e": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_c6f2a4c8bfbb",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 11,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_b1a8753da451",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_ce08bd40a027",
+   "lane": "positive",
+   "skeleton": "LESAO_SUBJ LESAO_SUBJ MEASURE_VERB CERCA de N UNIT_MM superficie regular",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "8.0"
+   ],
+   "ia_value_distribution": {
+    "8.0": 11
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 11,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "8.0"
+   ],
+   "family_coverage_rate": 0.0172,
+   "family_coverage_detail": {
+    "source_cluster_total": 58,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 28,
+    "pf_bde9fffc30bf": 4,
+    "pf_bf391333d980": 2,
+    "pf_9faff0c55851": 2,
+    "pf_66a4dd423b02": 2,
+    "pf_0a80b5d01dc7": 1,
+    "pf_f54d0706e247": 1,
+    "pf_4de10a85482f": 1,
+    "pf_25a5b268efa2": 1,
+    "pf_598bbe5c62fc": 1,
+    "pf_391f852f6790": 1,
+    "pf_b90fa5fe5cc6": 1,
+    "pf_a50158e45283": 1,
+    "pf_c741bcf361db": 1,
+    "pf_20e9b563b6c3": 1,
+    "pf_3ea0a15d4273": 1,
+    "pf_4ff2b892ff23": 1,
+    "pf_2c25c6fcd969": 1,
+    "pf_51dcf02ca41e": 1,
+    "pf_45eacb8c5a71": 1,
+    "pf_53f799d5e5db": 1,
+    "pf_55767f33f9c7": 1,
+    "pf_d0342d865223": 1,
+    "pf_8280e1136f68": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_ce08bd40a027",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 11,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_9950ab261a16",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_0a80b5d01dc7",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM N UNIT_MM superficie regular",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "8.0"
+   ],
+   "ia_value_distribution": {
+    "8.0": 11
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 11,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "8.0"
+   ],
+   "family_coverage_rate": 0.0172,
+   "family_coverage_detail": {
+    "source_cluster_total": 58,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 28,
+    "pf_bde9fffc30bf": 4,
+    "pf_bf391333d980": 2,
+    "pf_9faff0c55851": 2,
+    "pf_66a4dd423b02": 2,
+    "pf_ce08bd40a027": 1,
+    "pf_f54d0706e247": 1,
+    "pf_4de10a85482f": 1,
+    "pf_25a5b268efa2": 1,
+    "pf_598bbe5c62fc": 1,
+    "pf_391f852f6790": 1,
+    "pf_b90fa5fe5cc6": 1,
+    "pf_a50158e45283": 1,
+    "pf_c741bcf361db": 1,
+    "pf_20e9b563b6c3": 1,
+    "pf_3ea0a15d4273": 1,
+    "pf_4ff2b892ff23": 1,
+    "pf_2c25c6fcd969": 1,
+    "pf_51dcf02ca41e": 1,
+    "pf_45eacb8c5a71": 1,
+    "pf_53f799d5e5db": 1,
+    "pf_55767f33f9c7": 1,
+    "pf_d0342d865223": 1,
+    "pf_8280e1136f68": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_0a80b5d01dc7",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 11,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_2b0f536571c9",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_2b0f536571c9",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_bf391333d980",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB LESAO_SUBJ N UNIT_MM superficie regular",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "8.0"
+   ],
+   "ia_value_distribution": {
+    "8.0": 11
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 11,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "8.0"
+   ],
+   "family_coverage_rate": 0.0345,
+   "family_coverage_detail": {
+    "source_cluster_total": 58,
+    "claimed_here": 2
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 28,
+    "pf_bde9fffc30bf": 4,
+    "pf_9faff0c55851": 2,
+    "pf_66a4dd423b02": 2,
+    "pf_ce08bd40a027": 1,
+    "pf_0a80b5d01dc7": 1,
+    "pf_f54d0706e247": 1,
+    "pf_4de10a85482f": 1,
+    "pf_25a5b268efa2": 1,
+    "pf_598bbe5c62fc": 1,
+    "pf_391f852f6790": 1,
+    "pf_b90fa5fe5cc6": 1,
+    "pf_a50158e45283": 1,
+    "pf_c741bcf361db": 1,
+    "pf_20e9b563b6c3": 1,
+    "pf_3ea0a15d4273": 1,
+    "pf_4ff2b892ff23": 1,
+    "pf_2c25c6fcd969": 1,
+    "pf_51dcf02ca41e": 1,
+    "pf_45eacb8c5a71": 1,
+    "pf_53f799d5e5db": 1,
+    "pf_55767f33f9c7": 1,
+    "pf_d0342d865223": 1,
+    "pf_8280e1136f68": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_bf391333d980",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 2,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 2,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 4
+  },
+  "impact_estimate": 11,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=2)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 4 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_210b2875b603"
+  ]
+ },
+ {
+  "card_id": "pc_210b2875b603",
+  "variable": "polipo_tamanho_max_mm",
+  "source_cluster": {
+   "family_id": "pf_f54d0706e247",
+   "lane": "positive",
+   "skeleton": "SHOW_VERB POLIPO_SUBJ POLIPO_SUBJ N UNIT_MM superficie irregular com",
+   "variable": "polipo_tamanho_max_mm",
+   "source_cluster_ids": [
+    "8.0"
+   ],
+   "ia_value_distribution": {
+    "8.0": 11
+   },
+   "evidence_windows": {
+    "n_windows": 1,
+    "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+   },
+   "negative_windows": [],
+   "total_count": 11,
+   "grounding_stats": {},
+   "purity_score": 1.0,
+   "ia_values": [
+    "8.0"
+   ],
+   "family_coverage_rate": 0.0172,
+   "family_coverage_detail": {
+    "source_cluster_total": 58,
+    "claimed_here": 1
+   },
+   "family_fragmentation": {
+    "pf_noanchor": 28,
+    "pf_bde9fffc30bf": 4,
+    "pf_bf391333d980": 2,
+    "pf_9faff0c55851": 2,
+    "pf_66a4dd423b02": 2,
+    "pf_ce08bd40a027": 1,
+    "pf_0a80b5d01dc7": 1,
+    "pf_4de10a85482f": 1,
+    "pf_25a5b268efa2": 1,
+    "pf_598bbe5c62fc": 1,
+    "pf_391f852f6790": 1,
+    "pf_b90fa5fe5cc6": 1,
+    "pf_a50158e45283": 1,
+    "pf_c741bcf361db": 1,
+    "pf_20e9b563b6c3": 1,
+    "pf_3ea0a15d4273": 1,
+    "pf_4ff2b892ff23": 1,
+    "pf_2c25c6fcd969": 1,
+    "pf_51dcf02ca41e": 1,
+    "pf_45eacb8c5a71": 1,
+    "pf_53f799d5e5db": 1,
+    "pf_55767f33f9c7": 1,
+    "pf_d0342d865223": 1,
+    "pf_8280e1136f68": 1
+   }
+  },
+  "proposed_change": {
+   "change_type": "new_regex",
+   "description": "[BASELINE_ABLATION] Trivial regex for family pf_f54d0706e247",
+   "regex_skeleton": "(\\d+(?:[.,]\\d+)?)\\s*mm\\b",
+   "capture_map": {
+    "group_1": "value"
+   },
+   "target_scope": [
+    "descricao",
+    "conclusao"
+   ],
+   "precedence_hint": null,
+   "near_miss_patterns": [],
+   "risk_level": "medium"
+  },
+  "evidence_discovery": {
+   "n_rows": 0,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "evidence_eval": {
+   "n_rows": 1,
+   "note": "individual-level rows withheld from the public copy (aggregate distributions and all barrier decisions retained); available on reasonable request"
+  },
+  "hard_negatives": [],
+  "site_distribution": {
+   "Clinic A": 1
+  },
+  "impact_estimate": 11,
+  "plausibility_tag": "plausible",
+  "support_tag": "coherent_cluster",
+  "sandbox_result": {
+   "status": "SKEW_WARNING",
+   "barriers": [
+    {
+     "barrier": "canary_pass",
+     "passed": true,
+     "score": 1.0,
+     "detail": "All 2 canaries passed"
+    },
+    {
+     "barrier": "target_hit",
+     "passed": true,
+     "score": 1.0,
+     "detail": "Hit rate 100.0% >= threshold 80% (risk=medium, n=1)"
+    },
+    {
+     "barrier": "near_miss_safety",
+     "passed": true,
+     "score": 1.0,
+     "detail": "No false positives detected in hard negatives or corpus sample"
+    },
+    {
+     "barrier": "corpus_skew",
+     "passed": true,
+     "score": 1.0,
+     "detail": "WARNING: site skew detected — 'Clinic A' has 100.0% of 1 records (threshold=80%)"
+    },
+    {
+     "barrier": "corpus_wide_shadow",
+     "passed": true,
+     "score": 0.016515276630883535,
+     "detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+    }
+   ],
+   "impact_report": {
+    "fill_rate_delta": 0.016515276630883535,
+    "shadow_detail": "Shadow: 1120/67816 cases would change; fill_rate 27.1% → 28.8% (delta=+1.7%)"
+   },
+   "generated_canaries": [],
+   "generated_hard_negatives": []
+  },
+  "human_decision": null,
+  "overlaps_with": [
+   "pc_84bb20ebdc90",
+   "pc_e798a097c2da",
+   "pc_a779585b90b7",
+   "pc_6d1ec5727cb2",
+   "pc_ccca83791371",
+   "pc_a81ce833bf33",
+   "pc_292533b8e693",
+   "pc_9a7b10ad85a3",
+   "pc_98596428af2b",
+   "pc_6c7b5e477a58",
+   "pc_62fd6cf1266f",
+   "pc_d6c38736d13e",
+   "pc_703cb4f684dc",
+   "pc_9f246f57f5d5",
+   "pc_41b7e3b2470d",
+   "pc_b1a8753da451",
+   "pc_9950ab261a16",
+   "pc_2b0f536571c9"
+  ]
+ }
+]

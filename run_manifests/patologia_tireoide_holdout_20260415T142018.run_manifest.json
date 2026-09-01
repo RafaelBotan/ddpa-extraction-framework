@@ -1,0 +1,105 @@
+{
+  "manifest_version": "1.0.0",
+  "contract_id": "patologia_tireoide_holdout",
+  "contract_version": "1.0.0",
+  "contract_path": "contracts\\patologia_tireoide_holdout.yaml",
+  "started_at": "2026-04-15T14:20:18.429695+00:00",
+  "completed_at": "2026-04-15T14:20:18.571862+00:00",
+  "duration_s": 0.14,
+  "hashes": {
+    "study_contract": "f547f998e76c97eabb0e2602e1fcabad4f6b2d97bee3fd63aeeab84eb5abb60d",
+    "kb_semver": "v4.0",
+    "policy_registry": "9990e99605dd1fd6e908dc960d6741e3ea81725216d585375ecc1369b8024e89",
+    "framework_core": "78470caafa89b7b93923674533058a7d5927a062b90dde488fe1197accb6c898",
+    "extractors": {
+      "bethesda": "d53b435ca65a61eb60dc23718d05156ae43b12e82a1d7a0d6044ccf8c249813e",
+      "bethesda_desc": "d53b435ca65a61eb60dc23718d05156ae43b12e82a1d7a0d6044ccf8c249813e",
+      "subtipo": "d53b435ca65a61eb60dc23718d05156ae43b12e82a1d7a0d6044ccf8c249813e"
+    }
+  },
+  "policy_registry_id": "patologia_v1@0.1.0",
+  "variables": [
+    {
+      "name": "bethesda",
+      "n_total": 200,
+      "n_filled": 200,
+      "fill_rate": 1.0,
+      "status_distribution": {
+        "None": 200
+      },
+      "duration_s": 0.03,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 200
+      }
+    },
+    {
+      "name": "bethesda_desc",
+      "n_total": 200,
+      "n_filled": 132,
+      "fill_rate": 0.66,
+      "status_distribution": {
+        "None": 200
+      },
+      "duration_s": 0.04,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 132,
+        "abstained_source_incomplete": 68
+      }
+    },
+    {
+      "name": "subtipo",
+      "n_total": 200,
+      "n_filled": 156,
+      "fill_rate": 0.78,
+      "status_distribution": {
+        "None": 200
+      },
+      "duration_s": 0.04,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 156,
+        "abstained_source_incomplete": 44
+      }
+    }
+  ],
+  "canaries": {
+    "bethesda": [
+      {
+        "canary_id": "BET-01",
+        "expected": "II",
+        "got": "II",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "BET-02",
+        "expected": "VI",
+        "got": "VI",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "BET-03",
+        "expected": "IV",
+        "got": "IV",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ]
+  },
+  "gates": {
+    "gate1_path": "<path>",
+    "gate2_path": "<path>",
+    "gate1_count": 0,
+    "gate2_count": 0,
+    "gate1_blocking": 0
+  }
+}

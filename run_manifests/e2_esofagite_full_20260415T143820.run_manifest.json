@@ -1,0 +1,135 @@
+{
+  "manifest_version": "1.0.0",
+  "contract_id": "e2_esofagite_full",
+  "contract_version": "1.0.0",
+  "contract_path": "contracts\\e2_esofagite_full.yaml",
+  "started_at": "2026-04-15T14:38:20.143692+00:00",
+  "completed_at": "2026-04-15T14:40:36.928977+00:00",
+  "duration_s": 136.79,
+  "hashes": {
+    "study_contract": "bec95f51f013f04af05d3e028e6d3880e310d4a47aaae5f67e375900e58b8566",
+    "kb_semver": "v4.0",
+    "policy_registry": "463703166b85fcbd75b9a9608a3a6ff29136c1f43e2c68ff304b022d915e6d83",
+    "framework_core": "78470caafa89b7b93923674533058a7d5927a062b90dde488fe1197accb6c898",
+    "extractors": {
+      "la_grau": "ec2db4fdbc000e087aee60b4e3b2a879fd4a45b74a5dea8ee108ff30400dea40",
+      "hernia_hiatal_estrita": "a48398f358b785953b1ff1592e5b69f415a10bd09567e680fa90b8e006ae8ea6"
+    }
+  },
+  "policy_registry_id": "endoscopia_v1@1.0.0",
+  "variables": [
+    {
+      "name": "la_grau",
+      "n_total": 128167,
+      "n_filled": 37538,
+      "fill_rate": 0.2929,
+      "status_distribution": {
+        "no_match": 90592,
+        "LA_explicit": 31138,
+        "LA_negative": 6273,
+        "LA_implicit": 127,
+        "LA_historical": 37
+      },
+      "ia_fill": 128167,
+      "n_both_filled": 37538,
+      "n_agree_both": 13134,
+      "agreement_surface": 0.3499,
+      "duration_s": 58.33,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "abstained_unsupported": 90592,
+        "accepted_exact": 37538,
+        "abstained_source_incomplete": 37
+      }
+    },
+    {
+      "name": "hernia_hiatal_estrita",
+      "n_total": 128167,
+      "n_filled": 128167,
+      "fill_rate": 1.0,
+      "status_distribution": {
+        "hh_negative": 89238,
+        "no_match": 18785,
+        "hh_lemma": 15980,
+        "hh_geometric": 2729,
+        "hh_dilated_only": 1435
+      },
+      "ia_fill": 128167,
+      "n_both_filled": 128167,
+      "n_agree_both": 79432,
+      "agreement_surface": 0.6198,
+      "duration_s": 69.76,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 128167
+      }
+    }
+  ],
+  "canaries": {
+    "la_grau": [
+      {
+        "canary_id": "LA-01",
+        "expected": "A",
+        "got": "A",
+        "passed": true,
+        "status": "LA_explicit",
+        "section": "conclusao",
+        "note": ""
+      },
+      {
+        "canary_id": "LA-02",
+        "expected": "C",
+        "got": null,
+        "passed": false,
+        "status": "no_match",
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "LA-03",
+        "expected": "sem_esofagite",
+        "got": "sem_esofagite",
+        "passed": true,
+        "status": "LA_negative",
+        "section": "conclusao",
+        "note": ""
+      }
+    ],
+    "hernia_hiatal_estrita": [
+      {
+        "canary_id": "HH-01",
+        "expected": "sim",
+        "got": "sim",
+        "passed": true,
+        "status": "hh_lemma",
+        "section": "esofago",
+        "note": ""
+      },
+      {
+        "canary_id": "HH-02",
+        "expected": "nao",
+        "got": "sim",
+        "passed": false,
+        "status": "hh_lemma",
+        "section": "conclusao",
+        "note": ""
+      },
+      {
+        "canary_id": "HH-03",
+        "expected": "nao",
+        "got": "nao",
+        "passed": true,
+        "status": "hh_negative",
+        "section": "esofago",
+        "note": ""
+      }
+    ]
+  },
+  "gates": {
+    "gate1_path": "<path>",
+    "gate2_path": "<path>",
+    "gate1_count": 0,
+    "gate2_count": 16,
+    "gate1_blocking": 0
+  }
+}

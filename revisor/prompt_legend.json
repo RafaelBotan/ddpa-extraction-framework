@@ -1,0 +1,49 @@
+{
+  "bbps": {
+    "question": "Qual e a escala Boston (BBPS) neste laudo?",
+    "options": "Inteiro 0-9, ou \"nao informado\" se o laudo nao traz escore",
+    "ia_prompt_instruction": "bbps: integer 0-9 or \"nao_informado\"\n  - Soma dos 3 segmentos (direito + transverso + esquerdo)\n  - Range valido: 0 a 9\n  - \"nao_informado\" se nao consta no laudo",
+    "ia_prompt_source": "Prompt de extracao principal (SYSTEM_PROMPT, GPT-4.1-mini).",
+    "ia_prompt_notes": "L1 audit detectou ~4% alucinacoes IA (BBPS inferido de 'adequado'/'picoprep'/'lactulose' quando nao ha escore no texto).",
+    "pipeline_ontology": "inteiro 0-9 ou null",
+    "judging_question": "O BBPS extraido bate com o texto do laudo?"
+  },
+  "polipo_presente": {
+    "question": "Ha polipo descrito na colonoscopia ATUAL deste laudo?",
+    "options": "sim  |  nao  (historia/indicacao nao conta como atual)",
+    "ia_prompt_instruction": "polipo_presente: \"sim\"/\"nao\"\n  - \"sim\" se ha qualquer polipo descrito na colonoscopia ATUAL\n  - \"nao\" se o laudo afirma ausencia (\"sem polipos\", \"ausencia de formacoes polipoides\")\n  - Polipo em historia/indicacao nao conta como atual",
+    "ia_prompt_source": "Prompt de extracao principal (SYSTEM_PROMPT, GPT-4.1-mini).",
+    "ia_prompt_notes": "L1 audit detectou ~2,5% alucinacoes IA. Sinonimos clinicos como LST sao polipo (extracao interpretativa).",
+    "pipeline_ontology": ["sim", "nao"],
+    "judging_question": "Ha polipo na colonoscopia atual (nao em historia/indicacao)?"
+  },
+  "polipo_tamanho_max_mm": {
+    "question": "Qual o tamanho (em mm) do maior polipo descrito no laudo?",
+    "options": "Numero em mm (ex: 5, 12.5) ou \"nao informado\" se o tamanho nao aparece",
+    "ia_prompt_instruction": "polipo_tamanho_max_mm: numero em mm ou null\n  - Maior diametro do polipo em mm\n  - Se o laudo informa em cm, converter para mm (0,5 cm = 5 mm)\n  - null se nao informado",
+    "ia_prompt_source": "Prompt de extracao principal (SYSTEM_PROMPT, GPT-4.1-mini).",
+    "ia_prompt_notes": "Piloto v4-B #5: ~92-95% acuracia IA quando dado existe.",
+    "pipeline_ontology": "float em mm ou null",
+    "judging_question": "O tamanho extraido bate com o texto do laudo?"
+  },
+  "followup_interval_any": {
+    "question": "Qual intervalo de follow-up (qualquer tipo) a conclusao do laudo recomenda?",
+    "options": "7_dias, 15_dias, 30_dias, 3_meses, 6_meses, 1_ano, 2_anos, 3_anos, 5_anos, 10_anos, precoce, posterior, imediato, sem_intervalo, nao_recomendado",
+    "ia_prompt_instruction": "interval: free text or \"nenhum\"\n  - Copy the EXACT interval from the report: \"3 anos\", \"1 ano\", \"6 meses\", \"imediato\", \"apos preparo adequado\"\n  - \"nenhum\" if no interval mentioned\n  - DO NOT invent or infer intervals from guidelines",
+    "ia_prompt_source": "run_reextracao_b_unified_slice.py (GPT-4.1-mini, extracao B-unified, 6 variaveis em uma passada).",
+    "ia_prompt_notes": "Texto copiado literalmente do laudo. 'nenhum' quando silencio. Normalizacao free-text -> enum feita deterministicamente em rebuild_corpus_bunified.py (nao pelo LLM). Kappa B-unified ~+0.39 (versus -0.01 do legado). Coluna consumida: ia_followup_interval (normalizada); raw preservada em ia_followup_interval_raw para auditoria.",
+    "pipeline_ontology": ["7_dias", "15_dias", "30_dias", "3_meses", "6_meses", "1_ano", "2_anos", "3_anos", "5_anos", "10_anos", "precoce", "posterior", "imediato", "sem_intervalo", "nao_recomendado"],
+    "pipeline_aliases": {"nao_aplicavel": "nao_recomendado", "nao_mencionado": "nao_recomendado", "nenhum": "nao_recomendado"},
+    "judging_question": "Dado o texto do laudo, a conclusao do pipeline sobre o intervalo de seguimento esta correta?"
+  },
+  "intervalo_vigilancia_ccr": {
+    "question": "Para vigilancia de CCR neste laudo (desconsiderando terapeutico, remake por preparo ruim ou complementacao diagnostica), a resposta do pipeline esta correta?",
+    "options": "Julgue a resposta do pipeline: correto / incorreto / ambiguo",
+    "ia_prompt_instruction": "interval: free text or \"nenhum\"\n  - Copy the EXACT interval from the report: \"3 anos\", \"1 ano\", \"6 meses\", \"imediato\", \"apos preparo adequado\"\n  - \"nenhum\" if no interval mentioned\n  - DO NOT invent or infer intervals from guidelines",
+    "ia_prompt_source": "run_reextracao_b_unified_slice.py (GPT-4.1-mini, extracao B-unified). Mesmo campo filtrado para vigilancia de CCR (wrapper detector exclui terapeutico/remake/diagnostico).",
+    "ia_prompt_notes": "Variavel TARGET derivada de followup_interval_any. Sem comparison_column: IA original nao isolou vigilancia; comparar seria apples vs oranges.",
+    "pipeline_ontology": ["7_dias", "15_dias", "30_dias", "3_meses", "6_meses", "1_ano", "2_anos", "3_anos", "5_anos", "10_anos", "precoce", "posterior", "imediato", "sem_intervalo", "nao_recomendado"],
+    "pipeline_aliases": {"nao_aplicavel": "nao_recomendado", "nao_mencionado": "nao_recomendado", "nenhum": "nao_recomendado"},
+    "judging_question": "Dado o texto do laudo, a conclusao do pipeline sobre vigilancia de CCR esta correta (exclui terapeutico/remake)?"
+  }
+}

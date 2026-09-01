@@ -1,0 +1,79 @@
+# ============================================================================
+# Study Contract — followup_interval_any v4.3.1 @ E1 FULL
+# ============================================================================
+# Platform test A phase 2 — v4.3.1 rodando no corpus completo E1 (~135k laudos).
+# scale3k sanity passou 2.7s, 5/5 canaries OK, fill_rate=1.000.
+# ============================================================================
+
+contract:
+  id: e1_followup_v4_3_1_full
+  version: 1.0.0
+  study: E1
+  policy_registry: ../policies/endoscopia.yaml
+  description: >
+    Platform test A phase 2: classifier v4.3.1 frozen rodando no corpus
+    E1 completo (~135k laudos). Mede: distribuicao semantica, latencia,
+    fill_rate, scope_complete ratio.
+  created: 2026-04-15
+  hypotheses:
+    - id: H_SCALE
+      text: "Plataforma processa 135k laudos em <5min com fill_rate>=99%."
+
+corpus:
+  path: <path>
+  id_column: id_registro
+  text_column: texto_laudo_completo
+  strata:
+    - clinica
+  extra_columns:
+    - clinica
+
+extractor:
+  section_preset: ENDOSCOPY_SECTIONS
+  language: pt-BR
+
+variables:
+  - name: followup_present_v4_3_1
+    taxonomy: [LEX-S, TEMP, INF]
+    criticality: 7
+    description: "followup_present em {sim, sim_sem_prazo, ambiguo, nao_recomendado, nao_mencionado} via classifier v4.3.1 frozen."
+    detector:
+      module: followup_interval_any_v4_3_1
+      function: detect_followup_interval_any
+      interface: dataclass
+      value_field: value
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty]
+    comparison_column: null
+    silence_policy:
+      output_ontology:
+        - sim
+        - sim_sem_prazo
+        - ambiguo
+        - nao_recomendado
+        - nao_mencionado
+      default_if_silent: nao_mencionado
+      allows_implicit_negative: false
+      section_scope: [conclusao]
+    canaries:
+      - id: FUI-01
+        text: "[CONCLUSAO] Sugere-se nova colonoscopia em 3 anos."
+        expected_value: sim
+      - id: FUI-02
+        text: "[CONCLUSAO] Se necessario, repetir colonoscopia com melhor preparo intestinal."
+        expected_value: sim_sem_prazo
+      - id: FUI-03
+        text: "[CONCLUSAO] Habitualmente repete-se em 5 anos."
+        expected_value: ambiguo
+      - id: FUI-04
+        text: "[CONCLUSAO] Exame normal."
+        expected_value: nao_mencionado
+      - id: FUI-05
+        text: "[CONCLUSAO] Sugere-se, a criterio clinico, novo procedimento em 4-8\nsemanas."
+        expected_value: sim
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

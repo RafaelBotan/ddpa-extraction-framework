@@ -1,0 +1,198 @@
+# ============================================================================
+# Study Contract — E1 Endoscopia (piloto framework v4-B)
+# ============================================================================
+# Este contrato valida o schema study_contract reproduzindo os 4 pilotos
+# de colonoscopia (E1) já publicados em 04_piloto/PILOTO_*_RESULTADO.md.
+#
+# Corpus: 67.816 laudos de colonoscopia (BASE_ANALITICA_ESTUDO1.csv)
+# Ordem GPT-5 R5 item #1 — validação empírica do schema.
+# ============================================================================
+
+contract:
+  id: e1_endoscopia_piloto
+  version: 1.0.0
+  study: E1
+  policy_registry: ../policies/endoscopia.yaml
+  description: >
+    Piloto framework v4-B em colonoscopia. Reproduz os pilotos bbps,
+    polipo_presente, polipo_tamanho_max_mm e intervalo_recomendado via
+    contrato único, em vez de 4 scripts per-detector separados.
+  created: 2026-04-13
+  hypotheses:
+    - id: H_BBPS
+      text: "BBPS extraído pelo L1 concorda com IA em >=99% quando ambos têm valor."
+    - id: H_POLIPO
+      text: "polipo_presente L1 expõe ~2,5% de alucinação IA."
+    - id: H_TAMANHO
+      text: "polipo_tamanho_max_mm L1 tem exact match >=96% vs IA."
+    - id: H_INTERVALO
+      text: "intervalo_recomendado L1 concorda ~96% com IA e expõe guideline-consistent unsupported completion."
+
+corpus:
+  path: <path>
+  id_column: id_registro
+  text_column: texto_laudo_completo
+  strata:
+    - clinica
+  extra_columns:
+    - clinica
+    - preparo_boston_total
+    - polipo_presente
+    - polipo_tamanho_max_mm
+    - intervalo_recomendado
+
+extractor:
+  section_preset: ENDOSCOPY_SECTIONS
+  language: pt-BR
+
+variables:
+
+  # --------------------------------------------------------------------------
+  # BBPS — Boston Bowel Preparation Scale (NUM-C + ORD-E)
+  # --------------------------------------------------------------------------
+  - name: bbps
+    taxonomy: [NUM-C, ORD-E]
+    criticality: 6
+    description: "Boston Bowel Preparation Scale total (0-9)."
+    detector:
+      module: bbps_l1_v4
+      function: detect_bbps
+      interface: dataclass
+      value_field: value
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [computed_sum, declared_total, arith_flag]
+    comparison_column: preparo_boston_total
+    silence_policy:
+      output_ontology: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+      default_if_silent: null      # silence = abstained_source_incomplete
+      allows_implicit_negative: false
+      section_scope: [preparo, descricao]
+    canaries:
+      - id: BBPS-01
+        text: "PREPARO: Boston 2+3+3=8"
+        expected_value: 8
+        note: "soma canônica"
+      - id: BBPS-02
+        text: "PREPARO: inadequado"
+        expected_value: null
+        note: "silêncio numérico -> abstained"
+
+  # --------------------------------------------------------------------------
+  # polipo_presente — LEX-S + NEG
+  # --------------------------------------------------------------------------
+  - name: polipo_presente
+    taxonomy: [LEX-S, NEG]
+    criticality: 7
+    description: "Presença de pólipo colorretal (sim/nao)."
+    detector:
+      module: polipo_l1_v4
+      function: detect_polipo
+      interface: dataclass
+      mode: C
+      value_field: value
+      certainty_field: certainty
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty]
+    comparison_column: polipo_presente
+    silence_policy:
+      output_ontology: [sim, nao]
+      default_if_silent: nao
+      allows_implicit_negative: true
+      section_scope: [conclusao, descricao]
+    canaries:
+      - id: POL-01
+        text: "CONCLUSÃO: Pólipo séssil de 5mm em cólon sigmóide."
+        expected_value: sim
+      - id: POL-02
+        text: "CONCLUSÃO: ausência de formações polipóides."
+        expected_value: nao
+      - id: POL-03
+        text: "INDICAÇÃO: controle pós-polipectomia"
+        expected_value: nao
+        note: "historicidade em indicação não conta"
+
+  # --------------------------------------------------------------------------
+  # polipo_tamanho_max_mm — MEAS-N
+  # --------------------------------------------------------------------------
+  - name: polipo_tamanho_max_mm
+    taxonomy: [MEAS-N, NUM-C]
+    criticality: 8
+    description: "Tamanho máximo do maior pólipo em mm."
+    detector:
+      module: tamanho_polipo_l1_v4
+      function: detect_tamanho_polipo
+      interface: dataclass
+      mode: C
+      value_field: value
+      certainty_field: certainty
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty, all_measurements]
+    comparison_column: polipo_tamanho_max_mm
+    silence_policy:
+      output_ontology: [float]
+      default_if_silent: null      # polipo_no_size -> escalated_policy
+      allows_implicit_negative: false
+      section_scope: [descricao, conclusao]
+    canaries:
+      - id: TAM-01
+        text: "DESCRIÇÃO: pólipo séssil de 8mm em cólon direito."
+        expected_value: 8.0
+      - id: TAM-02
+        text: "DESCRIÇÃO: formação polipóide diminuta."
+        expected_value: null
+        note: "qualitativo -> value=None, status=qualitative_*"
+
+  # --------------------------------------------------------------------------
+  # intervalo_recomendado — TEMP + recomendacao
+  # --------------------------------------------------------------------------
+  - name: intervalo_recomendado
+    taxonomy: [TEMP, INF]
+    criticality: 7
+    description: "Intervalo de follow-up recomendado na conclusão."
+    detector:
+      module: intervalo_rec_l1_v4
+      function: detect_intervalo_recomendado
+      interface: dataclass
+      mode: C
+      value_field: value
+      certainty_field: certainty
+      scope_meta_field: scope_meta
+      evidence_class_field: evidence_class
+      extra_fields: [certainty]
+    comparison_column: intervalo_recomendado
+    silence_policy:
+      output_ontology:
+        - 7_dias
+        - 15_dias
+        - 30_dias
+        - 3_meses
+        - 6_meses
+        - 1_ano
+        - 2_anos
+        - 3_anos
+        - 5_anos
+        - 10_anos
+        - precoce
+        - posterior
+        - imediato
+        - sem_intervalo
+        - nao_recomendado
+      default_if_silent: nao_recomendado
+      allows_implicit_negative: true
+      section_scope: [conclusao]
+    canaries:
+      - id: INT-01
+        text: "CONCLUSÃO: Sugere-se nova colonoscopia em 3 anos."
+        expected_value: 3_anos
+      - id: INT-02
+        text: "CONCLUSÃO: exame normal."
+        expected_value: null
+        note: "silêncio auditado (value=None); policy resolve via default_if_silent=nao_recomendado"
+
+output:
+  dir: <path>
+  format: csv
+  write_evidence: true

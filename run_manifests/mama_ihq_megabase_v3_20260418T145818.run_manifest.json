@@ -1,0 +1,424 @@
+{
+  "manifest_version": "1.0.0",
+  "contract_id": "mama_ihq_megabase_v3",
+  "contract_version": "1.1.0",
+  "contract_path": "contracts\\mama_ihq_megabase_v3.yaml",
+  "started_at": "2026-04-18T14:58:18.054912+00:00",
+  "completed_at": "2026-04-18T14:59:02.160879+00:00",
+  "duration_s": 44.11,
+  "hashes": {
+    "study_contract": "1d1bef5ed26dc1c272c0f345bc03b3191d0d87e2389da00d6e67b14a6592d1df",
+    "kb_semver": "v4.0",
+    "policy_registry": "77c18ab0a0e91c2a5c3c073d3a8ce0a3aa197cbac8864f3a1513078d7b124408",
+    "framework_core": "78470caafa89b7b93923674533058a7d5927a062b90dde488fe1197accb6c898",
+    "extractors": {
+      "re_status": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "re_pct": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "re_allred": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "rp_status": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "rp_pct": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "rp_allred": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "her2_score": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "her2_status": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "ki67_pct": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "tipo_hist_ihq": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef",
+      "subtipo_molecular": "b5eb8a3486064ef4f57f0ce73f82316e56e4d707eb446a6f23e9b51d1c676aef"
+    }
+  },
+  "policy_registry_id": "patologia_v1@0.2.0",
+  "variables": [
+    {
+      "name": "re_status",
+      "n_total": 13905,
+      "n_filled": 11943,
+      "fill_rate": 0.8589,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.58,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 11943,
+        "abstained_source_incomplete": 1962
+      }
+    },
+    {
+      "name": "re_pct",
+      "n_total": 13905,
+      "n_filled": 11401,
+      "fill_rate": 0.8199,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.93,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 11401,
+        "abstained_source_incomplete": 2504
+      }
+    },
+    {
+      "name": "re_allred",
+      "n_total": 13905,
+      "n_filled": 9461,
+      "fill_rate": 0.6804,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.36,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 9461,
+        "abstained_source_incomplete": 4444
+      }
+    },
+    {
+      "name": "rp_status",
+      "n_total": 13905,
+      "n_filled": 11545,
+      "fill_rate": 0.8303,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.4,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 11545,
+        "abstained_source_incomplete": 2360
+      }
+    },
+    {
+      "name": "rp_pct",
+      "n_total": 13905,
+      "n_filled": 11356,
+      "fill_rate": 0.8167,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.76,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 11356,
+        "abstained_source_incomplete": 2549
+      }
+    },
+    {
+      "name": "rp_allred",
+      "n_total": 13905,
+      "n_filled": 8564,
+      "fill_rate": 0.6159,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.31,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 8564,
+        "abstained_source_incomplete": 5341
+      }
+    },
+    {
+      "name": "her2_score",
+      "n_total": 13905,
+      "n_filled": 11215,
+      "fill_rate": 0.8065,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.38,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 11202,
+        "abstained_source_incomplete": 2690,
+        "accepted_semantic": 13
+      }
+    },
+    {
+      "name": "her2_status",
+      "n_total": 13905,
+      "n_filled": 11312,
+      "fill_rate": 0.8135,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.51,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 11312,
+        "abstained_source_incomplete": 2593
+      }
+    },
+    {
+      "name": "ki67_pct",
+      "n_total": 13905,
+      "n_filled": 11455,
+      "fill_rate": 0.8238,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 3.52,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 11455,
+        "abstained_source_incomplete": 2450
+      }
+    },
+    {
+      "name": "tipo_hist_ihq",
+      "n_total": 13905,
+      "n_filled": 10838,
+      "fill_rate": 0.7794,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 4.43,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 10838,
+        "abstained_source_incomplete": 3067
+      }
+    },
+    {
+      "name": "subtipo_molecular",
+      "n_total": 13905,
+      "n_filled": 9060,
+      "fill_rate": 0.6516,
+      "status_distribution": {
+        "None": 13905
+      },
+      "duration_s": 5.36,
+      "output_csv": "<path>",
+      "resolution_distribution": {
+        "accepted_exact": 9060,
+        "abstained_source_incomplete": 4845
+      }
+    }
+  ],
+  "canaries": {
+    "re_status": [
+      {
+        "canary_id": "MIH-01-RE",
+        "expected": "positivo",
+        "got": "positivo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-02-RE",
+        "expected": "negativo",
+        "got": "negativo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-03-RE",
+        "expected": "positivo",
+        "got": "positivo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-TN-RE",
+        "expected": "negativo",
+        "got": "negativo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "re_pct": [
+      {
+        "canary_id": "MIH-01-REPCT",
+        "expected": 90,
+        "got": 90,
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "re_allred": [
+      {
+        "canary_id": "MIH-01-REALL",
+        "expected": 7,
+        "got": 7,
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "rp_status": [
+      {
+        "canary_id": "MIH-01-RP",
+        "expected": "positivo",
+        "got": "positivo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-06-RP",
+        "expected": "negativo",
+        "got": "negativo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "rp_pct": [
+      {
+        "canary_id": "MIH-01-RPPCT",
+        "expected": 60,
+        "got": 60,
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "her2_score": [
+      {
+        "canary_id": "MIH-02-HER2",
+        "expected": "3+",
+        "got": "3+",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-05-HER2",
+        "expected": "2+",
+        "got": "2+",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-HER2-0",
+        "expected": "0",
+        "got": "0",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "her2_status": [
+      {
+        "canary_id": "MIH-HER2S-POS",
+        "expected": "positivo",
+        "got": "positivo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-HER2S-EQV",
+        "expected": "equivoco",
+        "got": "equivoco",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-HER2S-NAR",
+        "expected": "negativo",
+        "got": "negativo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "ki67_pct": [
+      {
+        "canary_id": "MIH-KI67-TAB",
+        "expected": 5,
+        "got": 5,
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-KI67-NAR",
+        "expected": 90,
+        "got": 90,
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "tipo_hist_ihq": [
+      {
+        "canary_id": "MIH-TIPO-CDI",
+        "expected": "CDI_SOE",
+        "got": "CDI_SOE",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-TIPO-CLI",
+        "expected": "CLI",
+        "got": "CLI",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-TIPO-CDIS",
+        "expected": "CDIS",
+        "got": "CDIS",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ],
+    "subtipo_molecular": [
+      {
+        "canary_id": "MIH-SUB-LUMA",
+        "expected": "luminal_a",
+        "got": "luminal_a",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      },
+      {
+        "canary_id": "MIH-SUB-TN",
+        "expected": "triplo_negativo",
+        "got": "triplo_negativo",
+        "passed": true,
+        "status": null,
+        "section": null,
+        "note": ""
+      }
+    ]
+  },
+  "gates": {
+    "gate1_path": "<path>",
+    "gate2_path": "<path>",
+    "gate1_count": 0,
+    "gate2_count": 0,
+    "gate1_blocking": 0
+  }
+}

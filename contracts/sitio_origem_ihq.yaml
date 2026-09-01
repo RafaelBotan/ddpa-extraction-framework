@@ -1,0 +1,226 @@
+# ============================================================================
+# Study Contract — Sitio de origem (IHQ cross-domain DDPA extraction)
+# ============================================================================
+# Canonizado 2026-04-19 como S3 da Fase 2 (pos golden persistente n=100 IHQ).
+# Fonte canonica da ontologia: question_set_sitio_natureza_v1.json v2.1.0 (Q1 ORGAO_V1).
+# Golden humano de referencia: runs/fase_2a/golden_humano_100_v2_2026-04-19_n100.csv
+#   (100/100 super_ia_accepted == "all", Opus 4.7 propos, Dr. Rafael auditou).
+# L1 regex: playbooks/compendio/regex_organ_natureza_ihq_v1.yaml v1.1.0
+#   (40 classes, anchor+exclude+specificity, abstem em ambiguidade).
+# Agreement L1 vs golden (fase_2a n=100): tried 79.5%, overall 58%, abstain 27%.
+# ============================================================================
+
+contract:
+  id: sitio_origem_ihq
+  version: 1.0.0
+  study: DDPA_SITIO_ORIGEM_IHQ
+  policy_registry: ../policies/patologia.yaml
+  description: >
+    Extracao canonica de sitio de origem (organ_principal) em laudos IHQ.
+    Ontologia ORGAO_V1 (40 classes anatomicas) do question_set_sitio_natureza_v1
+    v2.1.0. Unidade = orgao (nao sub-regiao) para busca downstream consistente.
+    L1 regex (anchor+exclude+specificity) com politica de abstencao em
+    ambiguidade; L2 IA resolve abstains e divergencias. Golden n=100 em
+    runs/fase_2a serve como ancora humana permanente.
+  created: 2026-04-19
+  hypotheses:
+    - id: H_L1_TRIED_AGREEMENT
+      text: "L1 regex quando NAO abstem atinge >=80% agreement vs golden humano."
+    - id: H_L2_RESOLVES_ABSTAIN
+      text: "L2 IA (Sonnet 4.6) resolve >=80% dos abstains L1 mantendo agreement >=90%."
+    - id: H_CASCATA_SURFACE
+      text: "Cascata L1+L2 atinge surface agreement >=90% vs golden humano n=100."
+
+corpus:
+  path: <path>
+  filter:
+    column: tipo_exame
+    value: IMUNO_HISTOQUIMICO
+  total_rows_expected: 32586
+  id_column: numExame
+  text_column: texto_completo
+  strata:
+    - ano
+  extra_columns:
+    - ano
+    - data_exame
+    - material_especificado
+    - conclusao
+    - tecnica
+    - macroscopia
+    - microscopia
+  text_compose:
+    method: concat_priority
+    priority:
+      - material_especificado
+      - conclusao
+      - microscopia
+      - macroscopia
+      - tecnica
+    separator: "\n|CONCLUSAO|\n"
+    uppercase_for_regex: true
+
+extractor:
+  section_preset: PATHOLOGY_SECTIONS
+  language: pt-BR
+
+variables:
+
+  - name: sitio_origem
+    taxonomy: [CAT]
+    criticality: 10
+    description: >
+      Sitio/orgao principal da lesao biopsiada (organ_principal no
+      question_set). Classificar pelo MATERIAL, nao pelo tumor primario
+      (biopsia de linfonodo com metastase mamaria = LINFONODO). Sub-regioes
+      rolam para o orgao-pai (endometrio -> UTERO_CORPO; sigmoide ->
+      INTESTINO_GROSSO; fimbria -> TUBA_UTERINA). Fallback: INDETERMINADO.
+    detector:
+      module: playbooks.compendio.sitio_natureza_l1
+      function: detect_organ_principal
+      interface: tuple
+      yaml_source: playbooks/compendio/regex_organ_natureza_ihq_v1.yaml
+      yaml_version: "1.1.0"
+      pre_normalize: true
+      note: |
+        Modulo canonico a ser extraido de runs/fase_2a/l1_regex_predict.py
+        (implementacao de referencia validada na fase_2a). Comportamento:
+        applica anchor_patterns por classe, remove se bate exclude_patterns,
+        desempata por specificity (3>2>1), abstem se: (a) nenhuma classe
+        bateu, (b) multiplas classes com mesma specificity sem desempate,
+        (c) organ_principal nao resolveu por "primeira aparicao em material".
+    comparison_column: null
+    silence_policy:
+      output_ontology:
+        - MAMA
+        - UTERO_CORPO
+        - COLO_UTERINO
+        - TUBA_UTERINA
+        - OVARIO
+        - VULVA_VAGINA
+        - PLACENTA
+        - PROSTATA
+        - TESTICULO_EPIDIDIMO
+        - PENE
+        - BEXIGA_UROTELIO
+        - RIM
+        - SUPRARRENAL
+        - ESOFAGO
+        - ESTOMAGO
+        - INTESTINO_DELGADO
+        - APENDICE
+        - INTESTINO_GROSSO
+        - ANUS_CANAL_ANAL
+        - FIGADO
+        - VIA_BILIAR_VESICULA
+        - PANCREAS
+        - PULMAO
+        - PLEURA
+        - MEDIASTINO_TIMO
+        - TIREOIDE_PARATIREOIDE
+        - GLANDULA_SALIVAR
+        - CAVIDADE_ORAL_OROFARINGE
+        - LARINGE_HIPOFARINGE
+        - FOSSA_NASAL_SEIOS_PARANASAIS
+        - SNC_ENCEFALO_MEDULA
+        - PELE
+        - PARTES_MOLES
+        - OSSO
+        - MEDULA_OSSEA_BMX
+        - LINFONODO
+        - BACO
+        - RETROPERITONEO
+        - PERITONEO_OMENTO
+        - INDETERMINADO
+      default_if_silent: null
+      allows_implicit_negative: false
+      section_scope: [material_especificado, conclusao, microscopia]
+      escalate_on_ambiguity: true
+    canaries:
+      - id: SITIO-MAMA-DIRECT
+        text: "Material: fragmento de mama direita (mastectomia simples). CONCLUSAO: carcinoma ductal infiltrante."
+        expected_value: MAMA
+      - id: SITIO-LINFONODO-META
+        text: "Material: linfonodo axilar esquerdo. CONCLUSAO: metastase de carcinoma ductal mamario."
+        expected_value: LINFONODO
+      - id: SITIO-PANCREAS-WHIPPLE
+        text: "Material: peca de pancreatoduodenectomia (Whipple). CONCLUSAO: adenocarcinoma pancreatico."
+        expected_value: PANCREAS
+      - id: SITIO-COLO-VS-CORPO
+        text: "Material: biopsia de colo uterino. CONCLUSAO: NIC II."
+        expected_value: COLO_UTERINO
+      - id: SITIO-TUBA-FIMBRIA
+        text: "Material: fragmento de fimbria de tuba uterina direita. CONCLUSAO: STIC (carcinoma tubario seroso in situ)."
+        expected_value: TUBA_UTERINA
+      - id: SITIO-INDET
+        text: "CONCLUSAO: painel imuno-histoquimico reagente para AE1/AE3. Origem nao identificada."
+        expected_value: INDETERMINADO
+
+  - name: sitio_origem_abstained
+    taxonomy: [BIN]
+    criticality: 5
+    description: >
+      Flag L1: true quando regex nao conseguiu decidir single class (0 matches
+      ou multiplas classes de mesma specificity). Alvo do L2 IA.
+    detector:
+      module: playbooks.compendio.sitio_natureza_l1
+      function: detect_organ_principal_abstained_flag
+      interface: tuple
+      pre_normalize: false
+    comparison_column: null
+    silence_policy:
+      output_ontology: ['true', 'false']
+      default_if_silent: 'false'
+      allows_implicit_negative: false
+      section_scope: [material_especificado, conclusao]
+    canaries: []
+
+golden:
+  path: <path>
+  format: csv
+  encoding: utf-8-sig
+  sep: ';'
+  n: 100
+  column: organ_principal
+  agreement_targets:
+    tried_agreement_min: 0.85
+    overall_surface_min: 0.90
+    abstain_rate_max: 0.15
+  current_l1_baseline:
+    measured_on: "fase_2a n=100 (2026-04-19)"
+    tried_agreement: 0.795
+    overall_surface: 0.58
+    abstain_rate: 0.27
+    gap_to_target_on_abstain: 0.12
+    interpretation: "L1 regex e conservador; L2 IA deve fechar abstains sem degradar precision."
+
+l2_ia:
+  enabled: true
+  model_primary: claude-sonnet-4-6
+  model_ablation: claude-haiku-4-5
+  prompt_source: playbooks/compendio/research_app_question_sets/question_set_sitio_natureza_v1.json
+  prompt_question: Q1
+  temperature: 0
+  call_mode: per_laudo
+  output_schema:
+    organ_principal: str
+    confianca: enum[alta, media, baixa]
+    rationale: str
+    evidencia: str
+  fallback_policy:
+    - "Se L1 tried e classe valida -> usa L1 (confianca alta)"
+    - "Se L1 abstained -> usa L2"
+    - "Se L1 tried mas L2 disagreement (golden backlog) -> escalate para adjudicacao"
+
+output:
+  dir: <path>
+  format: csv
+  encoding: utf-8-sig
+  sep: ';'
+  decimal: ','
+  write_evidence: true
+  artifacts:
+    - l1_predictions.parquet
+    - l2_predictions.jsonl
+    - cascata_predictions.parquet
+    - agreement_vs_golden.md
