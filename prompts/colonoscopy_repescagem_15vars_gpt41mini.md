@@ -1,6 +1,6 @@
 # Colonoscopy — rescue pass (15 additional variables)
 
-**Model:** GPT-4.1-mini, temperature 0. **Use:** rescue pass over the colonoscopy corpus. Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `1ae2ce911d1eb11bd794de8a9ffb523b`); published as run. As run, the prompt's own preamble says 18 variables while the enumeration lists 17; the discrepancy existed in production and is preserved verbatim. Prompts are in Brazilian
+**Model:** GPT-4.1-mini, temperature 0. **Use:** rescue pass over the colonoscopy corpus. Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `1ae2ce911d1eb11bd794de8a9ffb523b276ba3769a9dd3a3034cd524c25f4486`); published as run. As run, the prompt's own preamble announces 18 fields while the enumeration lists 17 keys; the discrepancy existed in production and is preserved verbatim. Prompts are in Brazilian
 Portuguese, the language of the reports.
 
 ```text

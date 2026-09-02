@@ -1,6 +1,6 @@
 # Colonoscopy — main extraction (22 variables)
 
-**Model:** GPT-4.1-mini, temperature 0. **Use:** production read of 67,816 colonoscopy reports (the L2 side of the e1 cross-audit). Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `4501a7bc5474359a494dfa4fe6143db8`); published as run. Prompts are in Brazilian
+**Model:** GPT-4.1-mini, temperature 0. **Use:** production read of 67,816 colonoscopy reports (the L2 side of the e1 cross-audit). Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `4501a7bc5474359a494dfa4fe6143db89702afc99cfe2e10bb0351ae2426e1bf`); published as run. Prompts are in Brazilian
 Portuguese, the language of the reports.
 
 ```text

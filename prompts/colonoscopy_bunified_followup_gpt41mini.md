@@ -1,6 +1,6 @@
 # Colonoscopy — unified follow-up re-extraction (B-unified)
 
-**Model:** GPT-4.1-mini, temperature 0. **Use:** refined follow-up/interval fields (free-text interval copy; the version adopted after the enum-forcing error was diagnosed). Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `1fdf77ceb49ae9fec03efa6802330ce9`); published as run. Prompts are in Brazilian
+**Model:** GPT-4.1-mini, temperature 0. **Use:** refined follow-up/interval fields (free-text interval copy; the version adopted after the enum-forcing error was diagnosed). Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `1fdf77ceb49ae9fec03efa6802330ce9f7258fecbf074b3dbab9bccbfd75cced`); published as run. Prompts are in Brazilian
 Portuguese, the language of the reports.
 
 ```text

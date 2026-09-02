@@ -1,6 +1,6 @@
 # Upper-GI endoscopy — main extraction (20 variables)
 
-**Model:** GPT-4.1-mini, temperature 0. **Use:** production read of 128,167 upper-GI reports (the L2 side of the e2 cross-audit). Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `62e15b295f99673a37afadd25d21b6b7`); published as run. As run, the prompt's own preamble says 22 variables while the enumeration lists 20; the discrepancy existed in production and is preserved verbatim. Prompts are in Brazilian
+**Model:** GPT-4.1-mini, temperature 0. **Use:** production read of 128,167 upper-GI reports (the L2 side of the e2 cross-audit). Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `62e15b295f99673a37afadd25d21b6b78de83647aefc99d05193b1ecad14b580`); published as run. As run, the prompt's own preamble announces 22 fields while the enumeration lists 20 keys; the discrepancy existed in production and is preserved verbatim. Prompts are in Brazilian
 Portuguese, the language of the reports.
 
 ```text

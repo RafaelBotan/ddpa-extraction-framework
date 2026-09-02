@@ -1,6 +1,6 @@
 # Upper-GI endoscopy — rescue pass
 
-**Model:** GPT-4.1-mini, temperature 0. **Use:** rescue pass over the upper-GI corpus. Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `a39212ce7f8801e9e90705a4c2a50f25`); published as run. Field counts in this rescue prompt are as run; any internal count-vs-list mismatch is preserved verbatim. Prompts are in Brazilian
+**Model:** GPT-4.1-mini, temperature 0. **Use:** rescue pass over the upper-GI corpus. Extracted verbatim from the production script's `SYSTEM_PROMPT` (sha256 of the exact string: `a39212ce7f8801e9e90705a4c2a50f257c9ea09177889cc0f27d788e158cbbb4`); published as run. Field counts in this rescue prompt are as run; any internal count-vs-list mismatch is preserved verbatim. Prompts are in Brazilian
 Portuguese, the language of the reports.
 
 ```text
