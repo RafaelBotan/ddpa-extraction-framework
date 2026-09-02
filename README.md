@@ -16,7 +16,7 @@ refuse to encode model output the source text does not support.
 | `runtime/sandbox/` | the five safety barriers + viability gate (patch cards) |
 | `runtime/observability/` | cross-run dashboards, drift alerting, pattern discovery |
 | `*_l1_v4.py` | the 12 deterministic detectors (5 pathology domains, endoscopy variables) |
-| `contracts/` | study contracts — including the full structured prompts, verbatim |
+| `contracts/` | per-domain study contracts (variable panels, canary examples, policies) |
 | `policies/` | policy registry files |
 | `tests/` | automated suite (run `pytest tests/`: 450 passed, 3 skipped) |
 | `docs/L1_PLAYBOOK.md` | the catalogue of 32 recurring error patterns |
@@ -53,7 +53,9 @@ python scripts/run_sandbox.py --variable polipo_tamanho_max_mm --use-pattern-fam
 ```
 
 Running extraction end-to-end requires a report corpus (not shared); the
-contracts in `contracts/` document every prompt and variable panel verbatim.
+contracts in `contracts/` document every variable panel and policy, and the
+full extraction prompts are available from the corresponding author on
+reasonable request.
 
 ## Ethics
 
