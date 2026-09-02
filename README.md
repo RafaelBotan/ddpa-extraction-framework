@@ -17,6 +17,7 @@ refuse to encode model output the source text does not support.
 | `runtime/observability/` | cross-run dashboards, drift alerting, pattern discovery |
 | `*_l1_v4.py` | the 12 deterministic detectors (5 pathology domains, endoscopy variables) |
 | `contracts/` | per-domain study contracts (variable panels, canary examples, policies) |
+| `prompts/` | the endoscopy extraction system prompts, verbatim as run |
 | `policies/` | policy registry files |
 | `tests/` | automated suite (run `pytest tests/`: 450 passed, 3 skipped) |
 | `docs/L1_PLAYBOOK.md` | the catalogue of 32 recurring error patterns |
@@ -52,10 +53,11 @@ pytest tests/          # 450 passed, 3 skipped
 python scripts/run_sandbox.py --variable polipo_tamanho_max_mm --use-pattern-family [--force-trivial-regex] [--min-family-coverage 0.10]
 ```
 
-Running extraction end-to-end requires a report corpus (not shared); the
-contracts in `contracts/` document every variable panel and policy, and the
-full extraction prompts are available from the corresponding author on
-reasonable request.
+Running extraction end-to-end requires a report corpus (not shared). The
+contracts in `contracts/` document every variable panel and policy; the
+endoscopy extraction prompts are published verbatim in `prompts/`; the
+pathology comparator used the archive's pre-existing extractions, whose
+prompts belong to the source-base pipeline (available on reasonable request).
 
 ## Ethics
 
