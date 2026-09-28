@@ -1,17 +1,24 @@
-"""DDPA Sandbox — 5-Barrier Evaluator.
+"""DDPA Sandbox — evaluator v2.2 (gate + four blocking barriers + two telemetries).
 
-Runs barriers sequentially with fail-fast semantics:
+Runs checks sequentially with fail-fast semantics:
 
-  Barrier 1: canary_pass        — regression guard (fails hard)
-  Barrier 2: target_hit         — recall gate (fails hard)
-  Barrier 3: near_miss_safety   — precision guard (fails hard)
-  Barrier 4: corpus_skew        — distribution warning (always passes)
-  Barrier 5: corpus_wide_shadow — impact forecast (always passes, informative)
+  Gate      B0: family_viability            — blocks cards whose family is too fragmented
+  Barrier   B1: canary_pass                 — contract canaries must keep their expected value
+  Barrier   B2: target_hit                  — recall gate
+  Barrier   B3: near_miss_safety            — precision guard
+  Barrier   B4: regression_gate             — v2.2: versioned held-aside set re-executed from raw
+                                              text; value AND state compared; CAN REJECT
+  Telemetry T1: site_skew_warning           — source-distribution warning (never rejects)
+  Telemetry T2: corpus_wide_impact_forecast — projected change count (never rejects)
 
-Entry point: evaluate_card()
+History: until v2.1 the two telemetries were listed as "barriers 4 and 5" although both
+returned passed=True unconditionally; v2.2 renames them (old names kept as deprecated
+aliases), adds the regression gate and stops emitting SKEW_WARNING as a final status
+(it lives only in warning_flags). Entry point: evaluate_card()
 """
 from __future__ import annotations
 
+import warnings
 from typing import Any, Callable, Optional
 
 import pandas as pd
@@ -23,6 +30,7 @@ from sandbox.patch_card import (
     SandboxResult,
 )
 from sandbox.proposal_executor import execute_proposal_batch, execute_proposal_single
+from sandbox.regression import barrier_regression_gate
 
 
 # ============================================================================
@@ -311,18 +319,19 @@ def _stratified_sample(
 # Barrier 4: Corpus skew
 # ============================================================================
 
-def barrier_corpus_skew(
+def site_skew_warning(
     card: PatchCard,
     skew_threshold: float = 0.8,
 ) -> BarrierResult:
-    """Detect site distribution skew — always passes, emits warning.
+    """TELEMETRY (v2.2; formerly 'barrier 4'): site distribution skew - never rejects, emits warning.
 
     If the dominant site has >skew_threshold of total records, emit WARNING.
     """
     dist = card.site_distribution
     if not dist:
         return BarrierResult(
-            barrier='corpus_skew',
+            barrier='site_skew_warning',
+            kind='telemetry',
             passed=True,
             score=None,
             detail='No site distribution data available',
@@ -331,7 +340,8 @@ def barrier_corpus_skew(
     total = sum(dist.values())
     if total == 0:
         return BarrierResult(
-            barrier='corpus_skew',
+            barrier='site_skew_warning',
+            kind='telemetry',
             passed=True,
             score=None,
             detail='Site distribution total is zero',
@@ -342,7 +352,8 @@ def barrier_corpus_skew(
 
     if max_frac > skew_threshold:
         return BarrierResult(
-            barrier='corpus_skew',
+            barrier='site_skew_warning',
+            kind='telemetry',
             passed=True,
             score=max_frac,
             detail=(
@@ -352,7 +363,8 @@ def barrier_corpus_skew(
         )
 
     return BarrierResult(
-        barrier='corpus_skew',
+        barrier='site_skew_warning',
+        kind='telemetry',
         passed=True,
         score=max_frac,
         detail=f'Site distribution balanced — max site {max_site!r} at {max_frac:.1%}',
@@ -363,13 +375,14 @@ def barrier_corpus_skew(
 # Barrier 5: Corpus-wide shadow run
 # ============================================================================
 
-def barrier_corpus_wide_shadow(
+def corpus_wide_impact_forecast(
     card: PatchCard,
     detector_func: Callable[[str], Any],
     policy: Policy,
     corpus_df: pd.DataFrame,
 ) -> BarrierResult:
-    """Shadow run across full corpus — informative, always passes.
+    """TELEMETRY (v2.2; formerly 'barrier 5'): corpus-wide impact forecast - never rejects.
+    It projects how many rows would change; it is NOT a regression test (that is barrier 4).
 
     Computes:
     - cases_changed: how many rows would gain a value
@@ -377,7 +390,8 @@ def barrier_corpus_wide_shadow(
     """
     if corpus_df.empty:
         return BarrierResult(
-            barrier='corpus_wide_shadow',
+            barrier='corpus_wide_impact_forecast',
+            kind='telemetry',
             passed=True,
             score=None,
             detail='Empty corpus — shadow run skipped',
@@ -403,7 +417,8 @@ def barrier_corpus_wide_shadow(
         proposed_rate = 0.0
 
     return BarrierResult(
-        barrier='corpus_wide_shadow',
+        barrier='corpus_wide_impact_forecast',
+        kind='telemetry',
         passed=True,
         score=fill_rate_delta,
         detail=(
@@ -418,6 +433,23 @@ def barrier_corpus_wide_shadow(
 # Main orchestrator
 # ============================================================================
 
+# ---------------------------------------------------------------------------
+# Deprecated aliases (v2.2). The old names suggested these could reject a card;
+# they never could. Kept so v1.x scripts and reports keep importing.
+# ---------------------------------------------------------------------------
+
+def barrier_corpus_skew(*args, **kwargs) -> BarrierResult:
+    warnings.warn('barrier_corpus_skew is telemetry and was renamed site_skew_warning (v2.2)',
+                  DeprecationWarning, stacklevel=2)
+    return site_skew_warning(*args, **kwargs)
+
+
+def barrier_corpus_wide_shadow(*args, **kwargs) -> BarrierResult:
+    warnings.warn('barrier_corpus_wide_shadow is telemetry and was renamed corpus_wide_impact_forecast (v2.2)',
+                  DeprecationWarning, stacklevel=2)
+    return corpus_wide_impact_forecast(*args, **kwargs)
+
+
 def evaluate_card(
     card: PatchCard,
     canaries: list,
@@ -425,15 +457,23 @@ def evaluate_card(
     corpus_df: pd.DataFrame,
     detector_func: Callable[[str], Any],
     random_negative_n: int = 200,
+    regression_cases: Optional[list] = None,
+    regression_set_sha256: Optional[str] = None,
 ) -> PatchCard:
-    """Run all 5 barriers with fail-fast and set card.sandbox_result.
+    """Run gate, four blocking barriers and two telemetries; set card.sandbox_result.
 
-    Fail-fast rules:
-    - Barrier 1 fails → status=REJECTED_CANARY, stop after barrier 1
-    - Barrier 2 fails → status=NEEDS_REFINEMENT (60-79%) or LOW_TARGET_HIT (<60%), stop after barrier 2
-    - Barrier 3 fails → status=FALSE_POSITIVE_RISK, stop after barrier 3
-    - Barriers 4-5 always continue; final status APPROVED (or SKEW_WARNING if skew detected)
+    Fail-fast rules (v2.2):
+    - B0 fails -> status=LOW_FAMILY_COVERAGE
+    - B1 fails -> status=REJECTED_CANARY
+    - B2 fails -> status=NEEDS_REFINEMENT (60-79%) or LOW_TARGET_HIT (<60%)
+    - B3 fails -> status=FALSE_POSITIVE_RISK
+    - B4 (regression gate) fails -> status=REJECTED_REGRESSION
+    - telemetries never change the status; final status is APPROVED, with
+      LOCAL_PATTERN_WARNING / NO_REGRESSION_SET in warning_flags when applicable.
 
+    ``regression_cases`` is the loaded held-aside set (see sandbox.regression). When it is
+    None the gate is SKIPPED and flagged NO_REGRESSION_SET - that is not a pass; production
+    runs (scripts/run_sandbox.py) refuse to evaluate without a set.
     High-risk cards use random_negative_n=500 for barrier 3.
     """
     risk_level = card.proposed_change.risk_level
@@ -498,35 +538,58 @@ def evaluate_card(
         )
         return card
 
-    # --- Barrier 4: Corpus skew (always passes) ---
-    b4 = barrier_corpus_skew(card)
+    # --- Barrier 4 (v2.2): regression gate - blocking ---
+    skipped_regression = regression_cases is None
+    if skipped_regression:
+        b4 = BarrierResult(
+            barrier='regression_gate', passed=True, score=None, kind='blocking',
+            detail='SKIPPED: no regression set supplied - not a pass; production runs must supply one',
+        )
+    else:
+        b4 = barrier_regression_gate(card, regression_cases, detector_func, policy,
+                                     set_sha256=regression_set_sha256)
     barriers_run.append(b4)
+    if not b4.passed:
+        card.sandbox_result = SandboxResult(
+            status='REJECTED_REGRESSION',
+            barriers=barriers_run,
+            impact_report={},
+            generated_canaries=[],
+            generated_hard_negatives=[],
+        )
+        return card
 
-    # --- Barrier 5: Corpus-wide shadow (always passes) ---
-    b5 = barrier_corpus_wide_shadow(card, detector_func, policy, corpus_df)
-    barriers_run.append(b5)
+    # --- Telemetry T1: site skew (never rejects) ---
+    t_skew = site_skew_warning(card)
+    barriers_run.append(t_skew)
+
+    # --- Telemetry T2: corpus-wide impact forecast (never rejects) ---
+    t_impact = corpus_wide_impact_forecast(card, detector_func, policy, corpus_df)
+    barriers_run.append(t_impact)
 
     # Determine final status and warning flags (v2.1 per GPT-5 verdict 2026-04-17:
     # SKEW_WARNING conflates two things. Separate decision_status from warning_flags.)
     warning_flags: list[str] = []
 
     local_pattern = (
-        b4.detail is not None and
-        ('WARNING' in b4.detail or 'skew' in b4.detail.lower()) and
-        b4.score is not None and b4.score > 0.8
+        t_skew.detail is not None and
+        ('WARNING' in t_skew.detail or 'skew' in t_skew.detail.lower()) and
+        t_skew.score is not None and t_skew.score > 0.8
     )
     if local_pattern:
         warning_flags.append('LOCAL_PATTERN_WARNING')
+    if skipped_regression:
+        warning_flags.append('NO_REGRESSION_SET')
 
-    # Back-compat: keep SKEW_WARNING as top-level status when local pattern detected,
-    # so existing reports/dashboards don't break. The new semantic lives in warning_flags.
-    final_status = 'SKEW_WARNING' if local_pattern else 'APPROVED'
+    # v2.2: telemetry never decides the status. SKEW_WARNING is no longer a final
+    # status; the signal lives in warning_flags (LOCAL_PATTERN_WARNING).
+    final_status = 'APPROVED'
 
     impact_report: dict = {}
-    if b5.score is not None:
-        impact_report['fill_rate_delta'] = b5.score
-    if b5.detail:
-        impact_report['shadow_detail'] = b5.detail
+    if t_impact.score is not None:
+        impact_report['fill_rate_delta'] = t_impact.score
+    if t_impact.detail:
+        impact_report['shadow_detail'] = t_impact.detail
 
     card.sandbox_result = SandboxResult(
         status=final_status,

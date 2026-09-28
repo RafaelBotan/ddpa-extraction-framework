@@ -21,15 +21,16 @@ class ProposedChange:
 
 @dataclass
 class BarrierResult:
-    barrier: str          # canary_pass | target_hit | near_miss_safety | corpus_skew | corpus_wide_shadow
+    barrier: str          # family_viability | canary_pass | target_hit | near_miss_safety | regression_gate | site_skew_warning | corpus_wide_impact_forecast
     passed: bool
     score: float | None
     detail: str
+    kind: str = 'blocking'   # v2.2: 'blocking' (can reject the card) | 'telemetry' (informative, never rejects)
 
 
 @dataclass
 class SandboxResult:
-    status: str                            # APPROVED | REJECTED_CANARY | LOW_TARGET_HIT | FALSE_POSITIVE_RISK | NEEDS_REFINEMENT | LOW_FAMILY_COVERAGE
+    status: str                            # APPROVED | LOW_FAMILY_COVERAGE | REJECTED_CANARY | LOW_TARGET_HIT | NEEDS_REFINEMENT | FALSE_POSITIVE_RISK | REJECTED_REGRESSION (v2.2)
     barriers: list[BarrierResult]
     impact_report: dict
     generated_canaries: list[dict]

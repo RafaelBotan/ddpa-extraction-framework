@@ -1,0 +1,44 @@
+{
+ "_o_que_e": "MANIFEST NO_PHI dos conjuntos de regressão de polipo_tamanho_max_mm (JSONL são LOCAIS: contêm texto de laudo).",
+ "vigente": "v2",
+ "seed": 42,
+ "versoes": {
+  "v1": {
+   "arquivo": "regression_sets/polipo_tamanho_max_mm_v1.jsonl",
+   "sha256": "ca6abd066956574bff1956df51b7820566a92a39b6bfeb9432b7e1f09fb2be80",
+   "n_casos": 334,
+   "por_tipo": {
+    "synthetic_canary": 2,
+    "synthetic_known_bug": 12,
+    "adjudicated_dev": 3,
+    "metamorphic_expected_change": 197,
+    "metamorphic_invariance": 120
+   },
+   "gerado_em": "2026-09-18T12:38:57",
+   "status": "SUPERSEDIDO (mantido, nunca editado)",
+   "defeito": "tipo evidencia-removida admitia laudos com segunda medida residual; 3+ esperados mal construidos expostos pelo gate em 18/09"
+  },
+  "v2": {
+   "arquivo": "regression_sets/polipo_tamanho_max_mm_v2.jsonl",
+   "sha256": "2efb7266606db7f0eaf7650c345db370ddc5b17c1b59e612c5794aa68af74e17",
+   "n_casos": 319,
+   "por_tipo": {
+    "synthetic_canary": 2,
+    "synthetic_known_bug": 12,
+    "adjudicated_dev": 3,
+    "metamorphic_expected_change": 182,
+    "metamorphic_invariance": 120
+   },
+   "gerado_em": "2026-09-18T12:51:51",
+   "amostra_400": {
+    "remocao_valida_sem_medida_residual": 182,
+    "descartados_medida_residual": 52,
+    "descartados_baseline_ainda_acha_valor": 0,
+    "descartados_sem_alteracao": 166
+   },
+   "motivo": "filtro: apos a remocao nao pode restar NENHUMA medida mm/cm; verdade 'nenhum' por construcao"
+  }
+ },
+ "regra_de_atualizacao": "mudanca pretendida por card aprovado entra como caso novo em versao nova; versao usada para aprovar nunca e editada",
+ "publico": "somente tipos synthetic_* saem para o repositorio (tests/fixtures); os demais ficam locais"
+}

@@ -1,0 +1,227 @@
+{
+ "cervical|resultado": {
+  "aceitos": 189,
+  "matriz": [
+   {
+    "aceito": "AGC",
+    "referencia": "AGC",
+    "n": 3
+   },
+   {
+    "aceito": "ASC_H",
+    "referencia": "ASC_H",
+    "n": 8
+   },
+   {
+    "aceito": "ASC_H",
+    "referencia": "LSIL",
+    "n": 2
+   },
+   {
+    "aceito": "ASC_US",
+    "referencia": "ASC_US",
+    "n": 47
+   },
+   {
+    "aceito": "HSIL",
+    "referencia": "HSIL",
+    "n": 5
+   },
+   {
+    "aceito": "LSIL",
+    "referencia": "LSIL",
+    "n": 50
+   },
+   {
+    "aceito": "LSIL",
+    "referencia": "OUTRO",
+    "n": 2
+   },
+   {
+    "aceito": "NILM",
+    "referencia": "NILM",
+    "n": 72
+   }
+  ]
+ },
+ "cervical|adequab": {
+  "aceitos": 202,
+  "matriz": [
+   {
+    "aceito": "INSATISFATORIA",
+    "referencia": "INSATISFATORIA",
+    "n": 4
+   },
+   {
+    "aceito": "SATISFATORIA",
+    "referencia": "NAO_INFORMA",
+    "n": 4
+   },
+   {
+    "aceito": "SATISFATORIA",
+    "referencia": "SATISFATORIA",
+    "n": 194
+   }
+  ]
+ },
+ "tireoide_A|bethesda": {
+  "aceitos": 100,
+  "matriz": [
+   {
+    "aceito": "I",
+    "referencia": "I",
+    "n": 14
+   },
+   {
+    "aceito": "II",
+    "referencia": "II",
+    "n": 28
+   },
+   {
+    "aceito": "III",
+    "referencia": "III",
+    "n": 22
+   },
+   {
+    "aceito": "IV",
+    "referencia": "IV",
+    "n": 9
+   },
+   {
+    "aceito": "V",
+    "referencia": "V",
+    "n": 17
+   },
+   {
+    "aceito": "VI",
+    "referencia": "VI",
+    "n": 10
+   }
+  ]
+ },
+ "tireoide_B1|bethesda": {
+  "aceitos": 38,
+  "matriz": [
+   {
+    "aceito": "I",
+    "referencia": "I",
+    "n": 3
+   },
+   {
+    "aceito": "II",
+    "referencia": "II",
+    "n": 2
+   },
+   {
+    "aceito": "III",
+    "referencia": "III",
+    "n": 13
+   },
+   {
+    "aceito": "IV",
+    "referencia": "IV",
+    "n": 8
+   },
+   {
+    "aceito": "V",
+    "referencia": "V",
+    "n": 7
+   },
+   {
+    "aceito": "VI",
+    "referencia": "VI",
+    "n": 5
+   }
+  ]
+ },
+ "mama_ihq|re": {
+  "aceitos": 164,
+  "matriz": [
+   {
+    "aceito": "NEGATIVO",
+    "referencia": "NEGATIVO",
+    "n": 22
+   },
+   {
+    "aceito": "NEGATIVO",
+    "referencia": "POSITIVO",
+    "n": 1
+   },
+   {
+    "aceito": "POSITIVO",
+    "referencia": "NAO_INFORMA",
+    "n": 1
+   },
+   {
+    "aceito": "POSITIVO",
+    "referencia": "POSITIVO",
+    "n": 140
+   }
+  ]
+ },
+ "mama_ihq|rp": {
+  "aceitos": 159,
+  "matriz": [
+   {
+    "aceito": "NEGATIVO",
+    "referencia": "NEGATIVO",
+    "n": 36
+   },
+   {
+    "aceito": "NEGATIVO",
+    "referencia": "POSITIVO",
+    "n": 2
+   },
+   {
+    "aceito": "POSITIVO",
+    "referencia": "NAO_INFORMA",
+    "n": 1
+   },
+   {
+    "aceito": "POSITIVO",
+    "referencia": "POSITIVO",
+    "n": 120
+   }
+  ]
+ },
+ "mama_ihq|her2": {
+  "aceitos": 96,
+  "matriz": [
+   {
+    "aceito": "0",
+    "referencia": "0",
+    "n": 76
+   },
+   {
+    "aceito": "1+",
+    "referencia": "1+",
+    "n": 5
+   },
+   {
+    "aceito": "2+",
+    "referencia": "2+",
+    "n": 8
+   },
+   {
+    "aceito": "3+",
+    "referencia": "3+",
+    "n": 7
+   }
+  ]
+ },
+ "mama_ihq|ki67": {
+  "aceitos": 130,
+  "discordantes": 11,
+  "ref_nao_informa_entre_discordantes": 3,
+  "diferenca_absoluta_pontos": [
+   4,
+   4,
+   5,
+   5,
+   5,
+   5,
+   10,
+   40
+  ]
+ }
+}

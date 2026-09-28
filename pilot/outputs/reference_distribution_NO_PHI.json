@@ -1,0 +1,63 @@
+{
+ "cervical_ref_resultado": {
+  "NILM": 102,
+  "ASC_US": 63,
+  "LSIL": 52,
+  "ASC_H": 9,
+  "NAO_INFORMA": 7,
+  "OUTRO": 6,
+  "HSIL": 5,
+  "AGC": 3,
+  "AIS": 2,
+  "CARCINOMA_ESCAMOSO": 1
+ },
+ "cervical_ref_adequab": {
+  "SATISFATORIA": 194,
+  "NAO_INFORMA": 50,
+  "INSATISFATORIA": 6
+ },
+ "cervical_ref_bruto_quando_nulo": {
+  "nc": 7
+ },
+ "tireoide_A_ref": {
+  "I": 20,
+  "II": 52,
+  "III": 24,
+  "IV": 14,
+  "V": 20,
+  "VI": 16
+ },
+ "tireoide_B1_ref": {
+  "I": 11,
+  "II": 7,
+  "III": 35,
+  "IV": 28,
+  "V": 21,
+  "VI": 17
+ },
+ "mama_ref_re": {
+  "POSITIVO": 151,
+  "NEGATIVO": 27,
+  "NAO_INFORMA": 1
+ },
+ "mama_ref_rp": {
+  "POSITIVO": 134,
+  "NEGATIVO": 44,
+  "NAO_INFORMA": 1
+ },
+ "mama_ref_her2": {
+  "0": 141,
+  "1+": 13,
+  "3+": 13,
+  "2+": 11,
+  "NAO_INFORMA": 1
+ },
+ "mama_ref_ki67": {
+  "n_com_valor": 174,
+  "mediana": 25.0,
+  "p25": 10.0,
+  "p75": 40.0,
+  "<=14": 59,
+  ">14": 115
+ }
+}

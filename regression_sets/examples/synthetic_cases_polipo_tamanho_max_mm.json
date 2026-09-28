@@ -1,0 +1,114 @@
+[
+ {
+  "id": "SC-TAM-01",
+  "kind": "synthetic_canary",
+  "text": "DESCRICAO: polipo sessil de 8mm em colon direito.",
+  "expected_value": 8.0,
+  "source": "contracts/e1_endoscopia_full.yaml",
+  "note": "canário TAM-01"
+ },
+ {
+  "id": "SC-TAM-02",
+  "kind": "synthetic_canary",
+  "text": "DESCRICAO: formacao polipoide diminuta.",
+  "expected_value": null,
+  "source": "contracts/e1_endoscopia_full.yaml",
+  "note": "canário TAM-02"
+ },
+ {
+  "id": "SB-instrumento",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: polipo diminuto ressecado com alca. Pinca de biopsia de 10 mm utilizada.",
+  "expected_value": null,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "medida pertence ao instrumento (2.2 cross-scope)"
+ },
+ {
+  "id": "SB-boilerplate_com",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: mucosa colonica sem lesoes.\n\nCOMENTARIOS: referencia educativa: polipos a partir de 10 mm sao considerados grandes.",
+  "expected_value": null,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "medida em texto educativo (achado 03/09: comentarios fora do dicionario)"
+ },
+ {
+  "id": "SB-controle_externo",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: mucosa normal ate o ceco.\n\nCONTROLE EXTERNO: material de controle apresentou lesao medindo 47 mm.",
+  "expected_value": null,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "controle nao e o paciente"
+ },
+ {
+  "id": "SB-negacao",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: nao foram observados polipos. Divertículos de 8 mm no sigmoide.",
+  "expected_value": null,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "negacao + medida de outra estrutura (2.1)"
+ },
+ {
+  "id": "SB-multifocal_max",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: polipo sessil de 4 mm no ceco e polipo pediculado de 12 mm no sigmoide.",
+  "expected_value": 12.0,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "maximo entre focos (2.3)"
+ },
+ {
+  "id": "SB-formato_dual",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: polipo sessil de 1,2 cm (12 mm) no colon transverso.",
+  "expected_value": 12.0,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "notacao dual cm=mm (2.4)"
+ },
+ {
+  "id": "SB-filler",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: polipo sessil medindo cerca de 6 mm no reto.",
+  "expected_value": 6.0,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "palavras entre rotulo e medida (2.9)"
+ },
+ {
+  "id": "SB-sem_unidade",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: polipo sessil de 0,6 x 0,5 no colon esquerdo.",
+  "expected_value": null,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "sem unidade: abster (2.10)"
+ },
+ {
+  "id": "SB-cm_para_mm",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: polipo pediculado de 1,5 cm no sigmoide.",
+  "expected_value": 15.0,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "conversao cm->mm"
+ },
+ {
+  "id": "SB-historico",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: mucosa normal. Exame anterior (2019) descrevia polipo de 15 mm, ja ressecado.",
+  "expected_value": null,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "resultado historico nao e o achado atual"
+ },
+ {
+  "id": "SB-caixa_acentos",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRIÇÃO: PÓLIPO SÉSSIL DE 7 MM NO CÓLON DIREITO.",
+  "expected_value": 7.0,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "caixa alta e acentos"
+ },
+ {
+  "id": "SB-intervalo",
+  "kind": "synthetic_known_bug",
+  "text": "DESCRICAO: polipo sessil de 5 a 8 mm no colon ascendente.",
+  "expected_value": 8.0,
+  "source": "L1_PLAYBOOK.md §2 + challenge metamórfico 03/09",
+  "note": "intervalo: maximo do intervalo"
+ }
+]

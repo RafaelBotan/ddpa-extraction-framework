@@ -458,7 +458,7 @@ class TestEvaluateCard:
         assert sr.status == 'FALSE_POSITIVE_RISK'
         assert len(sr.barriers) == 4  # family_viability + canary_pass + target_hit + near_miss_safety
 
-    def test_approved_card_has_5_barriers(self):
+    def test_approved_card_has_gate_four_barriers_and_two_telemetries(self):
         from sandbox.evaluator import evaluate_card
         from study_contract import Canary
         card = _make_card()
@@ -477,7 +477,13 @@ class TestEvaluateCard:
         result_card = evaluate_card(card, canaries, policy, corpus_df, detector)
         sr = result_card.sandbox_result
         assert sr is not None
-        assert len(sr.barriers) == 6  # family_viability + 5 original barriers
+        # v2.2: B0 gate + B1..B4 (regression gate) + two telemetries = 7 entries
+        assert len(sr.barriers) == 7
+        kinds = [b.kind for b in sr.barriers]
+        assert kinds.count('blocking') == 5 and kinds.count('telemetry') == 2
+        assert [b.barrier for b in sr.barriers][-2:] == ['site_skew_warning', 'corpus_wide_impact_forecast']
+        assert sr.status == 'APPROVED'
+        assert 'NO_REGRESSION_SET' in sr.warning_flags  # no set was supplied in this test
 
     def test_high_risk_uses_500_negatives(self):
         """Verify high-risk cards use neg_n=500 (structural test, not count-verification)."""

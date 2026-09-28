@@ -18,7 +18,14 @@ from sandbox.evaluator import (
     barrier_near_miss_safety,
     barrier_corpus_skew,
     barrier_corpus_wide_shadow,
+    site_skew_warning,
+    corpus_wide_impact_forecast,
     evaluate_card,
+)
+from sandbox.regression import (
+    RegressionCase,
+    load_regression_set,
+    barrier_regression_gate,
 )
 from sandbox.report import (
     card_to_jsonl,
@@ -39,6 +46,11 @@ __all__ = [
     'barrier_target_hit',
     'barrier_near_miss_safety',
     'barrier_corpus_skew',
+    'site_skew_warning',
+    'corpus_wide_impact_forecast',
+    'RegressionCase',
+    'load_regression_set',
+    'barrier_regression_gate',
     'barrier_corpus_wide_shadow',
     'evaluate_card',
     'card_to_jsonl',

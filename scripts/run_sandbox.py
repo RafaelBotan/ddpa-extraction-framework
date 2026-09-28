@@ -211,8 +211,19 @@ def main():
     # column. Falling back to the raw corpus_df would let L1 misses into the
     # "correct" set, producing false FALSE_POSITIVE_RISK flags.
     eval_corpus = df
+
+    # v2.2: the regression gate needs a versioned held-aside set. Production refuses to run without it.
+    from sandbox.regression import load_regression_set
+    reg_dir = Path('regression_sets')
+    reg_candidates = sorted(reg_dir.glob(f'{args.var}_v*.jsonl'))
+    if not reg_candidates:
+        raise SystemExit(f'ERROR: no regression set for {args.var} in {reg_dir}/ - refusing to evaluate (v2.2 fail-closed)')
+    regression_cases, regression_sha = load_regression_set(reg_candidates[-1])
+    print(f'  Regression set: {reg_candidates[-1].name} ({len(regression_cases)} cases, sha256 {regression_sha[:12]})')
+
     for card in cards:
-        evaluate_card(card, canaries, policy, eval_corpus, detector_func)
+        evaluate_card(card, canaries, policy, eval_corpus, detector_func,
+                      regression_cases=regression_cases, regression_set_sha256=regression_sha)
         status = card.sandbox_result.status if card.sandbox_result else 'pending'
         print(f'  {card.card_id}: ia_value={card.source_cluster.get("ia_value")!r} -> {status}')
 

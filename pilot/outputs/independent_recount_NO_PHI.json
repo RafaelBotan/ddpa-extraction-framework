@@ -1,0 +1,432 @@
+{
+  "o_que_e": "Recontagem independente (R) dos números do piloto DDPA a partir das saídas por campo; comparação com os agregados do script original.",
+  "ancora_ki67_recalculada": true,
+  "resultados": {
+    "cervical": {
+      "resultado": {
+        "variavel": "resultado",
+        "n": 250,
+        "estados_iguais_ao_guardado": 250,
+        "estados_diferentes_do_guardado": 0,
+        "aceitos_por_concordancia": 189,
+        "disc_aceitos": {
+          "n": 189,
+          "discordantes": 4,
+          "pct": 2.1,
+          "ic95": [0.6, 5.3]
+        },
+        "aceitos_por_suporte_textual": 0,
+        "disc_suporte": {
+          "n": 0,
+          "discordantes": 0,
+          "pct": null,
+          "ic95": null
+        },
+        "escalados": 55,
+        "sem_resposta": 6,
+        "composicao": {
+          "discordancia_real": 3,
+          "detector_absteve": 51,
+          "modelo_absteve": 1
+        },
+        "so_detector": {
+          "cobertura": 193,
+          "n": 193,
+          "discordantes": 8,
+          "pct": 4.1,
+          "ic95": [1.8, 8]
+        },
+        "so_modelo": {
+          "cobertura": 243,
+          "n": 243,
+          "discordantes": 9,
+          "pct": 3.7,
+          "ic95": [1.7, 6.9]
+        },
+        "hibrido": {
+          "cobertura": 244,
+          "n": 244,
+          "discordantes": 10,
+          "pct": 4.1,
+          "ic95": [2, 7.4]
+        },
+        "erros_modelo_sozinho": 9,
+        "desses_no_escalonamento": 5,
+        "escalados_modelo_igual_referencia": 49,
+        "escalados_detector_igual_referencia": 0
+      },
+      "adequab": {
+        "variavel": "adequab",
+        "n": 250,
+        "estados_iguais_ao_guardado": 250,
+        "estados_diferentes_do_guardado": 0,
+        "aceitos_por_concordancia": 202,
+        "disc_aceitos": {
+          "n": 202,
+          "discordantes": 4,
+          "pct": 2,
+          "ic95": [0.5, 5]
+        },
+        "aceitos_por_suporte_textual": 0,
+        "disc_suporte": {
+          "n": 0,
+          "discordantes": 0,
+          "pct": null,
+          "ic95": null
+        },
+        "escalados": 2,
+        "sem_resposta": 46,
+        "composicao": {
+          "discordancia_real": 0,
+          "detector_absteve": 2,
+          "modelo_absteve": 0
+        },
+        "so_detector": {
+          "cobertura": 202,
+          "n": 202,
+          "discordantes": 4,
+          "pct": 2,
+          "ic95": [0.5, 5]
+        },
+        "so_modelo": {
+          "cobertura": 204,
+          "n": 204,
+          "discordantes": 5,
+          "pct": 2.5,
+          "ic95": [0.8, 5.6]
+        },
+        "hibrido": {
+          "cobertura": 204,
+          "n": 204,
+          "discordantes": 5,
+          "pct": 2.5,
+          "ic95": [0.8, 5.6]
+        },
+        "erros_modelo_sozinho": 5,
+        "desses_no_escalonamento": 1,
+        "escalados_modelo_igual_referencia": 1,
+        "escalados_detector_igual_referencia": 0
+      }
+    },
+    "tireoide_A": {
+      "bethesda": {
+        "variavel": "bethesda",
+        "n": 146,
+        "estados_iguais_ao_guardado": 146,
+        "estados_diferentes_do_guardado": 0,
+        "aceitos_por_concordancia": 100,
+        "disc_aceitos": {
+          "n": 100,
+          "discordantes": 0,
+          "pct": 0,
+          "ic95": [0, 3.6]
+        },
+        "aceitos_por_suporte_textual": 0,
+        "disc_suporte": {
+          "n": 0,
+          "discordantes": 0,
+          "pct": null,
+          "ic95": null
+        },
+        "escalados": 41,
+        "sem_resposta": 5,
+        "composicao": {
+          "discordancia_real": 0,
+          "detector_absteve": 41,
+          "modelo_absteve": 0
+        },
+        "so_detector": {
+          "cobertura": 100,
+          "n": 100,
+          "discordantes": 0,
+          "pct": 0,
+          "ic95": [0, 3.6]
+        },
+        "so_modelo": {
+          "cobertura": 141,
+          "n": 141,
+          "discordantes": 2,
+          "pct": 1.4,
+          "ic95": [0.2, 5]
+        },
+        "hibrido": {
+          "cobertura": 141,
+          "n": 141,
+          "discordantes": 2,
+          "pct": 1.4,
+          "ic95": [0.2, 5]
+        },
+        "erros_modelo_sozinho": 2,
+        "desses_no_escalonamento": 2,
+        "escalados_modelo_igual_referencia": 39,
+        "escalados_detector_igual_referencia": 0
+      }
+    },
+    "tireoide_B1": {
+      "bethesda": {
+        "variavel": "bethesda",
+        "n": 119,
+        "estados_iguais_ao_guardado": 119,
+        "estados_diferentes_do_guardado": 0,
+        "aceitos_por_concordancia": 38,
+        "disc_aceitos": {
+          "n": 38,
+          "discordantes": 0,
+          "pct": 0,
+          "ic95": [0, 9.3]
+        },
+        "aceitos_por_suporte_textual": 0,
+        "disc_suporte": {
+          "n": 0,
+          "discordantes": 0,
+          "pct": null,
+          "ic95": null
+        },
+        "escalados": 72,
+        "sem_resposta": 9,
+        "composicao": {
+          "discordancia_real": 0,
+          "detector_absteve": 72,
+          "modelo_absteve": 0
+        },
+        "so_detector": {
+          "cobertura": 38,
+          "n": 38,
+          "discordantes": 0,
+          "pct": 0,
+          "ic95": [0, 9.3]
+        },
+        "so_modelo": {
+          "cobertura": 110,
+          "n": 110,
+          "discordantes": 2,
+          "pct": 1.8,
+          "ic95": [0.2, 6.4]
+        },
+        "hibrido": {
+          "cobertura": 110,
+          "n": 110,
+          "discordantes": 2,
+          "pct": 1.8,
+          "ic95": [0.2, 6.4]
+        },
+        "erros_modelo_sozinho": 2,
+        "desses_no_escalonamento": 2,
+        "escalados_modelo_igual_referencia": 70,
+        "escalados_detector_igual_referencia": 0
+      }
+    },
+    "mama_ihq": {
+      "re": {
+        "variavel": "re",
+        "n": 179,
+        "estados_iguais_ao_guardado": 179,
+        "estados_diferentes_do_guardado": 0,
+        "aceitos_por_concordancia": 164,
+        "disc_aceitos": {
+          "n": 164,
+          "discordantes": 2,
+          "pct": 1.2,
+          "ic95": [0.1, 4.3]
+        },
+        "aceitos_por_suporte_textual": 0,
+        "disc_suporte": {
+          "n": 0,
+          "discordantes": 0,
+          "pct": null,
+          "ic95": null
+        },
+        "escalados": 15,
+        "sem_resposta": 0,
+        "composicao": {
+          "discordancia_real": 2,
+          "detector_absteve": 13,
+          "modelo_absteve": 0
+        },
+        "so_detector": {
+          "cobertura": 166,
+          "n": 166,
+          "discordantes": 4,
+          "pct": 2.4,
+          "ic95": [0.7, 6.1]
+        },
+        "so_modelo": {
+          "cobertura": 179,
+          "n": 179,
+          "discordantes": 2,
+          "pct": 1.1,
+          "ic95": [0.1, 4]
+        },
+        "hibrido": {
+          "cobertura": 179,
+          "n": 179,
+          "discordantes": 2,
+          "pct": 1.1,
+          "ic95": [0.1, 4]
+        },
+        "erros_modelo_sozinho": 2,
+        "desses_no_escalonamento": 0,
+        "escalados_modelo_igual_referencia": 15,
+        "escalados_detector_igual_referencia": 0
+      },
+      "rp": {
+        "variavel": "rp",
+        "n": 179,
+        "estados_iguais_ao_guardado": 179,
+        "estados_diferentes_do_guardado": 0,
+        "aceitos_por_concordancia": 159,
+        "disc_aceitos": {
+          "n": 159,
+          "discordantes": 3,
+          "pct": 1.9,
+          "ic95": [0.4, 5.4]
+        },
+        "aceitos_por_suporte_textual": 0,
+        "disc_suporte": {
+          "n": 0,
+          "discordantes": 0,
+          "pct": null,
+          "ic95": null
+        },
+        "escalados": 20,
+        "sem_resposta": 0,
+        "composicao": {
+          "discordancia_real": 1,
+          "detector_absteve": 19,
+          "modelo_absteve": 0
+        },
+        "so_detector": {
+          "cobertura": 160,
+          "n": 160,
+          "discordantes": 4,
+          "pct": 2.5,
+          "ic95": [0.7, 6.3]
+        },
+        "so_modelo": {
+          "cobertura": 179,
+          "n": 179,
+          "discordantes": 3,
+          "pct": 1.7,
+          "ic95": [0.3, 4.8]
+        },
+        "hibrido": {
+          "cobertura": 179,
+          "n": 179,
+          "discordantes": 3,
+          "pct": 1.7,
+          "ic95": [0.3, 4.8]
+        },
+        "erros_modelo_sozinho": 3,
+        "desses_no_escalonamento": 0,
+        "escalados_modelo_igual_referencia": 20,
+        "escalados_detector_igual_referencia": 0
+      },
+      "her2": {
+        "variavel": "her2",
+        "n": 179,
+        "estados_iguais_ao_guardado": 179,
+        "estados_diferentes_do_guardado": 0,
+        "aceitos_por_concordancia": 96,
+        "disc_aceitos": {
+          "n": 96,
+          "discordantes": 0,
+          "pct": 0,
+          "ic95": [0, 3.8]
+        },
+        "aceitos_por_suporte_textual": 0,
+        "disc_suporte": {
+          "n": 0,
+          "discordantes": 0,
+          "pct": null,
+          "ic95": null
+        },
+        "escalados": 83,
+        "sem_resposta": 0,
+        "composicao": {
+          "discordancia_real": 3,
+          "detector_absteve": 80,
+          "modelo_absteve": 0
+        },
+        "so_detector": {
+          "cobertura": 99,
+          "n": 99,
+          "discordantes": 2,
+          "pct": 2,
+          "ic95": [0.2, 7.1]
+        },
+        "so_modelo": {
+          "cobertura": 179,
+          "n": 179,
+          "discordantes": 4,
+          "pct": 2.2,
+          "ic95": [0.6, 5.6]
+        },
+        "hibrido": {
+          "cobertura": 179,
+          "n": 179,
+          "discordantes": 4,
+          "pct": 2.2,
+          "ic95": [0.6, 5.6]
+        },
+        "erros_modelo_sozinho": 4,
+        "desses_no_escalonamento": 4,
+        "escalados_modelo_igual_referencia": 79,
+        "escalados_detector_igual_referencia": 1
+      },
+      "ki67": {
+        "variavel": "ki67",
+        "n": 179,
+        "estados_iguais_ao_guardado": 179,
+        "estados_diferentes_do_guardado": 0,
+        "aceitos_por_concordancia": 130,
+        "disc_aceitos": {
+          "n": 130,
+          "discordantes": 11,
+          "pct": 8.5,
+          "ic95": [4.3, 14.6]
+        },
+        "aceitos_por_suporte_textual": 17,
+        "disc_suporte": {
+          "n": 17,
+          "discordantes": 1,
+          "pct": 5.9,
+          "ic95": [0.1, 28.7]
+        },
+        "escalados": 31,
+        "sem_resposta": 1,
+        "composicao": {
+          "discordancia_real": 19,
+          "detector_absteve": 1,
+          "modelo_absteve": 11
+        },
+        "so_detector": {
+          "cobertura": 160,
+          "n": 160,
+          "discordantes": 40,
+          "pct": 25,
+          "ic95": [18.5, 32.4]
+        },
+        "so_modelo": {
+          "cobertura": 167,
+          "n": 167,
+          "discordantes": 27,
+          "pct": 16.2,
+          "ic95": [10.9, 22.6]
+        },
+        "hibrido": {
+          "cobertura": 178,
+          "n": 178,
+          "discordantes": 38,
+          "pct": 21.3,
+          "ic95": [15.6, 28.1]
+        },
+        "erros_modelo_sozinho": 27,
+        "desses_no_escalonamento": 15,
+        "escalados_modelo_igual_referencia": 5,
+        "escalados_detector_igual_referencia": 1
+      }
+    }
+  },
+  "divergencias_com_o_original": [],
+  "veredito": "CONFERE: nenhuma divergência"
+}
