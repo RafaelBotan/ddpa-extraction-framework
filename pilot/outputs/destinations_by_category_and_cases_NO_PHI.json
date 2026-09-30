@@ -1,0 +1,335 @@
+{
+ "destino_por_categoria_anotada": {
+  "cervical|resultado": {
+   "AGC": {
+    "anotados": 3,
+    "aceito_igual": 3,
+    "aceito_diferente": 0,
+    "encaminhado": 0,
+    "sem_resposta": 0
+   },
+   "AIS": {
+    "anotados": 2,
+    "aceito_igual": 0,
+    "aceito_diferente": 0,
+    "encaminhado": 2,
+    "sem_resposta": 0
+   },
+   "ASC_H": {
+    "anotados": 9,
+    "aceito_igual": 8,
+    "aceito_diferente": 0,
+    "encaminhado": 1,
+    "sem_resposta": 0
+   },
+   "ASC_US": {
+    "anotados": 63,
+    "aceito_igual": 47,
+    "aceito_diferente": 0,
+    "encaminhado": 16,
+    "sem_resposta": 0
+   },
+   "CARCINOMA_ESCAMOSO": {
+    "anotados": 1,
+    "aceito_igual": 0,
+    "aceito_diferente": 0,
+    "encaminhado": 1,
+    "sem_resposta": 0
+   },
+   "HSIL": {
+    "anotados": 5,
+    "aceito_igual": 5,
+    "aceito_diferente": 0,
+    "encaminhado": 0,
+    "sem_resposta": 0
+   },
+   "LSIL": {
+    "anotados": 52,
+    "aceito_igual": 50,
+    "aceito_diferente": 2,
+    "encaminhado": 0,
+    "sem_resposta": 0
+   },
+   "NAO_INFORMA": {
+    "anotados": 7,
+    "aceito_igual": 0,
+    "aceito_diferente": 0,
+    "encaminhado": 2,
+    "sem_resposta": 5
+   },
+   "NILM": {
+    "anotados": 102,
+    "aceito_igual": 72,
+    "aceito_diferente": 0,
+    "encaminhado": 30,
+    "sem_resposta": 0
+   },
+   "OUTRO": {
+    "anotados": 6,
+    "aceito_igual": 0,
+    "aceito_diferente": 2,
+    "encaminhado": 3,
+    "sem_resposta": 1
+   }
+  },
+  "cervical|adequab": {
+   "INSATISFATORIA": {
+    "anotados": 6,
+    "aceito_igual": 4,
+    "aceito_diferente": 0,
+    "encaminhado": 1,
+    "sem_resposta": 1
+   },
+   "NAO_INFORMA": {
+    "anotados": 50,
+    "aceito_igual": 0,
+    "aceito_diferente": 4,
+    "encaminhado": 1,
+    "sem_resposta": 45
+   },
+   "SATISFATORIA": {
+    "anotados": 194,
+    "aceito_igual": 194,
+    "aceito_diferente": 0,
+    "encaminhado": 0,
+    "sem_resposta": 0
+   }
+  },
+  "tireoide_A|bethesda": {
+   "I": {
+    "anotados": 20,
+    "aceito_igual": 14,
+    "aceito_diferente": 0,
+    "encaminhado": 6,
+    "sem_resposta": 0
+   },
+   "II": {
+    "anotados": 52,
+    "aceito_igual": 28,
+    "aceito_diferente": 0,
+    "encaminhado": 21,
+    "sem_resposta": 3
+   },
+   "III": {
+    "anotados": 24,
+    "aceito_igual": 22,
+    "aceito_diferente": 0,
+    "encaminhado": 2,
+    "sem_resposta": 0
+   },
+   "IV": {
+    "anotados": 14,
+    "aceito_igual": 9,
+    "aceito_diferente": 0,
+    "encaminhado": 5,
+    "sem_resposta": 0
+   },
+   "V": {
+    "anotados": 20,
+    "aceito_igual": 17,
+    "aceito_diferente": 0,
+    "encaminhado": 3,
+    "sem_resposta": 0
+   },
+   "VI": {
+    "anotados": 16,
+    "aceito_igual": 10,
+    "aceito_diferente": 0,
+    "encaminhado": 4,
+    "sem_resposta": 2
+   }
+  },
+  "tireoide_B1|bethesda": {
+   "I": {
+    "anotados": 11,
+    "aceito_igual": 3,
+    "aceito_diferente": 0,
+    "encaminhado": 7,
+    "sem_resposta": 1
+   },
+   "II": {
+    "anotados": 7,
+    "aceito_igual": 2,
+    "aceito_diferente": 0,
+    "encaminhado": 5,
+    "sem_resposta": 0
+   },
+   "III": {
+    "anotados": 35,
+    "aceito_igual": 13,
+    "aceito_diferente": 0,
+    "encaminhado": 19,
+    "sem_resposta": 3
+   },
+   "IV": {
+    "anotados": 28,
+    "aceito_igual": 8,
+    "aceito_diferente": 0,
+    "encaminhado": 19,
+    "sem_resposta": 1
+   },
+   "V": {
+    "anotados": 21,
+    "aceito_igual": 7,
+    "aceito_diferente": 0,
+    "encaminhado": 13,
+    "sem_resposta": 1
+   },
+   "VI": {
+    "anotados": 17,
+    "aceito_igual": 5,
+    "aceito_diferente": 0,
+    "encaminhado": 9,
+    "sem_resposta": 3
+   }
+  },
+  "mama_ihq|re": {
+   "NAO_INFORMA": {
+    "anotados": 1,
+    "aceito_igual": 0,
+    "aceito_diferente": 1,
+    "encaminhado": 0,
+    "sem_resposta": 0
+   },
+   "NEGATIVO": {
+    "anotados": 27,
+    "aceito_igual": 22,
+    "aceito_diferente": 0,
+    "encaminhado": 5,
+    "sem_resposta": 0
+   },
+   "POSITIVO": {
+    "anotados": 151,
+    "aceito_igual": 140,
+    "aceito_diferente": 1,
+    "encaminhado": 10,
+    "sem_resposta": 0
+   }
+  },
+  "mama_ihq|rp": {
+   "NAO_INFORMA": {
+    "anotados": 1,
+    "aceito_igual": 0,
+    "aceito_diferente": 1,
+    "encaminhado": 0,
+    "sem_resposta": 0
+   },
+   "NEGATIVO": {
+    "anotados": 44,
+    "aceito_igual": 36,
+    "aceito_diferente": 0,
+    "encaminhado": 8,
+    "sem_resposta": 0
+   },
+   "POSITIVO": {
+    "anotados": 134,
+    "aceito_igual": 120,
+    "aceito_diferente": 2,
+    "encaminhado": 12,
+    "sem_resposta": 0
+   }
+  },
+  "mama_ihq|her2": {
+   "0": {
+    "anotados": 141,
+    "aceito_igual": 76,
+    "aceito_diferente": 0,
+    "encaminhado": 65,
+    "sem_resposta": 0
+   },
+   "1+": {
+    "anotados": 13,
+    "aceito_igual": 5,
+    "aceito_diferente": 0,
+    "encaminhado": 8,
+    "sem_resposta": 0
+   },
+   "2+": {
+    "anotados": 11,
+    "aceito_igual": 8,
+    "aceito_diferente": 0,
+    "encaminhado": 3,
+    "sem_resposta": 0
+   },
+   "3+": {
+    "anotados": 13,
+    "aceito_igual": 7,
+    "aceito_diferente": 0,
+    "encaminhado": 6,
+    "sem_resposta": 0
+   },
+   "NAO_INFORMA": {
+    "anotados": 1,
+    "aceito_igual": 0,
+    "aceito_diferente": 0,
+    "encaminhado": 1,
+    "sem_resposta": 0
+   }
+  }
+ },
+ "sem_resposta_por_anotacao": {
+  "cervical|resultado": {
+   "sem_resposta": 6,
+   "com_valor_anotado": 1,
+   "anotacao_nao_informa": 5
+  },
+  "cervical|adequab": {
+   "sem_resposta": 46,
+   "com_valor_anotado": 1,
+   "anotacao_nao_informa": 45
+  },
+  "tireoide_A|bethesda": {
+   "sem_resposta": 5,
+   "com_valor_anotado": 5,
+   "anotacao_nao_informa": 0
+  },
+  "tireoide_B1|bethesda": {
+   "sem_resposta": 9,
+   "com_valor_anotado": 9,
+   "anotacao_nao_informa": 0
+  },
+  "mama_ihq|re": {
+   "sem_resposta": 0,
+   "com_valor_anotado": 0,
+   "anotacao_nao_informa": 0
+  },
+  "mama_ihq|rp": {
+   "sem_resposta": 0,
+   "com_valor_anotado": 0,
+   "anotacao_nao_informa": 0
+  },
+  "mama_ihq|her2": {
+   "sem_resposta": 0,
+   "com_valor_anotado": 0,
+   "anotacao_nao_informa": 0
+  },
+  "mama_ihq|ki67": {
+   "sem_resposta": 1,
+   "com_valor_anotado": 0,
+   "anotacao_nao_informa": 1
+  }
+ },
+ "mama_casos": {
+  "casos": 179,
+  "casos_com_algum_campo_encaminhado": 104,
+  "campos_encaminhados_total": 149,
+  "distribuicao_campos_encaminhados_por_caso": {
+   "0": 75,
+   "1": 72,
+   "2": 19,
+   "3": 13
+  },
+  "casos_com_algum_campo_sem_resposta": 1
+ },
+ "ki67_todos_os_aceitos": {
+  "aceitos": 147,
+  "discordantes": 12,
+  "pct": 8.2,
+  "ic95": [
+   4.3,
+   13.8
+  ],
+  "por_concordancia": 130,
+  "por_suporte_textual": 17
+ }
+}

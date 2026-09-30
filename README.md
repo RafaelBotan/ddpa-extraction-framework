@@ -11,11 +11,12 @@ report extraction: a retrospective pilot study* (submitted to JAMIA, Research an
 
 ## Releases
 
-- **v2.2 (this release):** the frozen framework version evaluated in the retrospective pilot. The frozen set has 57 files, set hash `6333ade35add72553a32426af00ee9013a5c89d56a60c45c9e28d3240714d340`. This release adds:
+- **v2.2.1 (this release):** the same frozen framework code as v2.2, plus the scripts and aggregate outputs of the post-hoc analyses added during review (`pilot/conditional_discordance_by_reader_state*`, `pilot/destinations_by_category_and_cases*`, with their R recounts): each reader's discordance by the other reader's state (manuscript Table 3), the destination of each annotated category (Supplementary Table S16), fields without an answer against the annotation, and routed fields per breast case. No detector or runtime file changed.
+- **v2.2:** the frozen framework version evaluated in the retrospective pilot. The frozen set has 57 files, set hash `6333ade35add72553a32426af00ee9013a5c89d56a60c45c9e28d3240714d340`. This release adds:
   - the sandbox regression gate;
   - the pilot scripts;
   - the independent recount written in R;
-  - the aggregate outputs behind the manuscript's Tables 1 and 2, Figure 2 and Supplementary Table S16.
+  - the aggregate outputs behind the manuscript's Tables 1 and 2, Figure 2 and the discordant cells of Supplementary Table S16.
 - **v1.1 / v1.0:** earlier development releases. v1.1 added the endoscopy extraction prompts.
 
 ## Contents
@@ -32,7 +33,7 @@ report extraction: a retrospective pilot study* (submitted to JAMIA, Research an
 | `regression_sets/` | `MANIFEST.json` (hash and composition of each versioned regression set); `examples/` holds the 14 synthetic regression cases, outside the directory the gate reads, so `scripts/run_sandbox.py` still refuses to run without the full set |
 | `pilot/run_pilot.py` | pilot runner: calls the frozen detectors and the language model and applies the review-selection rule |
 | `pilot/independent_recount.R` | separate implementation in R that recomputed every pilot count from the stored field-level outputs |
-| `pilot/accepted_confusion_matrices.py` | accepted value × annotation matrices (Supplementary Table S16) |
+| `pilot/accepted_confusion_matrices.py` | accepted value × annotation cells (the discordant-cells column of Supplementary Table S16) |
 | `pilot/PROMPTS_pilot.md` | the three language-model prompts used in the pilot, verbatim |
 | `pilot/outputs/` | aggregate outputs: independent recount, accepted-value matrices, distribution of the reference annotations |
 | `tests/` | automated suite (`pytest tests/`: 470 passed, 3 skipped) |
